@@ -40,34 +40,13 @@ made subject to such option by the copyright holder.
 Contributor(s):
 -->
 <hibernate-reverse-engineering>
-  <schema-selection match-catalog="mysql"/>
-  <table-filter match-name="time_zone_transition_type"/>
-  <table-filter match-name="gtid_executed"/>
-  <table-filter match-name="time_zone"/>
-  <table-filter match-name="server_cost"/>
-  <table-filter match-name="db"/>
-  <table-filter match-name="engine_cost"/>
-  <table-filter match-name="time_zone_transition"/>
-  <table-filter match-name="slave_relay_log_info"/>
-  <table-filter match-name="slave_master_info"/>
-  <table-filter match-name="procs_priv"/>
-  <table-filter match-name="help_keyword"/>
-  <table-filter match-name="event"/>
-  <table-filter match-name="columns_priv"/>
-  <table-filter match-name="time_zone_leap_second"/>
-  <table-filter match-name="innodb_table_stats"/>
-  <table-filter match-name="tables_priv"/>
-  <table-filter match-name="ndb_binlog_index"/>
-  <table-filter match-name="func"/>
-  <table-filter match-name="user"/>
-  <table-filter match-name="help_relation"/>
-  <table-filter match-name="help_topic"/>
-  <table-filter match-name="servers"/>
-  <table-filter match-name="time_zone_name"/>
-  <table-filter match-name="proxies_priv"/>
-  <table-filter match-name="innodb_index_stats"/>
-  <table-filter match-name="proc"/>
-  <table-filter match-name="help_category"/>
-  <table-filter match-name="plugin"/>
-  <table-filter match-name="slave_worker_info"/>
+  <schema-selection match-catalog="Empleate"/>
+  <table-filter match-name="login"/>
+  <table-filter match-name="offerer"/>
+  <table-filter match-name="manager"/>
+  <table-filter match-name="company"/>
+  <table-filter match-name="category"/>
+  <table-filter match-name="offercategory"/>
+  <table-filter match-name="job"/>
+  <table-filter match-name="jobcategory"/>
 </hibernate-reverse-engineering>

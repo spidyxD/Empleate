@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 12/03/2018 12:06:20 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Empleate.domain.Category" table="category" catalog="empleatebeta" optimistic-lock="version">
+        <id name="idCategory" type="int">
+            <column name="idCategory" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="category" class="Empleate.domain.Category" fetch="select">
+            <column name="categ" />
+        </many-to-one>
+        <property name="nameCategory" type="string">
+            <column name="name_Category" length="45" />
+        </property>
+        <set name="categories" table="category" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="categ" />
+            </key>
+            <one-to-many class="Empleate.domain.Category" />
+        </set>
+        <set name="jobcategories" table="jobcategory" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="cat" not-null="true" />
+            </key>
+            <one-to-many class="Empleate.domain.Jobcategory" />
+        </set>
+        <set name="offercategories" table="offercategory" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="cat" not-null="true" />
+            </key>
+            <one-to-many class="Empleate.domain.Offercategory" />
+        </set>
+    </class>
+</hibernate-mapping>

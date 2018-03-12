@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 12/03/2018 12:06:20 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Empleate.domain.Login" table="login" catalog="empleatebeta" optimistic-lock="version">
+        <id name="idLogin" type="int">
+            <column name="idLogin" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="company" class="Empleate.domain.Company" fetch="select">
+            <column name="comp" not-null="true" />
+        </many-to-one>
+        <many-to-one name="manager" class="Empleate.domain.Manager" fetch="select">
+            <column name="manag" not-null="true" />
+        </many-to-one>
+        <many-to-one name="offerer" class="Empleate.domain.Offerer" fetch="select">
+            <column name="offer" not-null="true" />
+        </many-to-one>
+        <property name="username" type="string">
+            <column name="username" length="45" />
+        </property>
+        <property name="passwordLog" type="string">
+            <column name="password_log" length="45" />
+        </property>
+        <property name="type" type="string">
+            <column name="type" length="45" />
+        </property>
+    </class>
+</hibernate-mapping>

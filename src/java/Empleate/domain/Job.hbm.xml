@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 12/03/2018 12:06:20 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Empleate.domain.Job" table="job" catalog="empleatebeta" optimistic-lock="version">
+        <id name="idJob" type="int">
+            <column name="idJob" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="company" class="Empleate.domain.Company" fetch="select">
+            <column name="comp" not-null="true" />
+        </many-to-one>
+        <property name="nameJob" type="string">
+            <column name="name_Job" length="45" />
+        </property>
+        <property name="descriptionJob" type="string">
+            <column name="description_Job" length="45" />
+        </property>
+        <property name="salary" type="java.lang.Integer">
+            <column name="salary" />
+        </property>
+        <property name="typeJob" type="string">
+            <column name="type_Job" length="45" />
+        </property>
+        <property name="statusJob" type="java.lang.Integer">
+            <column name="status_Job" />
+        </property>
+        <set name="jobcategories" table="jobcategory" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="j" not-null="true" />
+            </key>
+            <one-to-many class="Empleate.domain.Jobcategory" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 12/03/2018 12:06:20 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Empleate.domain.Offerer" table="offerer" catalog="empleatebeta" optimistic-lock="version">
+        <id name="idOfferer" type="int">
+            <column name="idOfferer" />
+            <generator class="assigned" />
+        </id>
+        <property name="nameOfferer" type="string">
+            <column name="name_offerer" length="45" />
+        </property>
+        <property name="lastname" type="string">
+            <column name="lastname" length="45" />
+        </property>
+        <property name="nationality" type="string">
+            <column name="nationality" length="45" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="45" />
+        </property>
+        <property name="phone" type="string">
+            <column name="phone" length="45" />
+        </property>
+        <property name="residence" type="string">
+            <column name="residence" length="45" />
+        </property>
+        <set name="offercategories" table="offercategory" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="offer" not-null="true" />
+            </key>
+            <one-to-many class="Empleate.domain.Offercategory" />
+        </set>
+        <set name="logins" table="login" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="offer" not-null="true" />
+            </key>
+            <one-to-many class="Empleate.domain.Login" />
+        </set>
+    </class>
+</hibernate-mapping>
