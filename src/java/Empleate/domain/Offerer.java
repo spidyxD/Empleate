@@ -39,6 +39,16 @@ public class Offerer  implements java.io.Serializable {
        this.offercategories = offercategories;
        this.logins = logins;
     }
+
+    public Offerer(int idOfferer, String nameOfferer, String lastname, String nationality, String email, String phone, String residence) {
+        this.idOfferer = idOfferer;
+        this.nameOfferer = nameOfferer;
+        this.lastname = lastname;
+        this.nationality = nationality;
+        this.email = email;
+        this.phone = phone;
+        this.residence = residence;
+    }
    
     public int getIdOfferer() {
         return this.idOfferer;

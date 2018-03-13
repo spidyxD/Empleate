@@ -6,39 +6,104 @@
 package Empleate.dao;
 
 import Empleate.domain.Category;
+import Empleate.domain.Company;
+import Empleate.domain.Job;
 import Empleate.utils.HibernateUtil;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.HibernateException;
 
 /**
  *
  * @author Addiel
  */
-public class jobDAO extends HibernateUtil implements IBaseDAO <Category, java.math.BigInteger> {
+public class jobDAO extends HibernateUtil implements IBaseDAO <Job, java.math.BigInteger> {
 
     @Override
-    public void add(Category o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void add(Job o) {
+        try{
+            operationStart();
+            getSesion().save(o);
+            getTransac().commit();
+        }
+        catch(HibernateException he){
+            handleException(he);
+            throw he;
+        }
+        finally{
+        getSesion().close();
+        }
+    }
+
+    
+    @Override
+    public Job merge(Job o) {
+         try{
+            operationStart();
+            o = (Job)getSesion().merge(o);
+            getTransac().commit();
+        }
+        catch(HibernateException he){
+            handleException(he);
+            throw he;
+        }
+        finally{
+        getSesion().close();
+        }
+         return o;
     }
 
     @Override
-    public Category merge(Category o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void delete(Job o) {
+        try{
+            operationStart();
+            getSesion().delete(o);
+            getTransac().commit();
+        }
+        catch(HibernateException he){
+            handleException(he);
+            throw he;
+        }
+        finally{
+        getSesion().close();
+        }
     }
 
     @Override
-    public void delete(Category o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Job findById(BigInteger id) {
+         Job job = null;
+         try{
+            operationStart();
+            job = (Job)getSesion().get(Job.class,id);
+            getTransac().commit();
+        }
+        catch(HibernateException he){
+            handleException(he);
+            throw he;
+        }
+        finally{
+        getSesion().close();
+        }
+         return job;
     }
 
     @Override
-    public Category findById(BigInteger o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Category> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Job> findAll() {
+         List<Job> listJobs = new ArrayList();
+         try{
+            operationStart();
+            listJobs = getSesion().createQuery("from Job").list();
+            getTransac().commit();
+        }
+        catch(HibernateException he){
+            handleException(he);
+            throw he;
+        }
+        finally{
+        getSesion().close();
+        }
+    return listJobs;
     }
     
 }

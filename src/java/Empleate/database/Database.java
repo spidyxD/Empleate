@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  * @author jsanchez
  */
 public class Database {
-    Connection cnx;
+    /*Connection cnx;
     
     public Database(String servidorArg, String usuarioArg, String claveArg){
         if (servidorArg!=null){

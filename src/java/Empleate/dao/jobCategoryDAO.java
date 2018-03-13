@@ -5,7 +5,7 @@
  */
 package Empleate.dao;
 
-import Empleate.domain.Company;
+import Empleate.domain.Jobcategory;
 import Empleate.utils.HibernateUtil;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -16,10 +16,10 @@ import org.hibernate.HibernateException;
  *
  * @author Addiel
  */
-public class companyDAO extends HibernateUtil implements IBaseDAO <Company, java.math.BigInteger> {
+public class jobCategoryDAO extends HibernateUtil implements IBaseDAO <Jobcategory, java.math.BigInteger> {
 
     @Override
-    public void add(Company o) {
+    public void add(Jobcategory o) {
          try{
             operationStart();
             getSesion().save(o);
@@ -35,10 +35,10 @@ public class companyDAO extends HibernateUtil implements IBaseDAO <Company, java
     }
 
     @Override
-    public Company merge(Company o) {
+    public Jobcategory merge(Jobcategory o) {
         try{
             operationStart();
-            o = (Company)getSesion().merge(o);
+            o = (Jobcategory)getSesion().merge(o);
             getTransac().commit();
         }
         catch(HibernateException he){
@@ -52,7 +52,7 @@ public class companyDAO extends HibernateUtil implements IBaseDAO <Company, java
     }
 
     @Override
-    public void delete(Company o) {
+    public void delete(Jobcategory o) {
         try{
             operationStart();
             getSesion().delete(o);
@@ -68,11 +68,11 @@ public class companyDAO extends HibernateUtil implements IBaseDAO <Company, java
     }
 
     @Override
-    public Company findById(BigInteger id) {
-        Company company = null;
+    public Jobcategory findById(BigInteger id) {
+          Jobcategory jc = null;
          try{
             operationStart();
-            company = (Company)getSesion().get(Company.class,id);
+            jc = (Jobcategory)getSesion().get(Jobcategory.class,id);
             getTransac().commit();
         }
         catch(HibernateException he){
@@ -82,15 +82,15 @@ public class companyDAO extends HibernateUtil implements IBaseDAO <Company, java
         finally{
         getSesion().close();
         }
-         return company;
+         return jc;
     }
 
     @Override
-    public List<Company> findAll() {
-        List<Company> listCompanies = new ArrayList();
+    public List<Jobcategory> findAll() {
+         List<Jobcategory> listJC = new ArrayList();
          try{
             operationStart();
-            listCompanies = getSesion().createQuery("from Company").list();
+            listJC = getSesion().createQuery("from jobCategory").list();
             getTransac().commit();
         }
         catch(HibernateException he){
@@ -100,7 +100,7 @@ public class companyDAO extends HibernateUtil implements IBaseDAO <Company, java
         finally{
         getSesion().close();
         }
-    return listCompanies;
+    return listJC;
     }
     
 }
