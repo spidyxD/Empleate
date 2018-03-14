@@ -23,6 +23,16 @@ public class Job  implements java.io.Serializable {
     public Job() {
     }
 
+    public Job(int idJob, Company company, String nameJob, String descriptionJob, Integer salary, String typeJob, Integer statusJob) {
+        this.idJob = idJob;
+        this.company = company;
+        this.nameJob = nameJob;
+        this.descriptionJob = descriptionJob;
+        this.salary = salary;
+        this.typeJob = typeJob;
+        this.statusJob = statusJob;
+    }
+
 	
     public Job(int idJob, Company company) {
         this.idJob = idJob;

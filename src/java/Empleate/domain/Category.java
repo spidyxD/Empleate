@@ -33,6 +33,12 @@ public class Category  implements java.io.Serializable {
        this.jobcategories = jobcategories;
        this.offercategories = offercategories;
     }
+
+    public Category(int idCategory, Category category, String nameCategory) {
+        this.idCategory = idCategory;
+        this.category = category;
+        this.nameCategory = nameCategory;
+    }
    
     public int getIdCategory() {
         return this.idCategory;

@@ -18,6 +18,11 @@ public class Manager  implements java.io.Serializable {
     public Manager() {
     }
 
+    public Manager(int idManager, String email) {
+        this.idManager = idManager;
+        this.email = email;
+    }
+
 	
     public Manager(int idManager) {
         this.idManager = idManager;

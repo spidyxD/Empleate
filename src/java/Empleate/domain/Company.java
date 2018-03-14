@@ -40,6 +40,15 @@ public class Company  implements java.io.Serializable {
        this.jobs = jobs;
        this.logins = logins;
     }
+
+    public Company(int idCompany, String email, String phone, String description, Serializable location, String address) {
+        this.idCompany = idCompany;
+        this.email = email;
+        this.phone = phone;
+        this.description = description;
+        this.location = location;
+        this.address = address;
+    }
    
     public int getIdCompany() {
         return this.idCompany;
