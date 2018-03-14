@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package Empleate.logica;
-import Empleate.dao.categoryDAO;
 import Empleate.dao.offererDAO;
 /**
  *

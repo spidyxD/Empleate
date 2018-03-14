@@ -4,14 +4,13 @@
  * and open the template in the editor.
  */
 package Empleate.logica;
-import Empleate.dao.companyDAO;
 import Empleate.dao.managerDAO;
 /**
  *
  * @author Addiel
  */
 class ManagerModel {
-     private companyDAO managDAO;
+     private managerDAO managDAO;
     private static ManagerModel uniqueInstance;
     public static ManagerModel instance(){
         if (uniqueInstance == null){
@@ -20,6 +19,6 @@ class ManagerModel {
         return uniqueInstance;
     }
     private ManagerModel(){
-        managDAO = new companyDAO();
+        managDAO = new managerDAO();
     }
 }

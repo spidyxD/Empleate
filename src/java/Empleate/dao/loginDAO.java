@@ -6,7 +6,7 @@
 package Empleate.dao;
 
 import Empleate.domain.Job;
-import Empleate.domain.Manager;
+import Empleate.domain.Login;
 import Empleate.utils.HibernateUtil;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -17,10 +17,10 @@ import org.hibernate.HibernateException;
  *
  * @author Addiel
  */
-public class managerDAO  extends HibernateUtil implements IBaseDAO <Manager, java.math.BigInteger>{
+public class loginDAO extends HibernateUtil implements IBaseDAO <Login, java.math.BigInteger> {
 
     @Override
-    public void add(Manager o) {
+    public void add(Login o) {
           try{
             operationStart();
             getSesion().save(o);
@@ -36,10 +36,10 @@ public class managerDAO  extends HibernateUtil implements IBaseDAO <Manager, jav
     }
 
     @Override
-    public Manager merge(Manager o) {
+    public Login merge(Login o) {
         try{
             operationStart();
-            o = (Manager)getSesion().merge(o);
+            o = (Login)getSesion().merge(o);
             getTransac().commit();
         }
         catch(HibernateException he){
@@ -53,8 +53,8 @@ public class managerDAO  extends HibernateUtil implements IBaseDAO <Manager, jav
     }
 
     @Override
-    public void delete(Manager o) {
-        try{
+    public void delete(Login o) {
+         try{
             operationStart();
             getSesion().delete(o);
             getTransac().commit();
@@ -69,11 +69,11 @@ public class managerDAO  extends HibernateUtil implements IBaseDAO <Manager, jav
     }
 
     @Override
-    public Manager findById(BigInteger id) {
-         Manager manag = null;
+    public Login findById(BigInteger id) {
+         Login log = null;
          try{
             operationStart();
-            manag = (Manager)getSesion().get(Manager.class,id);
+            log = (Login)getSesion().get(Login.class,id);
             getTransac().commit();
         }
         catch(HibernateException he){
@@ -83,15 +83,15 @@ public class managerDAO  extends HibernateUtil implements IBaseDAO <Manager, jav
         finally{
         getSesion().close();
         }
-         return manag;
+         return log;
     }
 
     @Override
-    public List<Manager> findAll() {
-         List<Manager> listManag = new ArrayList();
+    public List<Login> findAll() {
+          List<Login> listLogin = new ArrayList();
          try{
             operationStart();
-            listManag = getSesion().createQuery("from Manager").list();
+            listLogin = getSesion().createQuery("from Login").list();
             getTransac().commit();
         }
         catch(HibernateException he){
@@ -101,8 +101,7 @@ public class managerDAO  extends HibernateUtil implements IBaseDAO <Manager, jav
         finally{
         getSesion().close();
         }
-    return listManag;
+    return listLogin;
     }
-    
     
 }

@@ -4,47 +4,21 @@
  * and open the template in the editor.
  */
 package Empleate.logica;
-
+import Empleate.dao.jobCategoryDAO;
 /**
  *
  * @author Addiel
  */
 public class jobCategoryModel {
-    private int percentage;
-    private JobModel j;
-    private CategoryModel cat;
-
-    public jobCategoryModel() {
+   private jobCategoryDAO jcD;
+   private static jobCategoryModel uniqueInstance;
+    public static jobCategoryModel instance(){
+        if (uniqueInstance == null){
+            uniqueInstance = new jobCategoryModel();
+        }
+        return uniqueInstance;
     }
-
-    public jobCategoryModel(int percentage, JobModel j, CategoryModel cat) {
-        this.percentage = percentage;
-        this.j = j;
-        this.cat = cat;
+    private jobCategoryModel(){
+        jcD = new jobCategoryDAO();
     }
-
-    public int getPercentage() {
-        return percentage;
-    }
-
-    public void setPercentage(int percentage) {
-        this.percentage = percentage;
-    }
-
-    public JobModel getJ() {
-        return j;
-    }
-
-    public void setJ(JobModel j) {
-        this.j = j;
-    }
-
-    public CategoryModel getCat() {
-        return cat;
-    }
-
-    public void setCat(CategoryModel cat) {
-        this.cat = cat;
-    }
-    
 }
