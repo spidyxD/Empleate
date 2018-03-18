@@ -21,7 +21,7 @@ public class TEST {
     offererDAO offD = new offererDAO();
     Set<Offercategory> offercategories = new HashSet<>(0);
     Set<Login> logins = new HashSet<>(0);
-    Offerer off = new Offerer(444,"Alberto","Segura","costarricense","aS@gmail.com","506 87451425","ESCAZU");   
+    Offerer off = new Offerer(555,"GEORGE","ALFARO","costarricense","gA@gmail.com","506 5616515","MONTE VERDE");   
     offD.add(off);
     System.out.println(offD.findAll().size());
     
