@@ -29,14 +29,14 @@ CREATE TABLE Manager (
 -- Table Company
 -- -----------------------------------------------------
 
-
 CREATE TABLE Company (
   idCompany INT NOT NULL,
   name_company VARCHAR(45) NULL,
   email VARCHAR(45) NULL,
   phone VARCHAR(45) NULL,
   description VARCHAR(45) NULL,
-  location POINT NULL,
+  location_X float,
+  location_Y float,
   address VARCHAR(45) NULL,
   PRIMARY KEY (idCompany));
 
@@ -158,12 +158,12 @@ CREATE TABLE offerCategory (
  insert into Manager (idManager,email) values (001,'BDA@system.com');
  insert into Manager (idManager,email) values(002, 'm@gmail.com');
  
- insert into Company (idCompany,name_company,email,phone,description) values(006,'ICODER','ICODER.COM','123456','KKKJJJJ');
- insert into Company (idCompany,name_company,email,phone,description) values(005,'ICAFE','ICAFE.COM','2651556','CVDVEDVF');
- insert into Company (idCompany,name_company,email,phone,description) values(003,'INTEL','INTEL.COM','1274513456','CDVGFD');
- insert into Company (idCompany,name_company,email,phone,description) values(004,'HP','HP.COM','51165151','ERFVVD');
- insert into Company (idCompany,name_company,email,phone,description) values (001,'ICAFE','icafe@gmail.com','123456','Instituto del Cafe') ;
- insert into Company (idCompany,name_company,email,phone,description) values (002,'Municipalidad','muni@gmail.com','789456','MunicipalidadHeredia') ;
+insert into Company (idCompany,name_company,email,phone,description,location_X,location_Y,address) values(006,'ICODER','ICODER.COM','123456','KKKJJJJ',100.96,93.58,'');
+ insert into Company (idCompany,name_company,email,phone,description,location_X,location_Y,address) values(005,'ICAFE','ICAFE.COM','2651556','CVDVEDVF',58.15,74.26,'');
+ insert into Company (idCompany,name_company,email,phone,description,location_X,location_Y,address) values(003,'INTEL','INTEL.COM','1274513456','CDVGFD',89.25,24.36,'');
+ insert into Company (idCompany,name_company,email,phone,description,location_X,location_Y,address) values(004,'HP','HP.COM','51165151','ERFVVD',561.58,15.36,'');
+ insert into Company (idCompany,name_company,email,phone,description,location_X,location_Y,address) values (001,'ICAFE','icafe@gmail.com','123456','Instituto del Cafe',835.36,58.12,'') ;
+ insert into Company (idCompany,name_company,email,phone,description,location_X,location_Y,address) values (002,'Municipalidad','muni@gmail.com','789456','MunicipalidadHeredia',45.36,12.45,'') ;
  
 update Company set address ='SABANA' where idCompany = 006;
 update Company set address ='SANTA BARBARA' where idCompany = 005;
