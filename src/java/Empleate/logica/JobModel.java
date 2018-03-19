@@ -43,7 +43,7 @@ public class JobModel {
     }
     public Job findJobByID(int id) throws Exception{
         try{
-        return jDAO.findById(BigInteger.valueOf(id));
+        return jDAO.findById(id);
         }catch(Exception e ){}
         return null;
     }

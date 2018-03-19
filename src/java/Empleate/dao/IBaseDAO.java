@@ -10,11 +10,13 @@ import java.util.List;
 /**
  *
  * @author Addiel
+ * @param <T>
+ * @param <K>
  */
-public interface IBaseDAO <T,K>{
+public interface IBaseDAO <T,Integer>{
     public abstract void add(T o);
     public abstract T merge(T o);
     public abstract void delete(T o);
-    public abstract T findById(K o);
+    public abstract T findById(Integer o);
     public abstract List<T> findAll();
 }

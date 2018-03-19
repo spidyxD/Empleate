@@ -16,20 +16,17 @@ public class Offercategory  implements java.io.Serializable {
 
     public Offercategory() {
     }
-
-	
-    public Offercategory(OffercategoryId id, Category category, Offerer offerer) {
-        this.id = id;
-        this.category = category;
-        this.offerer = offerer;
+      public Offercategory(Category cat, Offerer off) {//Constructor util
+        this.category = cat;
+        this.offerer = off;
+        this.id = new OffercategoryId(off.getIdOfferer(),cat.getIdCategory());//oferente,category
     }
-    public Offercategory(OffercategoryId id, Category category, Offerer offerer, Integer percentage) {
-       this.id = id;
-       this.category = category;
-       this.offerer = offerer;
-       this.percentage = percentage;
+    public Offercategory(Category cat, Offerer off, Integer per) {//Constructor util
+        this.category = cat;
+        this.offerer = off;
+        this.percentage = per;
+        this.id = new OffercategoryId(off.getIdOfferer(),cat.getIdCategory());//oferente,category
     }
-   
     public OffercategoryId getId() {
         return this.id;
     }

@@ -21,7 +21,7 @@ public class offerCategoryModel {
         }
         return uniqueInstance;
     }
-    private offerCategoryModel(){
+    public offerCategoryModel(){
         ocDAO = new offerCategoryDAO();
     }
   
@@ -37,7 +37,7 @@ public class offerCategoryModel {
         ocDAO.delete(offCat);
     }
     
-    public Offercategory findById(BigInteger id){
+    public Offercategory findById(int id){
         return ocDAO.findById(id);
     }
     

@@ -17,7 +17,7 @@ import org.hibernate.HibernateException;
  *
  * @author Addiel
  */
-public class managerDAO  extends HibernateUtil implements IBaseDAO <Manager, java.math.BigInteger>{
+public class managerDAO  extends HibernateUtil implements IBaseDAO <Manager,Integer>{
 
     @Override
     public void add(Manager o) {
@@ -69,7 +69,7 @@ public class managerDAO  extends HibernateUtil implements IBaseDAO <Manager, jav
     }
 
     @Override
-    public Manager findById(BigInteger id) {
+    public Manager findById(Integer id) {
          Manager manag = null;
          try{
             operationStart();

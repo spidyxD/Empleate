@@ -18,7 +18,7 @@ import org.hibernate.HibernateException;
  *
  * @author Addiel
  */
-public class jobDAO extends HibernateUtil implements IBaseDAO <Job, java.math.BigInteger> {
+public class jobDAO extends HibernateUtil implements IBaseDAO <Job, Integer> {
 
     @Override
     public void add(Job o) {
@@ -71,7 +71,7 @@ public class jobDAO extends HibernateUtil implements IBaseDAO <Job, java.math.Bi
     }
 
     @Override
-    public Job findById(BigInteger id) {
+    public Job findById(Integer id) {
          Job job = null;
          try{
             operationStart();

@@ -37,7 +37,7 @@ class ManagerModel {
         managerDAO.delete(man);
     }
     
-    public Manager findById(BigInteger id){
+    public Manager findById(int id){
         return managerDAO.findById(id);
     }
     

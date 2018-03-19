@@ -17,7 +17,7 @@ import org.hibernate.HibernateException;
  *
  * @author Addiel
  */
-public class loginDAO extends HibernateUtil implements IBaseDAO <Login, java.math.BigInteger> {
+public class loginDAO extends HibernateUtil implements IBaseDAO <Login,Integer> {
 
     @Override
     public void add(Login o) {
@@ -69,7 +69,7 @@ public class loginDAO extends HibernateUtil implements IBaseDAO <Login, java.mat
     }
 
     @Override
-    public Login findById(BigInteger id) {
+    public Login findById(Integer id) {
          Login log = null;
          try{
             operationStart();

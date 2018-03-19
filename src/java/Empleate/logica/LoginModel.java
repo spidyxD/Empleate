@@ -44,7 +44,7 @@ public class LoginModel {
     }
     Login findLoginByID(int id) throws Exception{
         try{
-        return logD.findById(BigInteger.valueOf(id));
+        return logD.findById(id);
         }catch(Exception e){}
         return null;
     }

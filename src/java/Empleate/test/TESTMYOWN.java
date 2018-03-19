@@ -5,31 +5,32 @@
  */
 package Empleate.test;
 
-import Empleate.dao.offererDAO;
-import Empleate.domain.Company;
-import Empleate.domain.Login;
-import Empleate.domain.Offercategory;
-import Empleate.domain.Offerer;
-import Empleate.logica.CompanyModel;
+import Empleate.domain.Category;
+import Empleate.domain.Job;
+import Empleate.domain.Jobcategory;
 import Empleate.logica.JobModel;
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-
+import Empleate.logica.jobCategoryModel;
+import Empleate.logica.CategoryModel;
 /**
  *
  * @author Addiel
  */
 public class TESTMYOWN {
     public static void main(String[] arg) throws Exception{
-    offererDAO offD = new offererDAO();
+    /*offererDAO offD = new offererDAO();
     Set<Offercategory> offercategories = new HashSet<>(0);
     Set<Login> logins = new HashSet<>(0);
     Offerer off = new Offerer(666,"KATE","ALFARO","costarricense","KA@gmail.com","506 561956","MONTE VERDE");   
     offD.add(off);
     System.out.println(offD.findAll().size());
-    Company c = new Company(7,"INTACO","intaco.ac.cr","506 22142536","we are a tecnoly company",36,32,"moravia, san jose, CR");
-    CompanyModel jm = new CompanyModel();
-    jm.addCompany(c);
+    Company c = new Company(7,"INTACO","intaco.ac.cr","506 22142536","we are a tecnoly company",36,32,"moravia, san jose, CR");*/
+    JobModel jm = new JobModel();
+    //(Category)cm.findCategoryById(BigInteger.valueOf(506)),(Job)jm.findJobByID(124),75)
+    CategoryModel cm = new CategoryModel();
+    jobCategoryModel jcm = new jobCategoryModel();
+    Jobcategory jc = new Jobcategory((Job)jm.findJobByID(124),(Category)cm.findCategoryById(896),75);
+    Jobcategory jc2 = new Jobcategory((Job)jm.findJobByID(255),(Category)cm.findCategoryById(506));
+    jcm.addJobCategoy(jc);
+    jcm.deleteJobCategory(jc2);
     }
 }

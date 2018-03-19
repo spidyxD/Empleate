@@ -44,7 +44,7 @@ public class CompanyModel {
     }
     public Company findCompanyByID(int id)throws Exception{
         try{
-        return compDAO.findById(BigInteger.valueOf(id));
+        return compDAO.findById(id);
         }catch(Exception e){}
         return null;
     }

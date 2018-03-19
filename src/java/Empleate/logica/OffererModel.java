@@ -21,7 +21,7 @@ public class OffererModel {
         }
         return uniqueInstance;
     }
-    private OffererModel(){
+    public OffererModel(){
         offDAO = new offererDAO();
     }
     
@@ -37,7 +37,7 @@ public class OffererModel {
         offDAO.delete(offerer);
     }
     
-    public Offerer findById(BigInteger id){
+    public Offerer findById(int id){
         return offDAO.findById(id);
     }
     

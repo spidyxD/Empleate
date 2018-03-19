@@ -21,7 +21,7 @@ public class jobCategoryModel {
         }
         return uniqueInstance;
     }
-    private jobCategoryModel(){
+    public jobCategoryModel(){
         jcD = new jobCategoryDAO();
     }
     
@@ -42,7 +42,7 @@ public class jobCategoryModel {
     }
     public Jobcategory findJobCategoryByID(int id) throws Exception{
         try{
-        return jcD.findById(BigInteger.valueOf(id));
+        return jcD.findById(id);
         }catch(Exception e){}
         return null;
     }

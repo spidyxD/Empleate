@@ -10,14 +10,14 @@ import Empleate.utils.HibernateUtil;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import static javassist.CtMethod.ConstParameter.integer;
 import org.hibernate.HibernateException;
-import static org.jboss.weld.servlet.SessionHolder.getSession;
 
 /**
  *
  * @author Addiel
  */
-public class categoryDAO extends HibernateUtil implements IBaseDAO <Category, java.math.BigInteger> {
+public class categoryDAO extends HibernateUtil implements IBaseDAO <Category, Integer> {
 
     @Override
     public void add(Category o) {
@@ -69,8 +69,8 @@ public class categoryDAO extends HibernateUtil implements IBaseDAO <Category, ja
     }
 
     @Override
-    public Category findById(BigInteger id) {
-        Category category = null;
+    public Category findById(Integer id) {
+         Category category = null;
          try{
             operationStart();
             category = (Category)getSesion().get(Category.class,id);
@@ -103,5 +103,7 @@ public class categoryDAO extends HibernateUtil implements IBaseDAO <Category, ja
         }
     return listCategories;
     }
+
+  
     
 }

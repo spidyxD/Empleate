@@ -16,7 +16,7 @@ import org.hibernate.HibernateException;
  *
  * @author Addiel
  */
-public class offerCategoryDAO extends HibernateUtil implements IBaseDAO <Offercategory, java.math.BigInteger> {
+public class offerCategoryDAO extends HibernateUtil implements IBaseDAO <Offercategory,Integer> {
 
     @Override
     public void add(Offercategory o) {
@@ -68,7 +68,7 @@ public class offerCategoryDAO extends HibernateUtil implements IBaseDAO <Offerca
     }
 
     @Override
-    public Offercategory findById(BigInteger id) {
+    public Offercategory findById(Integer id) {
         Offercategory oc = null;
          try{
             operationStart();

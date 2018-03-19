@@ -15,33 +15,33 @@ import java.util.ArrayList;
 public class CategoryModel {
    private categoryDAO catDAO;
    private static CategoryModel uniqueInstance;
-    public static CategoryModel instance(){
+   public static CategoryModel instance(){
         if (uniqueInstance == null){
             uniqueInstance = new CategoryModel();
         }
         return uniqueInstance;
     }
-    private CategoryModel(){
+   public CategoryModel(){
         catDAO = new categoryDAO();
     }
 
-   public void addOfferer(Category cat){
+   public void addCategory(Category cat){
         catDAO.add(cat);
     }
     
-    public void updateOfferer(Category cat){
+    public void updateCategory(Category cat){
         catDAO.merge(cat);
     }
     
-    public void deleteOfferer(Category cat){
+    public void deleteCategory(Category cat){
         catDAO.delete(cat);
     }
     
-    public Category findById(BigInteger id){
+    public Category findCategoryById(int id){
         return catDAO.findById(id);
     }
     
-     public ArrayList<Category> findAll() {
+    public ArrayList<Category> findAllCategories() {
          ArrayList<Category> listCategory = new ArrayList<Category>(catDAO.findAll());
          return listCategory;
      }

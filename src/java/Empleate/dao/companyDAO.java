@@ -16,7 +16,7 @@ import org.hibernate.HibernateException;
  *
  * @author Addiel
  */
-public class companyDAO extends HibernateUtil implements IBaseDAO <Company, java.math.BigInteger> {
+public class companyDAO extends HibernateUtil implements IBaseDAO <Company, Integer> {
 
     @Override
     public void add(Company o) {
@@ -68,7 +68,7 @@ public class companyDAO extends HibernateUtil implements IBaseDAO <Company, java
     }
 
     @Override
-    public Company findById(BigInteger id) {
+    public Company findById(Integer id) {
         Company company = null;
          try{
             operationStart();
