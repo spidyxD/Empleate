@@ -20,8 +20,11 @@
         <property name="description" type="string">
             <column name="description" length="45" />
         </property>
-        <property name="location" type="serializable">
-            <column name="location" />
+        <property name="location_X" type="float">
+            <column name="location_X" />
+        </property>
+         <property name="location_Y" type="float">
+            <column name="location_Y" />
         </property>
         <property name="address" type="string">
             <column name="address" length="45" />

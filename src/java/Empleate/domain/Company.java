@@ -2,7 +2,6 @@ package Empleate.domain;
 // Generated 12/03/2018 12:06:18 AM by Hibernate Tools 4.3.1
 
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,7 +16,8 @@ public class Company  implements java.io.Serializable {
      private String email;
      private String phone;
      private String description;
-     private Serializable location;
+     private float location_X;
+     private float location_Y;
      private String address;
      private Set<Job> jobs = new HashSet<Job>(0);
      private Set<Login> logins = new HashSet<Login>(0);
@@ -29,24 +29,27 @@ public class Company  implements java.io.Serializable {
     public Company(int idCompany) {
         this.idCompany = idCompany;
     }
-    public Company(int idCompany, String nameCompany, String email, String phone, String description, Serializable location, String address, Set<Job> jobs, Set<Login> logins) {
+    public Company(int idCompany, String nameCompany, String email, String phone, String description, float location_X,float location_Y, String address, Set<Job> jobs, Set<Login> logins) {
        this.idCompany = idCompany;
        this.nameCompany = nameCompany;
        this.email = email;
        this.phone = phone;
        this.description = description;
-       this.location = location;
+       this.location_X = location_X;
+       this.location_Y = location_Y;
        this.address = address;
        this.jobs = jobs;
        this.logins = logins;
     }
 
-    public Company(int idCompany, String email, String phone, String description, Serializable location, String address) {
+    public Company(int idCompany,String nameCompany, String email, String phone, String description, float location_X,float location_Y, String address) {
         this.idCompany = idCompany;
+        this.nameCompany = nameCompany;
         this.email = email;
         this.phone = phone;
         this.description = description;
-        this.location = location;
+        this.location_X = location_X;
+        this.location_Y = location_Y;
         this.address = address;
     }
    
@@ -85,13 +88,23 @@ public class Company  implements java.io.Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-    public Serializable getLocation() {
-        return this.location;
+
+    public float getLocation_X() {
+        return location_X;
+    }
+
+    public void setLocation_X(float location_X) {
+        this.location_X = location_X;
+    }
+
+    public float getLocation_Y() {
+        return location_Y;
+    }
+
+    public void setLocation_Y(float location_Y) {
+        this.location_Y = location_Y;
     }
     
-    public void setLocation(Serializable location) {
-        this.location = location;
-    }
     public String getAddress() {
         return this.address;
     }

@@ -5,6 +5,9 @@
  */
 package Empleate.logica;
 import Empleate.dao.jobCategoryDAO;
+import Empleate.domain.Jobcategory;
+import java.math.BigInteger;
+import java.util.List;
 /**
  *
  * @author Addiel
@@ -21,4 +24,34 @@ public class jobCategoryModel {
     private jobCategoryModel(){
         jcD = new jobCategoryDAO();
     }
+    
+    public void addJobCategoy(Jobcategory j) throws Exception{
+        try{
+        jcD.add(j);
+        }catch(Exception e){}
+    }
+    public void updateJobCategory(Jobcategory j) throws Exception{
+        try{
+        jcD.merge(j);
+        }catch(Exception e){}
+    }
+    public void deleteJobCategory(Jobcategory j) throws Exception{
+        try{
+        jcD.delete(j);
+        }catch(Exception e){}
+    }
+    public Jobcategory findJobCategoryByID(int id) throws Exception{
+        try{
+        return jcD.findById(BigInteger.valueOf(id));
+        }catch(Exception e){}
+        return null;
+    }
+    
+    public List<Jobcategory> findAllJobCategory() throws Exception{
+        try{
+        return jcD.findAll();
+        }catch(Exception e){}
+        return null;
+    }
+    
 }

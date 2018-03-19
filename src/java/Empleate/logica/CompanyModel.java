@@ -5,6 +5,9 @@
  */
 package Empleate.logica;
 import Empleate.dao.companyDAO;
+import Empleate.domain.Company;
+import java.math.BigInteger;
+import java.util.List;
 /**
  *
  * @author Addiel
@@ -18,7 +21,38 @@ public class CompanyModel {
         }
         return uniqueInstance;
     }
-    private CompanyModel(){
+    public CompanyModel(){
         compDAO = new companyDAO();
+    }
+    
+    public void addCompany(Company c)throws Exception{
+        try{
+        compDAO.add(c);
+        }catch(Exception e){}
+    
+    }
+    public void updateCompany(Company c)throws Exception{
+        try{
+        compDAO.merge(c);
+        }catch(Exception e){}
+    
+    }
+    void deleteCompany(Company c)throws Exception{
+        try{
+        compDAO.delete(c);
+        }catch(Exception e){}
+    }
+    public Company findCompanyByID(int id)throws Exception{
+        try{
+        return compDAO.findById(BigInteger.valueOf(id));
+        }catch(Exception e){}
+        return null;
+    }
+    
+    public List<Company> findAllCompanies()throws Exception{
+        try{
+        return compDAO.findAll();
+        }catch(Exception e){}
+        return null;
     }
 }

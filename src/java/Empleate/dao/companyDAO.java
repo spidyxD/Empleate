@@ -102,5 +102,18 @@ public class companyDAO extends HibernateUtil implements IBaseDAO <Company, java
         }
     return listCompanies;
     }
-    
+    public Company findByLocation(String location){
+        Company c = null;
+        try{
+            operationStart();
+           c = (Company)getSesion().byId(location);
+        }catch(HibernateException he){
+        handleException(he);
+            throw he;
+        }
+         finally{
+        getSesion().close();
+        }
+        return c;
+    }
 }

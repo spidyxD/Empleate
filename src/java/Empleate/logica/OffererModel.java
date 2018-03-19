@@ -18,7 +18,7 @@ public class OffererModel {
         }
         return uniqueInstance;
     }
-    private OffererModel(){
+    public OffererModel(){
         offDAO = new offererDAO();
     }
 }
