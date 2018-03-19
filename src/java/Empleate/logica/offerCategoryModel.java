@@ -5,12 +5,15 @@
  */
 package Empleate.logica;
 import Empleate.dao.offerCategoryDAO;
+import Empleate.domain.Offercategory;
+import java.math.BigInteger;
+import java.util.ArrayList;
 /**
  *
  * @author Addiel
  */
 public class offerCategoryModel {
-   private offerCategoryDAO ocD;
+   private offerCategoryDAO ocDAO;
    private static offerCategoryModel uniqueInstance;
     public static offerCategoryModel instance(){
         if (uniqueInstance == null){
@@ -19,8 +22,28 @@ public class offerCategoryModel {
         return uniqueInstance;
     }
     private offerCategoryModel(){
-        ocD = new offerCategoryDAO();
+        ocDAO = new offerCategoryDAO();
+    }
+  
+    public void addOffererCat(Offercategory offCat){
+        ocDAO.add(offCat);
     }
     
+    public void updateOffererCat(Offercategory offCat){
+        ocDAO.merge(offCat);
+    }
+    
+    public void deleteOffererCat(Offercategory offCat){
+        ocDAO.delete(offCat);
+    }
+    
+    public Offercategory findById(BigInteger id){
+        return ocDAO.findById(id);
+    }
+    
+     public ArrayList<Offercategory> findAll() {
+         ArrayList<Offercategory> listOfferer = new ArrayList<Offercategory>(ocDAO.findAll());
+         return listOfferer;
+     }
   
 }
