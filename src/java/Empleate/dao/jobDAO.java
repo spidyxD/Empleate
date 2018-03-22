@@ -106,4 +106,6 @@ public class jobDAO extends HibernateUtil implements IBaseDAO <Job, Integer> {
     return listJobs;
     }
     
+    
+    
 }
