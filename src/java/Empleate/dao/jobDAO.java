@@ -110,7 +110,7 @@ public class jobDAO extends HibernateUtil implements IBaseDAO <Job, Integer> {
         try{
            operationStart();
            
-           getSesion().createQuery("select job");
+           getSesion().createQuery("select idJob,job.name_Job,description_Job,salary,type_Job,comp,status_Job from ");
            getTransac().commit();
         }
         catch(HibernateException he){
