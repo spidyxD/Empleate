@@ -16,8 +16,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Addiel
  */
-@WebServlet(name = "Home", urlPatterns = {"/login", "/logout","/top5","publicJobsByCategory","/publicJobsByLocation"})
-public class Home extends HttpServlet {
+@WebServlet(name = "main", urlPatterns = {"/login", "/logout","/top5","publicJobsByCategory","/publicJobsByLocation"})
+public class main extends HttpServlet {
      protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
                 switch(request.getServletPath()){
