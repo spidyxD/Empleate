@@ -105,12 +105,12 @@ public class jobDAO extends HibernateUtil implements IBaseDAO <Job, Integer> {
         }
     return listJobs;
     }
-    public List<Job> findByCategory(Category cat){
-        List<Job> jobs = new ArrayList();
+    public ArrayList<Job> findByCategory(Category cat){
+        ArrayList<Job> jobs = new ArrayList();
         try{
            operationStart();
-           
-           getSesion().createQuery("select idJob,job.name_Job,description_Job,salary,type_Job,comp,status_Job from ");
+           String sql = " ";
+           getSesion().createQuery(sql);
            getTransac().commit();
         }
         catch(HibernateException he){
@@ -121,5 +121,22 @@ public class jobDAO extends HibernateUtil implements IBaseDAO <Job, Integer> {
         getSesion().close();
         }
         return jobs;
+    }
+    public ArrayList<Job> giveTop5(){
+        ArrayList<Job> top = new ArrayList();
+        try{
+           operationStart();
+           String sql = " ";
+           getSesion().createQuery(sql);
+           getTransac().commit();
+        }
+        catch(HibernateException he){
+            handleException(he);
+            throw he;
+        }
+        finally{
+        getSesion().close();
+        }
+        return top;
     }
 }
