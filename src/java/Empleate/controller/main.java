@@ -3,8 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package Empleate.controller;
+import Empleate.domain.Company;
+import Empleate.logica.JobModel;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -43,6 +47,10 @@ public class main extends HttpServlet {
     private void doLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{ 
         HttpSession s =  request.getSession( true);
+        Company c = new Company();
+        c.setEmail(request.getParameter("user"));
+        //NOS FALTA ACLARAR PQ LAS ENTIDADES NO TIENEN COMO ATRIBUTO PROPIO LA CONTRASEÑA
+        
         }catch(Exception e){
             String error = e.getMessage();
             request.setAttribute("error",error);
@@ -52,19 +60,18 @@ public class main extends HttpServlet {
     }
 
     private void doLogout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try{ 
-        HttpSession s =  request.getSession( true);
-        }catch(Exception e){
-            String error = e.getMessage();
-            request.setAttribute("error",error);
-            request.getRequestDispatcher("Error.jsp").forward(request, response);
-            
-        }
+            request.getSession().invalidate();
+            request.getRequestDispatcher("main.jsp").forward( request, response);          
     }
 
     private void giveTop5(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       try{ 
         HttpSession s =  request.getSession( true);
+        ArrayList top = new ArrayList();
+        top = (ArrayList) JobModel.instance().top5();
+        s.setAttribute("top5", top);
+        request.getRequestDispatcher("main").
+                forward( request, response);
         }catch(Exception e){
             String error = e.getMessage();
             request.setAttribute("error",error);
@@ -138,3 +145,5 @@ public class main extends HttpServlet {
      
     
 }
+
+

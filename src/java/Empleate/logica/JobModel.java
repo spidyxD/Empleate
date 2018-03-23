@@ -7,6 +7,7 @@ package Empleate.logica;
 import Empleate.dao.jobDAO;
 import Empleate.domain.Job;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 /**
  *
@@ -54,5 +55,16 @@ public class JobModel {
         }catch(Exception e){}
         return null;
     }
-    
+     public List<Job> top5() throws Exception{//para el carusel
+        List<Job> ls = (this.findAllJobs());
+        ArrayList<Job> ls2 = new ArrayList<Job>();
+        if(ls.size()<=5){
+            for (int i = 1; i <= 5; i++) {
+                ls2.add(ls.get(ls.size()-i));
+            }
+        }else{
+            return ls;
+        }
+        return ls2;  
+    }
 }
