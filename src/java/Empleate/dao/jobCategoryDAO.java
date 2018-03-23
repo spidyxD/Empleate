@@ -5,6 +5,8 @@
  */
 package Empleate.dao;
 
+import Empleate.domain.Category;
+import Empleate.domain.Job;
 import Empleate.domain.Jobcategory;
 import Empleate.utils.HibernateUtil;
 import java.math.BigInteger;
@@ -102,5 +104,5 @@ public class jobCategoryDAO extends HibernateUtil implements IBaseDAO <Jobcatego
         }
     return listJC;
     }
-    
+   
 }

@@ -105,5 +105,23 @@ public class jobDAO extends HibernateUtil implements IBaseDAO <Job, Integer> {
         }
     return listJobs;
     }
-    
+   /* public List<Job> findByCategory(List<Category> cat){
+        List<Job> jobs = new ArrayList();
+        try{
+           operationStart();
+           for(Category c:cat){
+           //jobs = getSesion().
+            
+           }
+           getTransac().commit();
+        }
+        catch(HibernateException he){
+            handleException(he);
+            throw he;
+        }
+        finally{
+        getSesion().close();
+        }
+        return jobs;
+    }*/
 }
