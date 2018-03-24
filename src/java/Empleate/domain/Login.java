@@ -10,12 +10,10 @@ public class Login  implements java.io.Serializable {
 
 
      private int idLogin;
-     private Company company;
-     private Manager manager;
-     private Offerer offerer;
      private String username;
-     private String passwordLog;
-     private String type;
+     private String password;
+     private String type_log;
+     private int enable;
 
     public Login() {
     }
@@ -23,18 +21,13 @@ public class Login  implements java.io.Serializable {
 	
     public Login(int idLogin, Company company, Manager manager, Offerer offerer) {
         this.idLogin = idLogin;
-        this.company = company;
-        this.manager = manager;
-        this.offerer = offerer;
     }
-    public Login(int idLogin, Company company, Manager manager, Offerer offerer, String username, String passwordLog, String type) {
+    public Login(int idLogin, Company company, Manager manager, Offerer offerer, String username, String password, String type,int enable) {
        this.idLogin = idLogin;
-       this.company = company;
-       this.manager = manager;
-       this.offerer = offerer;
        this.username = username;
-       this.passwordLog = passwordLog;
-       this.type = type;
+       this.password = password;
+       this.type_log = type;
+       this.enable = enable;
     }
    
     public int getIdLogin() {
@@ -44,27 +37,6 @@ public class Login  implements java.io.Serializable {
     public void setIdLogin(int idLogin) {
         this.idLogin = idLogin;
     }
-    public Company getCompany() {
-        return this.company;
-    }
-    
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-    public Manager getManager() {
-        return this.manager;
-    }
-    
-    public void setManager(Manager manager) {
-        this.manager = manager;
-    }
-    public Offerer getOfferer() {
-        return this.offerer;
-    }
-    
-    public void setOfferer(Offerer offerer) {
-        this.offerer = offerer;
-    }
     public String getUsername() {
         return this.username;
     }
@@ -72,19 +44,29 @@ public class Login  implements java.io.Serializable {
     public void setUsername(String username) {
         this.username = username;
     }
-    public String getPasswordLog() {
-        return this.passwordLog;
+    public String getPassword() {
+        return this.password;
     }
     
-    public void setPasswordLog(String passwordLog) {
-        this.passwordLog = passwordLog;
+    public void setPassword(String passwordLog) {
+        this.password = passwordLog;
     }
-    public String getType() {
-        return this.type;
+
+    public String getType_log() {
+        return type_log;
     }
-    
-    public void setType(String type) {
-        this.type = type;
+
+    public void setType_log(String type_log) {
+        this.type_log = type_log;
+    }
+   
+
+    public int getEnable() {
+        return enable;
+    }
+
+    public void setEnable(int enable) {
+        this.enable = enable;
     }
 
 

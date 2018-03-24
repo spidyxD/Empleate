@@ -48,25 +48,32 @@ public class JobModel {
         }catch(Exception e ){}
         return null;
     }
-    
+     public ArrayList findJobByCategory(String c,String id) throws Exception{
+        try{
+        return jDAO.findByCategory(c, id);
+        }catch(Exception e ){}
+        return null;
+    }
     public List<Job> findAllJobs() throws Exception{
         try{
         return jDAO.findAll();
         }catch(Exception e){}
         return null;
     }
-    
-    public List<Job> top5() throws Exception{//para el carusel
+
+     public List<Job> top5() throws Exception{//para el carusel
         List<Job> ls = (this.findAllJobs());
         ArrayList<Job> ls2 = new ArrayList<Job>();
         if(ls.size()<=5){
+            //condicion para ingresar al top es que el valor status sea 0 para que se considere publico
             for (int i = 1; i <= 5; i++) {
+                if(ls.get(i).getStatusJob() == 0){
                 ls2.add(ls.get(ls.size()-i));
+                }
             }
         }else{
             return ls;
         }
         return ls2;  
     }
-    
 }

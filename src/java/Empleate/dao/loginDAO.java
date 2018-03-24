@@ -85,6 +85,23 @@ public class loginDAO extends HibernateUtil implements IBaseDAO <Login,Integer> 
         }
          return log;
     }
+     public Login findByPassword(String key) {
+         Login log = null;
+         String sql = "Select *from login where password =" + "'" + key + "'";
+         try{
+            operationStart();
+            log = (Login)getSesion().createSQLQuery(sql);
+            getTransac().commit();
+        }
+        catch(HibernateException he){
+            handleException(he);
+            throw he;
+        }
+        finally{
+        getSesion().close();
+        }
+         return log;
+    }
 
     @Override
     public List<Login> findAll() {
