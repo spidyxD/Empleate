@@ -48,7 +48,12 @@ public class JobModel {
         }catch(Exception e ){}
         return null;
     }
-    
+     public ArrayList findJobByCategory(String c,String id) throws Exception{
+        try{
+        return jDAO.findByCategory(c, id);
+        }catch(Exception e ){}
+        return null;
+    }
     public List<Job> findAllJobs() throws Exception{
         try{
         return jDAO.findAll();

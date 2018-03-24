@@ -75,7 +75,7 @@ public class main extends HttpServlet {
         ArrayList top = new ArrayList();
         top = (ArrayList) JobModel.instance().top5();
         s.setAttribute("top5", top);
-        request.getRequestDispatcher("main").
+        request.getRequestDispatcher("main.jsp").
                 forward( request, response);
         }catch(Exception e){
             String error = e.getMessage();
@@ -88,6 +88,12 @@ public class main extends HttpServlet {
     private void doSearchPublicJobsByCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{ 
         HttpSession s =  request.getSession( true);
+        ArrayList jobs = new ArrayList();
+        String p = request.getParameter("percentage");
+        jobs = JobModel.instance().findJobByCategory(request.getParameter("category"),p);
+        s.setAttribute("jobsByCategory", jobs);
+         request.getRequestDispatcher("main.jsp").
+                forward( request, response);
         }catch(Exception e){
             String error = e.getMessage();
             request.setAttribute("error",error);
