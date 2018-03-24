@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 12/03/2018 12:06:20 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Empleate.domain.Jobcategory" table="jobcategory" catalog="empleatebeta" optimistic-lock="version">
+        <composite-id name="id" class="Empleate.domain.JobcategoryId">
+            <key-property name="j" type="int">
+                <column name="j" />
+            </key-property>
+            <key-property name="cat" type="int">
+                <column name="cat" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="category" class="Empleate.domain.Category" update="false" insert="false" fetch="select">
+            <column name="cat" not-null="true" />
+        </many-to-one>
+        <many-to-one name="job" class="Empleate.domain.Job" update="false" insert="false" fetch="select">
+            <column name="j" not-null="true" />
+        </many-to-one>
+        <property name="percentage" type="java.lang.Integer">
+            <column name="percentage" />
+        </property>
+    </class>
+</hibernate-mapping>
