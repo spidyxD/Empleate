@@ -10,9 +10,6 @@ public class Login  implements java.io.Serializable {
 
 
      private int idLogin;
-     private Company company;
-     private Manager manager;
-     private Offerer offerer;
      private String username;
      private String password;
      private String type_log;
@@ -24,15 +21,9 @@ public class Login  implements java.io.Serializable {
 	
     public Login(int idLogin, Company company, Manager manager, Offerer offerer) {
         this.idLogin = idLogin;
-        this.company = company;
-        this.manager = manager;
-        this.offerer = offerer;
     }
     public Login(int idLogin, Company company, Manager manager, Offerer offerer, String username, String password, String type,int enable) {
        this.idLogin = idLogin;
-       this.company = company;
-       this.manager = manager;
-       this.offerer = offerer;
        this.username = username;
        this.password = password;
        this.type_log = type;
@@ -45,27 +36,6 @@ public class Login  implements java.io.Serializable {
     
     public void setIdLogin(int idLogin) {
         this.idLogin = idLogin;
-    }
-    public Company getCompany() {
-        return this.company;
-    }
-    
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-    public Manager getManager() {
-        return this.manager;
-    }
-    
-    public void setManager(Manager manager) {
-        this.manager = manager;
-    }
-    public Offerer getOfferer() {
-        return this.offerer;
-    }
-    
-    public void setOfferer(Offerer offerer) {
-        this.offerer = offerer;
     }
     public String getUsername() {
         return this.username;
