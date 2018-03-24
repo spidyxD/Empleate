@@ -122,11 +122,11 @@ public class jobDAO extends HibernateUtil implements IBaseDAO <Job, Integer> {
         }
         return jobs;
     }
-    public ArrayList<Job> giveTop5(){
+    /*public ArrayList<Job> giveTop5(){
         ArrayList<Job> top = new ArrayList();
         try{
            operationStart();
-           String sql = " ";
+           String sql = "select *from job where status_Job = 1 and  ";
            getSesion().createQuery(sql);
            getTransac().commit();
         }
@@ -138,5 +138,5 @@ public class jobDAO extends HibernateUtil implements IBaseDAO <Job, Integer> {
         getSesion().close();
         }
         return top;
-    }
+    }*/
 }

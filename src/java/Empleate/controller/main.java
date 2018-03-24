@@ -5,8 +5,9 @@
  */
 
 package Empleate.controller;
-import Empleate.domain.Company;
+import Empleate.domain.Login;
 import Empleate.logica.JobModel;
+import Empleate.logica.LoginModel;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -47,9 +48,13 @@ public class main extends HttpServlet {
     private void doLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{ 
         HttpSession s =  request.getSession( true);
-        Company c = new Company();
-        c.setEmail(request.getParameter("user"));
-        //NOS FALTA ACLARAR PQ LAS ENTIDADES NO TIENEN COMO ATRIBUTO PROPIO LA CONTRASEÑA
+        Login l = new Login();
+        l.setUsername(request.getParameter("email"));
+        l.setPassword(request.getParameter("password"));
+        l = LoginModel.instance().findLoginByPassword(l.getPassword());
+        s.setAttribute("usuario", l);
+        //FALTA ESPECIFICAR EL TIPO DE USURIO SEGUN LOGIN
+        request.getRequestDispatcher("Home.jsp").forward( request, response);
         
         }catch(Exception e){
             String error = e.getMessage();
@@ -61,7 +66,7 @@ public class main extends HttpServlet {
 
     private void doLogout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             request.getSession().invalidate();
-            request.getRequestDispatcher("main.jsp").forward( request, response);          
+            request.getRequestDispatcher("Home.jsp").forward( request, response);          
     }
 
     private void giveTop5(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
