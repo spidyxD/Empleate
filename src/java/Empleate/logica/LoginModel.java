@@ -5,10 +5,7 @@
  */
 package Empleate.logica;
 import Empleate.dao.loginDAO;
-import Empleate.dao.offererDAO;
-import Empleate.domain.Job;
 import Empleate.domain.Login;
-import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -24,32 +21,37 @@ public class LoginModel {
         }
         return uniqueInstance;
     }
-    private LoginModel(){
+    public LoginModel(){
         logD = new loginDAO();
     } 
-      void addLogin(Login l) throws Exception{
+    public void addLogin(Login l) throws Exception{
           try{
           logD.add(l);
           }catch(Exception e){}
     }
-    void updateLogin(Login l) throws Exception{
+    public void updateLogin(Login l) throws Exception{
         try{
         logD.merge(l);
         }catch(Exception e){}
     }
-    void deleteLogin(Login l) throws Exception{
+    public void deleteLogin(Login l) throws Exception{
         try{
         logD.delete(l);
         }catch(Exception e){}
     }
-    Login findLoginByID(int id) throws Exception{
+    public Login findLoginByID(int id) throws Exception{
         try{
         return logD.findById(id);
         }catch(Exception e){}
         return null;
     }
-    
-    List<Login> findAllLogin() throws Exception{
+    public Login findLoginByPassword(String key) throws Exception{
+        try{
+        return logD.findByPassword(key);
+        }catch(Exception e){}
+        return null;
+    }
+    public List<Login> findAllLogin() throws Exception{
         try{
         return logD.findAll();
         }catch(Exception e){}
