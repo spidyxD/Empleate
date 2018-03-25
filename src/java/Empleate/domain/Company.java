@@ -19,6 +19,8 @@ public class Company  implements java.io.Serializable {
      private float location_X;
      private float location_Y;
      private String address;
+     private String username;
+     private String password;
      private Set<Job> jobs = new HashSet<Job>(0);
      private Set<Login> logins = new HashSet<Login>(0);
 
@@ -42,7 +44,7 @@ public class Company  implements java.io.Serializable {
        this.logins = logins;
     }
 
-    public Company(int idCompany,String nameCompany, String email, String phone, String description, float location_X,float location_Y, String address) {
+    public Company(int idCompany,String nameCompany, String email, String phone, String description, float location_X,float location_Y, String address,String user,String passw) {
         this.idCompany = idCompany;
         this.nameCompany = nameCompany;
         this.email = email;
@@ -51,6 +53,8 @@ public class Company  implements java.io.Serializable {
         this.location_X = location_X;
         this.location_Y = location_Y;
         this.address = address;
+        this.username = user;
+        this.password = passw;
     }
    
     public int getIdCompany() {
@@ -125,6 +129,22 @@ public class Company  implements java.io.Serializable {
     
     public void setLogins(Set<Login> logins) {
         this.logins = logins;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 

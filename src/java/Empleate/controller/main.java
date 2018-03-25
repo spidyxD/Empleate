@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Addiel
  */
-@WebServlet(name = "main", urlPatterns = {"/login", "/logout","/top5","publicJobsByCategory","/publicJobsByLocation"})
+@WebServlet(name = "main", urlPatterns = {"/login", "/logout","/top5","publicJobsByCategory","/publicJobsByLocation","generalJobsByCategory","/generalJobsByLocation","/registCompany", "/registOffer"})
 public class main extends HttpServlet {
      protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -40,6 +40,19 @@ public class main extends HttpServlet {
                 break;
             case "/publicJobsByLocation":
                 this.doSearchPublicJobsByLocate(request,response);
+                break;
+            case "/generalJobsByCategory":
+                //if(request.getSession().)
+                this.doSearchGeneralJobsByCategory(request,response);
+                break;
+            case "/generalJobsByLocation":
+                this.doSearchGeneralJobsByLocate(request,response);
+                break;
+            case "/registCompany":
+                this.doRegisterCompany(request,response);
+                break;
+            case "/registOffer":
+                this.doResgiterOfferent(request,response);
                 break;
         }
      
@@ -112,7 +125,13 @@ public class main extends HttpServlet {
             
         }
     }
+    private void doRegisterCompany(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("registCompany.jsp").forward(request, response);
+    }
 
+    private void doResgiterOfferent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("registOfferer.jsp").forward(request, response);
+    }
   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -151,6 +170,16 @@ public class main extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private void doSearchGeneralJobsByCategory(HttpServletRequest request, HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void doSearchGeneralJobsByLocate(HttpServletRequest request, HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+   
      
      
      

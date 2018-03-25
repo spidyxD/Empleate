@@ -26,6 +26,12 @@
         <property name="residence" type="string">
             <column name="residence" length="45" />
         </property>
+        <property name="username" type="string">
+            <column name="username" length="45" />
+        </property>
+         <property name="password" type="string">
+            <column name="password" length="45" />
+        </property>
         <set name="offercategories" table="offercategory" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="offer" not-null="true" />
