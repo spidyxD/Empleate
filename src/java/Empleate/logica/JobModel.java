@@ -60,6 +60,7 @@ public class JobModel {
         }catch(Exception e){}
         return null;
     }
+
      public List<Job> top5() throws Exception{//para el carusel
         List<Job> ls = (this.findAllJobs());
         ArrayList<Job> ls2 = new ArrayList<Job>();

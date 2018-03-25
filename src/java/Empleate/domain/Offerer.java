@@ -18,6 +18,8 @@ public class Offerer  implements java.io.Serializable {
      private String email;
      private String phone;
      private String residence;
+     private String username;
+     private String password;
      private Set<Offercategory> offercategories = new HashSet<Offercategory>(0);
      private Set<Login> logins = new HashSet<Login>(0);
 
@@ -28,7 +30,7 @@ public class Offerer  implements java.io.Serializable {
     public Offerer(int idOfferer) {
         this.idOfferer = idOfferer;
     }
-    public Offerer(int idOfferer, String nameOfferer, String lastname, String nationality, String email, String phone, String residence, Set<Offercategory> offercategories, Set<Login> logins) {
+    public Offerer(int idOfferer, String nameOfferer, String lastname, String nationality, String email, String phone, String residence,String user,String passw, Set<Offercategory> offercategories, Set<Login> logins) {
        this.idOfferer = idOfferer;
        this.nameOfferer = nameOfferer;
        this.lastname = lastname;
@@ -37,10 +39,12 @@ public class Offerer  implements java.io.Serializable {
        this.phone = phone;
        this.residence = residence;
        this.offercategories = offercategories;
+       this.username = user;
+        this.password = passw;
        this.logins = logins;
     }
 
-    public Offerer(int idOfferer, String nameOfferer, String lastname, String nationality, String email, String phone, String residence) {
+    public Offerer(int idOfferer, String nameOfferer, String lastname, String nationality, String email, String phone, String residence,String user,String passw) {
         this.idOfferer = idOfferer;
         this.nameOfferer = nameOfferer;
         this.lastname = lastname;
@@ -48,6 +52,8 @@ public class Offerer  implements java.io.Serializable {
         this.email = email;
         this.phone = phone;
         this.residence = residence;
+        this.username = user;
+        this.password = passw;
     }
    
     public int getIdOfferer() {
@@ -106,6 +112,25 @@ public class Offerer  implements java.io.Serializable {
     public void setOffercategories(Set<Offercategory> offercategories) {
         this.offercategories = offercategories;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+    
+    
     public Set<Login> getLogins() {
         return this.logins;
     }

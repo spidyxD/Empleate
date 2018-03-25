@@ -28,8 +28,8 @@ public class TESTMYOWN {
     //(Category)cm.findCategoryById(BigInteger.valueOf(506)),(Job)jm.findJobByID(124),75)
     CategoryModel cm = new CategoryModel();
     jobCategoryModel jcm = new jobCategoryModel();
-    Jobcategory jc = new Jobcategory((Job)jm.findJobByID(124),(Category)cm.findCategoryById(896),75);
-    Jobcategory jc2 = new Jobcategory((Job)jm.findJobByID(255),(Category)cm.findCategoryById(506));
+    Jobcategory jc = new Jobcategory((Job)jm.findJobByID(1),(Category)cm.findCategoryById(2),75);
+    Jobcategory jc2 = new Jobcategory((Job)jm.findJobByID(2),(Category)cm.findCategoryById(1));
     jcm.addJobCategoy(jc);
     jcm.deleteJobCategory(jc2);
     }

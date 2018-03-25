@@ -4,9 +4,33 @@
         <servlet-name>main</servlet-name>
         <servlet-class>Empleate.controller.main</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>registroEmpresa</servlet-name>
+        <servlet-class>Empleate.controller.registroEmpresa</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>registroOferente</servlet-name>
+        <servlet-class>Empleate.controller.registroOferente</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>registro</servlet-name>
+        <servlet-class>Empleate.controller.registro</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>main</servlet-name>
         <url-pattern>/main</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>registroEmpresa</servlet-name>
+        <url-pattern>/registroEmpresa</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>registroOferente</servlet-name>
+        <url-pattern>/registroOferente</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>registro</servlet-name>
+        <url-pattern>/registro</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

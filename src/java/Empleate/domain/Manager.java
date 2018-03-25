@@ -12,24 +12,27 @@ public class Manager  implements java.io.Serializable {
 
 
      private int idManager;
-     private String email;
+     private String username;
+     private String password;
      private Set<Login> logins = new HashSet<Login>(0);
 
     public Manager() {
     }
 
-    public Manager(int idManager, String email) {
+    public Manager(int idManager, String email,String passw) {
         this.idManager = idManager;
-        this.email = email;
+        this.username = email;
+        this.password = passw;
     }
 
 	
     public Manager(int idManager) {
         this.idManager = idManager;
     }
-    public Manager(int idManager, String email, Set<Login> logins) {
+    public Manager(int idManager, String email,String passw, Set<Login> logins) {
        this.idManager = idManager;
-       this.email = email;
+       this.username = email;
+       this.password = passw;
        this.logins = logins;
     }
    
@@ -40,13 +43,23 @@ public class Manager  implements java.io.Serializable {
     public void setIdManager(int idManager) {
         this.idManager = idManager;
     }
-    public String getEmail() {
-        return this.email;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
     
-    public void setEmail(String email) {
-        this.email = email;
-    }
     public Set<Login> getLogins() {
         return this.logins;
     }

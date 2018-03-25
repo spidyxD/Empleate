@@ -105,6 +105,7 @@ public class jobDAO extends HibernateUtil implements IBaseDAO <Job, Integer> {
         }
     return listJobs;
     }
+
     public ArrayList<Job> findByCategory(String cat,String p){
         ArrayList<Job> jobs = new ArrayList();
         try{
