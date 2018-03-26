@@ -1,4 +1,6 @@
 
+<%@page import="Empleate.domain.Job"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -34,30 +36,18 @@
     </div>
     <div class="cuerpo">
       <section class="section">
+          <jsp:useBean id="top" scope="request" type="List<Job>" class="java.util.ArrayList"/>
         <div class="row">
           <div class="carousel carousel-slider center">
             <div class="carousel-fixed-item center">
             </div>
+              <%for(Job j: top){%>
+              
             <div class="carousel-item red white-text" href="#one!">
-              <h2>Job1</h2>
+              <h2><%=j.getNameJob()%></h2>
               <p class="white-text">job1 descrip</p>
             </div>
-            <div class="carousel-item amber white-text" href="#two!">
-              <h2>Job2</h2>
-              <p class="white-text">job2 descrip</p>
-            </div>
-            <div class="carousel-item green white-text" href="#three!">
-              <h2>Job3</h2>
-              <p class="white-text">job3 descrip</p>
-            </div>
-            <div class="carousel-item blue white-text" href="#four!">
-              <h2>Job4</h2>
-              <p class="white-text">job4 descrip</p>
-            </div>
-            <div class="carousel-item black white-text" href="#five!">
-              <h2>Job5</h2>
-              <p class="white-text">job5 descrip</p>
-            </div>
+              <%}%>
           </div>
         </div>
       </section>
