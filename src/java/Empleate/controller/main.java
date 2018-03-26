@@ -74,8 +74,8 @@ public class main extends HttpServlet {
         HttpSession s =  request.getSession( true);
         ArrayList top = new ArrayList();
         top = (ArrayList) JobModel.instance().top5();
-        s.setAttribute("top5", top);
-        request.getRequestDispatcher("main.jsp").
+        s.setAttribute("top", top);
+        request.getRequestDispatcher("Home.jsp").
                 forward( request, response);
         }catch(Exception e){
             String error = e.getMessage();
