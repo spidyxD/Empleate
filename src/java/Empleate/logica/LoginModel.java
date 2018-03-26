@@ -57,5 +57,12 @@ public class LoginModel {
         }catch(Exception e){}
         return null;
     }
+
+    public Login findLoginByData(String username, String password) {
+        try{
+        return logD.findByData(username,password);
+        }catch(Exception e){}
+        return null;
+    }
     
 }

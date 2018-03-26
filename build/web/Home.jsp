@@ -41,13 +41,11 @@
           <div class="carousel carousel-slider center">
             <div class="carousel-fixed-item center">
             </div>
-              <%for(Job j: top){%>
-              
+              <%for(Job j: top){%>    
             <div class="carousel-item red white-text" href="#one!">
               <h2><%=j.getNameJob()%></h2>
               <p class="white-text">job1 descrip</p>
             </div>
-              <%}%>
           </div>
         </div>
       </section>

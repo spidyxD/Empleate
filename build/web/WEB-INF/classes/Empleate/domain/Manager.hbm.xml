@@ -1,3 +1,4 @@
+
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
@@ -11,6 +12,9 @@
         <property name="email" type="string">
             <column name="email" length="45" />
         </property>
+        <property name="login" type="int">
+            <column name="login"  />
+        </property>
         <set name="logins" table="login" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="manag" not-null="true" />
@@ -19,3 +23,4 @@
         </set>
     </class>
 </hibernate-mapping>
+
