@@ -120,5 +120,23 @@ public class loginDAO extends HibernateUtil implements IBaseDAO <Login,Integer> 
         }
     return listLogin;
     }
+
+    public Login findByData(String user, String passw) {
+        Login log = null;
+         String sql = "Select *from login where username ="+ "'"+ user +"'"+" password =" + "'" + passw + "'";
+         try{
+            operationStart();
+            log = (Login)getSesion().createSQLQuery(sql);
+            getTransac().commit();
+        }
+        catch(HibernateException he){
+            handleException(he);
+            throw he;
+        }
+        finally{
+        getSesion().close();
+        }
+         return log;
+    }
     
 }

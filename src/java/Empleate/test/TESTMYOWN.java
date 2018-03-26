@@ -17,20 +17,13 @@ import Empleate.logica.CategoryModel;
  */
 public class TESTMYOWN {
     public static void main(String[] arg) throws Exception{
-    /*offererDAO offD = new offererDAO();
-    Set<Offercategory> offercategories = new HashSet<>(0);
-    Set<Login> logins = new HashSet<>(0);
-    Offerer off = new Offerer(666,"KATE","ALFARO","costarricense","KA@gmail.com","506 561956","MONTE VERDE");   
-    offD.add(off);
-    System.out.println(offD.findAll().size());
-    Company c = new Company(7,"INTACO","intaco.ac.cr","506 22142536","we are a tecnoly company",36,32,"moravia, san jose, CR");*/
-    JobModel jm = new JobModel();
-    //(Category)cm.findCategoryById(BigInteger.valueOf(506)),(Job)jm.findJobByID(124),75)
-    CategoryModel cm = new CategoryModel();
-    jobCategoryModel jcm = new jobCategoryModel();
-    Jobcategory jc = new Jobcategory((Job)jm.findJobByID(1),(Category)cm.findCategoryById(2),75);
-    Jobcategory jc2 = new Jobcategory((Job)jm.findJobByID(2),(Category)cm.findCategoryById(1));
-    jcm.addJobCategoy(jc);
-    jcm.deleteJobCategory(jc2);
+        
+        JobModel jm = new JobModel();
+        CategoryModel cm = new CategoryModel();
+        jobCategoryModel jcm = new jobCategoryModel();
+        Jobcategory jc = new Jobcategory((Job)jm.findJobByID(1),(Category)cm.findCategoryById(2),75);
+        Jobcategory jc2 = new Jobcategory((Job)jm.findJobByID(2),(Category)cm.findCategoryById(1));
+        jcm.addJobCategoy(jc);
+        jcm.deleteJobCategory(jc2);
     }
 }

@@ -6,7 +6,6 @@
 package Empleate.logica;
 import Empleate.dao.jobDAO;
 import Empleate.domain.Job;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -14,7 +13,7 @@ import java.util.List;
  * @author Addiel
  */
 public class JobModel {
-    private jobDAO jDAO;
+    private final jobDAO jDAO;
      private static JobModel uniqueInstance;
     public static JobModel instance(){
         if (uniqueInstance == null){
@@ -54,13 +53,18 @@ public class JobModel {
         }catch(Exception e ){}
         return null;
     }
+      public ArrayList findGeneralJobByCategory(String c,String id) throws Exception{
+        try{
+        return jDAO.findGeneralByCategory(c, id);
+        }catch(Exception e ){}
+        return null;
+    }
     public List<Job> findAllJobs() throws Exception{
         try{
         return jDAO.findAll();
         }catch(Exception e){}
         return null;
     }
-
      public List<Job> top5() throws Exception{//para el carusel
         List<Job> ls = (this.findAllJobs());
         ArrayList<Job> ls2 = new ArrayList<Job>();

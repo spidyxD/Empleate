@@ -29,12 +29,9 @@
         <property name="address" type="string">
             <column name="address" length="45" />
         </property>
-        <property name="username" type="string">
-            <column name="username" length="45" />
-        </property>
-         <property name="password" type="string">
-            <column name="password" length="45" />
-        </property>
+        <property name="login" type="int">
+            <column name="login"/>
+        </property> 
         <set name="jobs" table="job" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="comp" not-null="true" />

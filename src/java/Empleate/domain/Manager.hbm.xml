@@ -8,11 +8,11 @@
             <column name="idManager" />
             <generator class="assigned" />
         </id>
-        <property name="username" type="string">
-            <column name="username" length="45" />
+        <property name="email" type="string">
+            <column name="email" length="45" />
         </property>
-         <property name="password" type="string">
-            <column name="password" length="45" />
+        <property name="login" type="int">
+            <column name="login"  />
         </property>
         <set name="logins" table="login" inverse="true" lazy="true" fetch="select">
             <key>

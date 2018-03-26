@@ -8,23 +8,17 @@
             <column name="idLogin" />
             <generator class="assigned" />
         </id>
-        <many-to-one name="company" class="Empleate.domain.Company" fetch="select">
-            <column name="comp" not-null="true" />
-        </many-to-one>
-        <many-to-one name="manager" class="Empleate.domain.Manager" fetch="select">
-            <column name="manag" not-null="true" />
-        </many-to-one>
-        <many-to-one name="offerer" class="Empleate.domain.Offerer" fetch="select">
-            <column name="offer" not-null="true" />
-        </many-to-one>
         <property name="username" type="string">
             <column name="username" length="45" />
         </property>
-        <property name="passwordLog" type="string">
-            <column name="password_log" length="45" />
+        <property name="password" type="string">
+            <column name="password" length="45" />
         </property>
-        <property name="type" type="string">
-            <column name="type" length="45" />
+        <property name="type_log" type="string">
+            <column name="type_log" length="45" />
+        </property>
+         <property name="enable" type="int">
+            <column name="enable"/>
         </property>
     </class>
 </hibernate-mapping>

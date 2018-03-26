@@ -19,19 +19,18 @@ public class Company  implements java.io.Serializable {
      private float location_X;
      private float location_Y;
      private String address;
-     private String username;
-     private String password;
+     private int login;
      private Set<Job> jobs = new HashSet<Job>(0);
      private Set<Login> logins = new HashSet<Login>(0);
 
     public Company() {
     }
 
-	
     public Company(int idCompany) {
         this.idCompany = idCompany;
     }
-    public Company(int idCompany, String nameCompany, String email, String phone, String description, float location_X,float location_Y, String address, Set<Job> jobs, Set<Login> logins) {
+    
+    public Company(int idCompany, String nameCompany, String email, String phone, String description, float location_X,float location_Y, String address, int login,Set<Job> jobs, Set<Login> logins) {
        this.idCompany = idCompany;
        this.nameCompany = nameCompany;
        this.email = email;
@@ -42,9 +41,10 @@ public class Company  implements java.io.Serializable {
        this.address = address;
        this.jobs = jobs;
        this.logins = logins;
+       this.login = login;
     }
 
-    public Company(int idCompany,String nameCompany, String email, String phone, String description, float location_X,float location_Y, String address,String user,String passw) {
+    public Company(int idCompany,String nameCompany, String email, String phone, String description, float location_X,float location_Y, String address,int login) {
         this.idCompany = idCompany;
         this.nameCompany = nameCompany;
         this.email = email;
@@ -53,8 +53,7 @@ public class Company  implements java.io.Serializable {
         this.location_X = location_X;
         this.location_Y = location_Y;
         this.address = address;
-        this.username = user;
-        this.password = passw;
+        this.login = login;
     }
    
     public int getIdCompany() {
@@ -131,25 +130,13 @@ public class Company  implements java.io.Serializable {
         this.logins = logins;
     }
 
-    public String getUsername() {
-        return username;
+    public int getLogin() {
+        return login;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setLogin(int login) {
+        this.login = login;
     }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-
-
-
 }
 
 

@@ -62,11 +62,11 @@ public class main extends HttpServlet {
         try{ 
         HttpSession s =  request.getSession( true);
         Login l = new Login();
-        l.setUsername(request.getParameter("email"));
+        l.setUsername(request.getParameter("username"));
         l.setPassword(request.getParameter("password"));
-        l = LoginModel.instance().findLoginByPassword(l.getPassword());
+        l = LoginModel.instance().findLoginByData(l.getUsername(),l.getPassword());
         s.setAttribute("usuario", l);
-        //FALTA ESPECIFICAR EL TIPO DE USURIO SEGUN LOGIN
+        //LA VALIDACION  DE TIPO DE LOGIN SE DEBERA IMPLEMENTAR EN EL JSP UNA FUNCION JAVA
         request.getRequestDispatcher("Home.jsp").forward( request, response);
         
         }catch(Exception e){
@@ -132,7 +132,30 @@ public class main extends HttpServlet {
     private void doResgiterOfferent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("registOfferer.jsp").forward(request, response);
     }
-  // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+  
+    private void doSearchGeneralJobsByCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+         try{ 
+        HttpSession s =  request.getSession( true);
+        ArrayList jobs = new ArrayList();
+        String p = request.getParameter("percentage");
+        jobs = JobModel.instance().findGeneralJobByCategory(request.getParameter("category"),p);
+        s.setAttribute("jobsByCategory", jobs);
+         request.getRequestDispatcher("main.jsp").
+                forward( request, response);
+        }catch(Exception e){
+            String error = e.getMessage();
+            request.setAttribute("error",error);
+            request.getRequestDispatcher("Error.jsp").forward(request, response);
+            
+        }
+    }
+
+    private void doSearchGeneralJobsByLocate(HttpServletRequest request, HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+   
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -170,17 +193,7 @@ public class main extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    private void doSearchGeneralJobsByCategory(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private void doSearchGeneralJobsByLocate(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-   
-     
+ 
      
      
     
