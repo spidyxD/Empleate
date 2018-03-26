@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 12/03/2018 12:06:20 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Empleate.domain.Login" table="login" catalog="empleatebeta" optimistic-lock="version">
+        <id name="idLogin" type="int">
+            <column name="idLogin" />
+            <generator class="assigned" />
+        </id>
+        <property name="username" type="string">
+            <column name="username" length="45" />
+        </property>
+        <property name="password" type="string">
+            <column name="password" length="45" />
+        </property>
+        <property name="type_log" type="string">
+            <column name="type_log" length="45" />
+        </property>
+         <property name="enable" type="int">
+            <column name="enable"/>
+        </property>
+    </class>
+</hibernate-mapping>

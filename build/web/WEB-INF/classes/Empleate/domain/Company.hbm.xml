@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 12/03/2018 12:06:20 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Empleate.domain.Company" table="company" catalog="empleatebeta" optimistic-lock="version">
+        <id name="idCompany" type="int">
+            <column name="idCompany" />
+            <generator class="assigned" />
+        </id>
+        <property name="nameCompany" type="string">
+            <column name="name_company" length="45" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="45" />
+        </property>
+        <property name="phone" type="string">
+            <column name="phone" length="45" />
+        </property>
+        <property name="description" type="string">
+            <column name="description" length="45" />
+        </property>
+        <property name="location_X" type="float">
+            <column name="location_X" />
+        </property>
+         <property name="location_Y" type="float">
+            <column name="location_Y" />
+        </property>
+        <property name="address" type="string">
+            <column name="address" length="45" />
+        </property>
+        <set name="jobs" table="job" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="comp" not-null="true" />
+            </key>
+            <one-to-many class="Empleate.domain.Job" />
+        </set>
+        <set name="logins" table="login" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="comp" not-null="true" />
+            </key>
+            <one-to-many class="Empleate.domain.Login" />
+        </set>
+    </class>
+</hibernate-mapping>
