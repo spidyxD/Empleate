@@ -1,3 +1,4 @@
+
 $(document).ready(function(){
     $('.parallax').parallax();
 });
@@ -11,4 +12,3 @@ function autoplay() {
     $('.carousel').carousel('next');
     setTimeout(autoplay, 4500);
 }
-

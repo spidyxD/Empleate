@@ -50,4 +50,3 @@ Contributor(s):
   <table-filter match-name="login"/>
   <table-filter match-name="offerer"/>
 </hibernate-reverse-engineering>
-

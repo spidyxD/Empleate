@@ -1,20 +1,5 @@
 
-input[type=text] {
-    color:white;
-}
 
-.header{
-  background-color: #1e0233;
-  color:white;
-  align:left;
-}
-.test{display: inline;}
-.nav-wrapper{
-  background-color: #1e0233;
-}
-.titulo{
-  display: block;
-}
 .cuerpo{
   height: auto;
   background-color: #c4c4c4;

@@ -3,8 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Andrés%20Gutiérrez/Documents/GitHub/Empleate/src/java/Empleate/logica/JobModel.java</file>
-            <file>file:/C:/Users/Andrés%20Gutiérrez/Documents/GitHub/Empleate/src/java/Empleate/controller/Home.java</file>
+            <file>file:/C:/Users/Andrés%20Gutiérrez/Documents/GitHub/Empleate/web/footer.jspf</file>
+            <file>file:/C:/Users/Andrés%20Gutiérrez/Documents/GitHub/Empleate/web/css/myStyle.css</file>
+            <file>file:/C:/Users/Andrés%20Gutiérrez/Documents/GitHub/Empleate/web/includesHead.jspf</file>
+            <file>file:/C:/Users/Andrés%20Gutiérrez/Documents/GitHub/Empleate/web/header.jspf</file>
             <file>file:/C:/Users/Andrés%20Gutiérrez/Documents/GitHub/Empleate/web/Home.jsp</file>
         </group>
     </open-files>

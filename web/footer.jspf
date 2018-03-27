@@ -1,0 +1,39 @@
+<footer class="page-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col s3">
+        <h5 class="white-text">Empleate</h5>
+        <p class="grey-text text-lighten-4">Busque su lugar</p>
+      </div>
+      <div class="col s3">
+        <h5 class="white-text">Telefono</h5>
+        <ul>
+          <li><a class="grey-text text-lighten-3" href=" https://api.whatsapp.com/send?phone=50661688613" target="_blank">61688613</a></li>
+          <li><a class="grey-text text-lighten-3" href=" https://api.whatsapp.com/send?phone=50685732292"target="_blank">85732292</a></li>
+        </ul>
+      </div>
+      <div class="col s3">
+        <h5 class="white-text">Ubicacion</h5>
+        <ul>
+          <li><span>Lagunilla, Heredia</span></li>
+      </div>
+      <div class="col s3">
+        <h5 class="white-text">Correo</h5>
+        <ul>
+          <li><a class="white-text" href="mailto:andres.gutierrez.arcia@gmail.com"><strong>E-mail </strong><span>andres.gutierrez.arcia@gmail.com</span></a></li>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright">
+    <div class="container">
+    © 2018
+    <a class="grey-text text-lighten-4 right" href="https://github.com/andrsGutirrz/Empleate" target="_blank">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+<style media="screen">
+.page-footer{
+  background-color:#1e0233;
+}
+</style>
