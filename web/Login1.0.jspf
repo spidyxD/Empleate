@@ -11,9 +11,9 @@
     <div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
-                            
+                                <span onclick="document.getElementById('modal-wrapper').style.display='none'" class="close" title="Close PopUp">&times;</span>
 				<form class="login100-form validate-form">
-                                    <span onclick="document.getElementById('modal-wrapper').style.display='none'" class="close" title="Close PopUp">&times;</span>
+                                    
 					<span class="login100-form-title p-b-26">
 						Bienvenido a Empleate
 					</span>
