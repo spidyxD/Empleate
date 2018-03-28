@@ -7,7 +7,6 @@ package Empleate.dao;
 
 import Empleate.domain.Company;
 import Empleate.utils.HibernateUtil;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.HibernateException;

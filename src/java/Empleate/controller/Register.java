@@ -5,12 +5,20 @@
  */
 package Empleate.controller;
 
+import Empleate.domain.Company;
+import Empleate.domain.Job;
+import Empleate.domain.Login;
+import Empleate.logica.CompanyModel;
+import Empleate.logica.LoginModel;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -85,8 +93,61 @@ public class Register extends HttpServlet {
     private void goToRegister(HttpServletRequest request, HttpServletResponse response) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    private void doRegisterCompany(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void doRegisterCompany(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try{ 
+        HttpSession s =  request.getSession(true);
+        
+        Company c = new Company();
+        Login l = new Login();
+        
+        CompanyModel cm = new CompanyModel();
+        LoginModel lm = new LoginModel();
+        
+        String name = request.getParameter("nombreEmpresa");
+        String email = request.getParameter("website");
+        String descript = request.getParameter("descripcion");
+        String addres = request.getParameter("direccion");
+        String phone = request.getParameter("telefono");
+        String user = request.getParameter("username");
+        String key = request.getParameter("password");
+        
+        l.setIdLogin(0);
+        l.setUsername(user);
+        l.setPassword(key);
+        l.setEnable(1);
+        l.setType_log("company");
+        lm.addLogin(l);
+        
+        Thread.sleep(1000);
+        
+        c.setNameCompany(name);
+        c.setEmail(email);
+        c.setDescription(descript);
+        c.setPhone(phone);
+        c.setAddress(addres);
+        c.setLocation_X((float) 10.14);
+        c.setLocation_Y((float) 156.425);
+        c.setIdCompany(0);
+        Set<Login> logins = new HashSet<Login>();
+        logins.add(new Login());
+        c.setLogins(logins);
+        Set<Job> jobs = new HashSet<Job>();
+        jobs.add(new Job());
+        c.setJobs(jobs);
+        c.setLogin(lm.findLoginByData(user, key).getIdLogin());
+        l.setIdLogin(lm.findLoginByData(user, key).getIdLogin());
+        
+        cm.addCompany(c);
+        
+        request.setAttribute("login", l);
+        request.setAttribute("company", c);
+        request.getRequestDispatcher("Home.jsp").forward( request, response);
+         }catch(Exception e){
+            String error = e.getMessage();
+            request.setAttribute("error",error);
+            request.getRequestDispatcher("Error.jsp").forward(request, response);
+            
+        }	
     }
 
     private void doRegisterOfferer(HttpServletRequest request, HttpServletResponse response) {

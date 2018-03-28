@@ -18,8 +18,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Addiel
  */
-@WebServlet(name = "Login", urlPatterns = {"/Login", "/Logout"})
-public class Login extends HttpServlet {
+@WebServlet(name = "login", urlPatterns = {"/Login", "/Logout"})
+public class login extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
