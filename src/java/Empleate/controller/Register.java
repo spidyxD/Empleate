@@ -102,10 +102,17 @@ public class Register extends HttpServlet {
         c.setDescription(request.getParameter("descripcion"));
         c.setPhone(request.getParameter("telefono"));
         c.setAddress(request.getParameter("direccion"));
+        c.setLocation_X((float) 10.14);
+        c.setLocation_Y((float) 156.425);
         l.setUsername(request.getParameter("username"));
         l.setPassword(request.getParameter("password"));
+        l.setEnable(1);
+        l.setType_log("company");
         cm.addCompany(c);
         lm.addLogin(l);
+        request.setAttribute("login", l);
+        request.setAttribute("company", c);
+        request.getRequestDispatcher("Home.jsp").forward( request, response);
          }catch(Exception e){
             String error = e.getMessage();
             request.setAttribute("error",error);

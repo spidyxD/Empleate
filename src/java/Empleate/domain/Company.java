@@ -137,6 +137,8 @@ public class Company  implements java.io.Serializable {
     public void setLogin(int login) {
         this.login = login;
     }
+
+   
 }
 
 
