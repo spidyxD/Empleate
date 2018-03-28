@@ -15,37 +15,46 @@
   <body>
     <%@include file="header.jspf"%>
     <div class="cuerpo container"><!-- nom,apel,nation,phone,email,recidence**login** -->
-      <h4>Formulario para registro de Oferentes</h4>
+      <h4>Formulario para registro de Empresas</h4>
       <div class="row">
     <form action="RegistCompany" method="post" class="col s12">
       <div class="row">
-        <div class="input-field col s6">
-          <input id="nombre" type="text"  class="validate">
-          <label for="Nombre">Nombre</label>
-        </div>
-        <div class="input-field col s6">
-          <input id="apellido" type="text" class="validate">
-          <label for="apellido">Apellido</label>
-        </div>
-      </div>
-      <div class="row">
         <div class="input-field col s4">
-          <input id="nacionalidad" type="text" class="validate">
-          <label for="nacionalidad">Nacionalidad</label>
+          <input id="nombreEmpresa" type="text"  class="validate">
+          <label for="nombreEmpresa">Nombre de la empresa</label>
         </div>
-        <div class="input-field col s4">
-          <input id="Telefono" type="text" class="validate">
+           <div class="input-field col s4">
+          <input id="telefono" type="tel" class="validate">
           <label for="telefono">Telefono</label>
         </div>
-        <div class="input-field col s4">
-          <input id="residencia" type="text" class="validate">
-          <label for="residencia">Residencia</label>
+          <div class="input-field col s4">
+          <input id="website" type="url" class="validate">
+          <label for="website">website</label>
         </div>
+        
       </div>
       <div class="row">
         <div class="input-field col s6">
-          <input id="email" type="email" class="validate">
-          <label for="email">Email</label>
+          <input id="Direccion" type="text" class="validate">
+          <label for="Direccion">Direccion </label>
+        </div>
+        
+        <div class="input-field col s6">
+          <input id="location" type="text" class="validate">
+          <label for="location">Localizacion</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="descripcion" type="text" class="validate">
+          <label for="descripcion">Descripcion de la empresa</label>
+        </div>
+        
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="username" type="text" class="validate">
+          <label for="username">usename</label>
         </div>
         <div class="input-field col s6">
           <input id="password" type="password" class="validate">

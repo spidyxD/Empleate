@@ -5,12 +5,17 @@
  */
 package Empleate.controller;
 
+import Empleate.domain.Company;
+import Empleate.domain.Login;
+import Empleate.logica.CompanyModel;
+import Empleate.logica.LoginModel;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -85,8 +90,28 @@ public class Register extends HttpServlet {
     private void goToRegister(HttpServletRequest request, HttpServletResponse response) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    private void doRegisterCompany(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void doRegisterCompany(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try{ 
+        HttpSession s =  request.getSession(true);
+        Company c = new Company();
+        Login l = new Login();
+        CompanyModel cm = new CompanyModel();
+        LoginModel lm = new LoginModel();
+        c.setNameCompany(request.getParameter("nombreEmpresa"));
+        c.setEmail(request.getParameter("website"));
+        c.setDescription(request.getParameter("descripcion"));
+        c.setPhone(request.getParameter("telefono"));
+        c.setAddress(request.getParameter("direccion"));
+        l.setUsername(request.getParameter("username"));
+        l.setPassword(request.getParameter("password"));
+        cm.addCompany(c);
+        lm.addLogin(l);
+         }catch(Exception e){
+            String error = e.getMessage();
+            request.setAttribute("error",error);
+            request.getRequestDispatcher("Error.jsp").forward(request, response);
+            
+        }	
     }
 
     private void doRegisterOfferer(HttpServletRequest request, HttpServletResponse response) {
