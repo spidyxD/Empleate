@@ -23,7 +23,9 @@ public class TESTMYOWN {
         jobCategoryModel jcm = new jobCategoryModel();
         Jobcategory jc = new Jobcategory((Job)jm.findJobByID(1),(Category)cm.findCategoryById(2),75);
         Jobcategory jc2 = new Jobcategory((Job)jm.findJobByID(2),(Category)cm.findCategoryById(1));
-        jcm.addJobCategoy(jc);
-        jcm.deleteJobCategory(jc2);
+        //jcm.addJobCategoy(jc);
+        //jcm.deleteJobCategory(jc2);
+        String info = jm.top5().get(1).getNameJob();
+        System.out.println(info);
     }
 }

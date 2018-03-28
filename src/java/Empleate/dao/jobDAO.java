@@ -5,11 +5,8 @@
  */
 package Empleate.dao;
 
-import Empleate.domain.Category;
-import Empleate.domain.Company;
 import Empleate.domain.Job;
 import Empleate.utils.HibernateUtil;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -112,11 +109,11 @@ public class jobDAO extends HibernateUtil implements IBaseDAO <Job, Integer> {
            int percent = Integer.parseInt(p);
            if(percent != 0){
            String sql = "select job.idJob,job.name_job,job.description_job,salary,type_job,job.comp,job.status_job from job,jobCategory,category where job.idJob=jobCategory.j and jobCategory.cat = category.idCategory and Job.type_Job= 0 and category.name_category="+"'"+cat+"'and jobCategory.percentage="+String.valueOf(percent)+";";
-           getSesion().createSQLQuery(sql);
+           getSesion().createSQLQuery(sql).addEntity(Job.class).list();
            getTransac().commit();
            }else{
            String sql = "select job.idJob,job.name_job,job.description_job,salary,type_job,job.comp,job.status_job from job,jobCategory,category where job.idJob=jobCategory.j and jobCategory.cat = category.idCategory and Job.type_Job= 0 and category.name_category="+"'"+cat+"';";
-            getSesion().createSQLQuery(sql);
+            getSesion().createSQLQuery(sql).addEntity(Job.class).list();
            getTransac().commit();
            }
           
@@ -131,18 +128,18 @@ public class jobDAO extends HibernateUtil implements IBaseDAO <Job, Integer> {
         return jobs;
     }
     
-     public ArrayList<Job> findGeneralByCategory(String cat,String p){
-        ArrayList<Job> jobs = new ArrayList();
+     public List<Job> findGeneralByCategory(String cat,String p){
+        List<Job> jobs = new ArrayList();
         try{
            operationStart();
            int percent = Integer.parseInt(p);
            if(percent != 0){
            String sql = "select job.idJob,job.name_job,job.description_job,salary,type_job,job.comp,job.status_job from job,jobCategory,category where job.idJob=jobCategory.j and jobCategory.cat = category.idCategory and category.name_category="+"'"+cat+"'and jobCategory.percentage="+String.valueOf(percent)+";";
-           getSesion().createSQLQuery(sql);
+           getSesion().createSQLQuery(sql).addEntity(Job.class).list();
            getTransac().commit();
            }else{
            String sql = "select job.idJob,job.name_job,job.description_job,salary,type_job,job.comp,job.status_job from job,jobCategory,category where job.idJob=jobCategory.j and jobCategory.cat = category.idCategory and category.name_category="+"'"+cat+"';";
-            getSesion().createSQLQuery(sql);
+            jobs = getSesion().createSQLQuery(sql).addEntity(Job.class).list();
            getTransac().commit();
            }
           
@@ -156,12 +153,11 @@ public class jobDAO extends HibernateUtil implements IBaseDAO <Job, Integer> {
         }
         return jobs;
     }
-    /*public ArrayList<Job> giveTop5(){
-        ArrayList<Job> top = new ArrayList();
+    public List<Job> giveTop5(){
+        List<Job> top = new ArrayList();
         try{
            operationStart();
-           String sql = "select *from job where status_Job = 1 and  ";
-           getSesion().createQuery(sql);
+           top = getSesion().createSQLQuery("select *from job where type_Job = 'public' and status_Job = 1 order by idJob DESC limit 5;").addEntity(Job.class).list();
            getTransac().commit();
         }
         catch(HibernateException he){
@@ -172,5 +168,5 @@ public class jobDAO extends HibernateUtil implements IBaseDAO <Job, Integer> {
         getSesion().close();
         }
         return top;
-    }*/
+    }
 }
