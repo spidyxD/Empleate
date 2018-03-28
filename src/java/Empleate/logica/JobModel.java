@@ -53,7 +53,7 @@ public class JobModel {
         }catch(Exception e ){}
         return null;
     }
-      public ArrayList findGeneralJobByCategory(String c,String id) throws Exception{
+      public List findGeneralJobByCategory(String c,String id) throws Exception{
         try{
         return jDAO.findGeneralByCategory(c, id);
         }catch(Exception e ){}
@@ -66,7 +66,6 @@ public class JobModel {
         return null;
     }
      public List<Job> top5() throws Exception{//para el carusel
-        List<Job> ls = (this.findAllJobs());
-        return ls;
+        return jDAO.giveTop5();
     }
 }

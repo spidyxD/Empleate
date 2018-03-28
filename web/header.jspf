@@ -1,5 +1,6 @@
 <%-- any content can be specified here e.g.: --%>
 <%@ page pageEncoding="UTF-8" %>
+<%@include file="Login1.0.jspf"%>
 <div class="header">
   <div class="titulo">
     <h1>Empleate</h1>
@@ -12,7 +13,7 @@
           <li><input id="icon_prefix" type="text" class="validate"></li>
           <li><a href="#"><i class="material-icons right">search</i></a></li>
           <li><a href="#"class="waves-effect waves-light btn">Registrarse</a></li>
-          <li><a href="#"class="waves-effect waves-light btn">Entrar</a></li>
+           <li><a onclick="document.getElementById('modal-wrapper').style.display='block'" class="waves-effect waves-light btn">Entrar</a></li>
         </ul>
       </div>
     </nav>
