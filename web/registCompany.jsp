@@ -20,44 +20,44 @@
     <form action="RegistCompany" method="post" class="col s12">
       <div class="row">
         <div class="input-field col s4">
-          <input id="nombreEmpresa" type="text"  class="validate">
+          <input name="nombreEmpresa" id="nombreEmpresa" type="text"  class="validate">
           <label for="nombreEmpresa">Nombre de la empresa</label>
         </div>
            <div class="input-field col s4">
-          <input id="telefono" type="tel" class="validate">
+          <input name="telefono" id="telefono" type="text" class="validate">
           <label for="telefono">Telefono</label>
         </div>
           <div class="input-field col s4">
-          <input id="website" type="url" class="validate">
+          <input name="website" id="website" type="url" class="validate">
           <label for="website">website</label>
         </div>
         
       </div>
       <div class="row">
         <div class="input-field col s6">
-          <input id="Direccion" type="text" class="validate">
-          <label for="Direccion">Direccion </label>
+          <input name="direccion" id="direccion" type="text" class="validate">
+          <label for="direccion">Direccion </label>
         </div>
         
         <div class="input-field col s6">
-          <input id="location" type="text" class="validate">
+          <input name="location" id="location" type="text" class="validate">
           <label for="location">Localizacion</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s12">
-          <input id="descripcion" type="text" class="validate">
+          <input name="descripcion" id="descripcion" type="text" class="validate">
           <label for="descripcion">Descripcion de la empresa</label>
         </div>
         
       </div>
       <div class="row">
         <div class="input-field col s6">
-          <input id="username" type="text" class="validate">
-          <label for="username">usename</label>
+          <input name="username" id="username" type="text" class="validate">
+          <label for="username">Username</label>
         </div>
         <div class="input-field col s6">
-          <input id="password" type="password" class="validate">
+          <input name="password" id="password" type="password" class="validate">
           <label for="password">Password</label>
         </div>
       </div>

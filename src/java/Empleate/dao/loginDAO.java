@@ -5,10 +5,8 @@
  */
 package Empleate.dao;
 
-import Empleate.domain.Job;
 import Empleate.domain.Login;
 import Empleate.utils.HibernateUtil;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -87,10 +85,10 @@ public class loginDAO extends HibernateUtil implements IBaseDAO <Login,Integer> 
     }
      public Login findByPassword(String key) {
          Login log = null;
-         String sql = "Select *from login where password =" + "'" + key + "'";
+         String sql = "select *from login where password =" + "'" + key + "'";
          try{
             operationStart();
-            log = (Login)getSesion().createSQLQuery(sql);
+            log = (Login)getSesion().createSQLQuery(sql).addEntity(Login.class);
             getTransac().commit();
         }
         catch(HibernateException he){
@@ -122,11 +120,13 @@ public class loginDAO extends HibernateUtil implements IBaseDAO <Login,Integer> 
     }
 
     public Login findByData(String user, String passw) {
-        Login log = null;
-         String sql = "Select *from login where username ="+ "'"+ user +"'"+" password =" + "'" + passw + "'";
+        Login log = new Login();
+        List<Login> l= new ArrayList();
+         String sql = "select *from login where username ="+ "'"+ user +"'"+" and "+" password =" + "'" + passw + "'";
          try{
             operationStart();
-            log = (Login)getSesion().createSQLQuery(sql);
+            l = getSesion().createSQLQuery(sql).addEntity(Login.class).list();
+            log = l.get(0);
             getTransac().commit();
         }
         catch(HibernateException he){

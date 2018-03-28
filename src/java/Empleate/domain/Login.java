@@ -16,6 +16,11 @@ public class Login  implements java.io.Serializable {
      private int enable;
 
     public Login() {
+        idLogin=-1;
+        username="";
+        password="";
+        type_log="";
+        enable=0;
     }
 
 	

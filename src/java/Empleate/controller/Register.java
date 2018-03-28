@@ -6,10 +6,13 @@
 package Empleate.controller;
 
 import Empleate.domain.Company;
+import Empleate.domain.Job;
 import Empleate.domain.Login;
 import Empleate.logica.CompanyModel;
 import Empleate.logica.LoginModel;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -93,23 +96,49 @@ public class Register extends HttpServlet {
     private void doRegisterCompany(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{ 
         HttpSession s =  request.getSession(true);
+        
         Company c = new Company();
         Login l = new Login();
+        
         CompanyModel cm = new CompanyModel();
         LoginModel lm = new LoginModel();
-        c.setNameCompany(request.getParameter("nombreEmpresa"));
-        c.setEmail(request.getParameter("website"));
-        c.setDescription(request.getParameter("descripcion"));
-        c.setPhone(request.getParameter("telefono"));
-        c.setAddress(request.getParameter("direccion"));
-        c.setLocation_X((float) 10.14);
-        c.setLocation_Y((float) 156.425);
-        l.setUsername(request.getParameter("username"));
-        l.setPassword(request.getParameter("password"));
+        
+        String name = request.getParameter("nombreEmpresa");
+        String email = request.getParameter("website");
+        String descript = request.getParameter("descripcion");
+        String addres = request.getParameter("direccion");
+        String phone = request.getParameter("telefono");
+        String user = request.getParameter("username");
+        String key = request.getParameter("password");
+        
+        l.setIdLogin(0);
+        l.setUsername(user);
+        l.setPassword(key);
         l.setEnable(1);
         l.setType_log("company");
-        cm.addCompany(c);
         lm.addLogin(l);
+        
+        Thread.sleep(1000);
+        
+        c.setNameCompany(name);
+        c.setEmail(email);
+        c.setDescription(descript);
+        c.setPhone(phone);
+        c.setAddress(addres);
+        c.setLocation_X((float) 10.14);
+        c.setLocation_Y((float) 156.425);
+        c.setIdCompany(0);
+        Set<Login> logins = new HashSet<Login>();
+        logins.add(new Login());
+        c.setLogins(logins);
+        Set<Job> jobs = new HashSet<Job>();
+        jobs.add(new Job());
+        c.setJobs(jobs);
+        c.setLogin(lm.findLoginByData(user, key).getIdLogin());
+        l.setIdLogin(lm.findLoginByData(user, key).getIdLogin());
+        
+        cm.addCompany(c);
+        
         request.setAttribute("login", l);
         request.setAttribute("company", c);
         request.getRequestDispatcher("Home.jsp").forward( request, response);
