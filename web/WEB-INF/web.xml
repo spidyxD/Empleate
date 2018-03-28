@@ -9,18 +9,35 @@
         <servlet-class>Empleate.controller.consultasEmpleate</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Login</servlet-name>
-        <servlet-class>Empleate.controller.Login</servlet-class>
+        <servlet-name>login</servlet-name>
+        <servlet-class>Empleate.controller.login</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Register</servlet-name>
         <servlet-class>Empleate.controller.Register</servlet-class>
     </servlet>
+    
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>Register</servlet-name>
+        <url-pattern>/RegistCompany</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Register</servlet-name>
+        <url-pattern>/RegistOffer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>login</servlet-name>
+        <url-pattern>/Login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>login</servlet-name>
+        <url-pattern>/Logout</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
         <url-pattern>/Home</url-pattern>
@@ -29,10 +46,7 @@
         <servlet-name>consultasEmpleate</servlet-name>
         <url-pattern>/consultasEmpleate</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Login</servlet-name>
-        <url-pattern>/Login</url-pattern>
-    </servlet-mapping>
+    
     <servlet-mapping>
         <servlet-name>Register</servlet-name>
         <url-pattern>/Register</url-pattern>

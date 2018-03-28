@@ -17,35 +17,41 @@
     <div class="cuerpo container"><!-- nom,apel,nation,phone,email,recidence**login** -->
       <h4>Formulario para registro de Oferentes</h4>
       <div class="row">
-    <form action="nombredelServlet" method="post" class="col s12">
+    <form action="RegistOffer" method="post" class="col s12">
       <div class="row">
-        <div class="input-field col s6">
+        <div class="input-field col s4">
           <input id="nombre" type="text"  class="validate">
-          <label for="Nombre">Nombre</label>
+          <label for="nombre">Nombre</label>
         </div>
-        <div class="input-field col s6">
+        <div class="input-field col s4">
           <input id="apellido" type="text" class="validate">
           <label for="apellido">Apellido</label>
         </div>
-      </div>
-      <div class="row">
         <div class="input-field col s4">
           <input id="nacionalidad" type="text" class="validate">
           <label for="nacionalidad">Nacionalidad</label>
         </div>
+      </div>
+      <div class="row">
+        
         <div class="input-field col s4">
-          <input id="Telefono" type="text" class="validate">
+          <input id="telefono" type="tel" class="validate">
           <label for="telefono">Telefono</label>
         </div>
         <div class="input-field col s4">
           <input id="residencia" type="text" class="validate">
           <label for="residencia">Residencia</label>
         </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s6">
+        <div class="input-field col s4">
           <input id="email" type="email" class="validate">
           <label for="email">Email</label>
+        </div>
+      </div>
+      <div class="row">
+        
+        <div class="input-field col s6">
+          <input id="username" type="text" class="validate">
+          <label for="username">Username</label>
         </div>
         <div class="input-field col s6">
           <input id="password" type="password" class="validate">
@@ -53,7 +59,7 @@
         </div>
       </div>
       <div class="input-field col s12">
-        <input class="btn"  type="submit" value="Ingresar">
+        <input class="btn"  type="submit" value="Ingresar" >
       </div>
     </form>
   </div>

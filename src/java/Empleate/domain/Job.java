@@ -21,6 +21,14 @@ public class Job  implements java.io.Serializable {
      private Set<Jobcategory> jobcategories = new HashSet<Jobcategory>(0);
 
     public Job() {
+        idJob=-1;
+        company = new Company();
+        nameJob="";
+        descriptionJob="";
+        salary=0;
+        typeJob="";
+        statusJob=-1;
+        jobcategories = new HashSet<Jobcategory>(0);
     }
 
     public Job(int idJob, Company company, String nameJob, String descriptionJob, Integer salary, String typeJob, Integer statusJob) {
