@@ -42,8 +42,8 @@ public class TESTMYOWN {
          l.setIdLogin(0);
         Set<Login> logins = new HashSet<Login>();
         logins.add(new Login());
-        String user = "amAzon5";
-        String key = "12345";
+        String user = "spidyxD";
+        String key = "user002";
         
         l.setUsername(user);
         l.setPassword(key);
@@ -57,7 +57,7 @@ public class TESTMYOWN {
         String addres = "lagunilla";
         String phone = "506 52156";
         
-        c.setNameCompany(name);
+       /* c.setNameCompany(name);
         c.setEmail(email);
         c.setDescription(descript);
         c.setPhone(phone);
@@ -72,7 +72,7 @@ public class TESTMYOWN {
             jobs.add(new Job());
         c.setJobs(jobs);
        
-        cm.addCompany(c);
-       
+        cm.addCompany(c);*/
+       System.out.println(lm.findLoginByData(user, key).getUsername());
     }
 }

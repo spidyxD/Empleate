@@ -85,10 +85,12 @@ public class loginDAO extends HibernateUtil implements IBaseDAO <Login,Integer> 
     }
      public Login findByPassword(String key) {
          Login log = null;
-         String sql = "select *from login where password =" + "'" + key + "'";
+         List<Login> l = new ArrayList();
+         String sql = "select *from login where password =" + "'" + key + "';";
          try{
             operationStart();
-            log = (Login)getSesion().createSQLQuery(sql).addEntity(Login.class);
+            l = getSesion().createSQLQuery(sql).addEntity(Login.class).list();
+            log = l.get(0);
             getTransac().commit();
         }
         catch(HibernateException he){
@@ -122,7 +124,7 @@ public class loginDAO extends HibernateUtil implements IBaseDAO <Login,Integer> 
     public Login findByData(String user, String passw) {
         Login log = new Login();
         List<Login> l= new ArrayList();
-         String sql = "select *from login where username ="+ "'"+ user +"'"+" and "+" password =" + "'" + passw + "'";
+         String sql = "select *from login where username="+ "'"+ user +"'"+" and "+"password=" + "'" + passw + "';";
          try{
             operationStart();
             l = getSesion().createSQLQuery(sql).addEntity(Login.class).list();
