@@ -1,0 +1,45 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<%@include file="Login1.0.jspf"%>
+<%@include file="registroSelector.jspf"%>
+<div class="header">
+  <div class="titulo">
+    <h1>Empleate</h1>
+    <h2>Busque su lugar!</h2>
+  </div>
+  <div class="test">
+    <nav>
+      <div class="nav-wrapper">
+        <ul class="right hide-on-med-and-down">
+          <li><input id="icon_prefix" type="text" class="validate"></li>
+          <li><a href="#"><i class="material-icons right">search</i></a></li>
+          <li><a class="waves-effect waves-light btn modal-trigger" href="#registroSelector">Registrarse</a></li>
+          <li><a class="waves-effect waves-light btn modal-trigger" href="#Log">Iniciar sesion</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</div>
+
+<style media="screen">
+.header{
+  background-color: #1e0233;
+  color:white;
+  align:left;
+}
+.test{display: inline;}
+.nav-wrapper{
+  background-color: #1e0233;
+}
+.titulo{
+  display: block;
+}
+
+.btn{
+    background-color: white;
+    color:#1e0233;
+}
+input[type=text]{
+    color: white;
+}
+</style>
