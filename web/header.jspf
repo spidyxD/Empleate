@@ -1,22 +1,14 @@
 <%-- any content can be specified here e.g.: --%>
 <%@ page pageEncoding="UTF-8" %>
 <%@include file="Login1.0.jspf"%>
+<%@include file="registroSelector.jspf"%>
 <div class="header">
   <div class="titulo">
-    <h1>Empleate</h1>
-    <h2>Busque su lugar!</h2>
+      <h1><a href="Home">Empleate</a></h1>
+      <h2><a href="Home">Busque su lugar!</a></h2>
   </div>
   <div class="test">
-    <nav>
-      <div class="nav-wrapper">
-        <ul class="right hide-on-med-and-down">
-          <li><input id="icon_prefix" type="text" class="validate"></li>
-          <li><a href="#"><i class="material-icons right">search</i></a></li>
-          <li><a href="#"class="waves-effect waves-light btn">Registrarse</a></li>
-           <li><a onclick="document.getElementById('modal-wrapper').style.display='block'" class="waves-effect waves-light btn">Entrar</a></li>
-        </ul>
-      </div>
-    </nav>
+      
   </div>
 </div>
 
@@ -38,4 +30,12 @@
     background-color: white;
     color:#1e0233;
 }
+.titulo h1,.titulo h2{
+    text-decoration: none;
+    color: white;
+}
+input[type=text]{
+    color: white;
+}
+
 </style>

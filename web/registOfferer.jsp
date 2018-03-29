@@ -20,41 +20,41 @@
     <form action="RegistOffer" method="post" class="col s12">
       <div class="row">
         <div class="input-field col s4">
-          <input id="nombre" type="text"  class="validate">
+          <input id="nombre" type="text" name="nombre" class="validate">
           <label for="nombre">Nombre</label>
         </div>
         <div class="input-field col s4">
-          <input id="apellido" type="text" class="validate">
+          <input id="apellido" type="text" name="apellido" class="validate">
           <label for="apellido">Apellido</label>
         </div>
         <div class="input-field col s4">
-          <input id="nacionalidad" type="text" class="validate">
+          <input id="nacionalidad" type="text" name="nacionalidad" class="validate">
           <label for="nacionalidad">Nacionalidad</label>
         </div>
       </div>
       <div class="row">
         
         <div class="input-field col s4">
-          <input id="telefono" type="tel" class="validate">
+          <input id="telefono" type="tel" name="telefono" class="validate">
           <label for="telefono">Telefono</label>
         </div>
         <div class="input-field col s4">
-          <input id="residencia" type="text" class="validate">
+          <input id="residencia" type="text" name="residencia" class="validate">
           <label for="residencia">Residencia</label>
         </div>
         <div class="input-field col s4">
-          <input id="email" type="email" class="validate">
+          <input id="email" type="email" name="email" class="validate">
           <label for="email">Email</label>
         </div>
       </div>
       <div class="row">
         
         <div class="input-field col s6">
-          <input id="username" type="text" class="validate">
+          <input id="username" type="text" name="username" class="validate">
           <label for="username">Username</label>
         </div>
         <div class="input-field col s6">
-          <input id="password" type="password" class="validate">
+          <input id="password" type="password" name="password" class="validate">
           <label for="password">Password</label>
         </div>
       </div>
