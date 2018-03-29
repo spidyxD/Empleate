@@ -5,7 +5,14 @@
  */
 package Empleate.controller;
 
+import Empleate.domain.Company;
+import Empleate.domain.Login;
+import Empleate.domain.Manager;
+import Empleate.domain.Offerer;
+import Empleate.logica.CompanyModel;
 import Empleate.logica.LoginModel;
+import Empleate.logica.ManagerModel;
+import Empleate.logica.OffererModel;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -84,18 +91,45 @@ public class login extends HttpServlet {
 
     protected void doLogin(HttpServletRequest request, 
         HttpServletResponse response) throws ServletException, IOException {
-       try{ 
-        HttpSession s =  request.getSession( true);
-        Empleate.domain.Login l = new Empleate.domain.Login();
-        l.setUsername(request.getParameter("username"));
-        l.setPassword(request.getParameter("password"));
-        l = LoginModel.instance().findLoginByData(l.getUsername(),l.getPassword());
-        s.setAttribute("usuario", l);
-        //LA VALIDACION  DE TIPO DE LOGIN SE DEBERA IMPLEMENTAR EN EL JSP UNA FUNCION JAVA
-        request.getRequestDispatcher("Home.jsp").forward( request, response);
+        Login l = new Login();
+        try{ 
+            HttpSession s =  request.getSession(true);
+            
+            l.setUsername(request.getParameter("username"));
+            l.setPassword(request.getParameter("password"));
         
-        }catch(Exception e){
-            String error = e.getMessage();
+        if(verifyLogin(l,request,response)){
+             l = LoginModel.instance().findLoginByData(request.getParameter("username"), request.getParameter("password"));
+             switch(l.getType_log()){
+                 case "company":
+                     Company c = new Company();
+                     c =CompanyModel.instance().findCompanyByIdLogin(String.valueOf(l.getIdLogin()));
+                     s.setAttribute("company", c);
+                     s.setAttribute("login", l);
+                     request.getRequestDispatcher("Home.jsp").forward( request, response);
+                 break;
+                 case "offerer":
+                     Offerer o = new Offerer();
+                     o = OffererModel.instance().findByIdLogin(l.getIdLogin());
+                     s.setAttribute("offerer", o);
+                     s.setAttribute("login", l);
+                     request.getRequestDispatcher("Home.jsp").forward( request, response);
+                 break;
+                 case "manager":
+                     Manager m= new Manager();
+                     m = ManagerModel.instance().findByIdLogin(l.getIdLogin());
+                     s.setAttribute("manager", m);
+                     s.setAttribute("login", l);
+                     request.getRequestDispatcher("Home.jsp").forward( request, response);
+                 break;    
+                 default:
+                     request.getRequestDispatcher("Error.jsp").forward(request, response);
+                     break;
+         }
+       
+       }
+       }catch(Exception e){
+            String error = "Error de credenciales del usuario: "+ request.getParameter("username") + " idRegister: " +l.getIdLogin() + " type: " + l.getType_log();
             request.setAttribute("error",error);
             request.getRequestDispatcher("Error.jsp").forward(request, response);
             
@@ -106,6 +140,10 @@ public class login extends HttpServlet {
             request.getSession().invalidate();
             request.getRequestDispatcher("Home.jsp").forward( request, response);          
     }    
-   
+   public boolean verifyLogin(Login l,HttpServletRequest request, 
+        HttpServletResponse response){
+        l = LoginModel.instance().findLoginByData(request.getParameter("username"),request.getParameter("password"));
+        return l.getIdLogin() != -1;
+   }
 
 }

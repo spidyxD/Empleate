@@ -5,6 +5,7 @@
  */
 package Empleate.dao;
 
+import Empleate.domain.Company;
 import Empleate.domain.Offerer;
 import Empleate.utils.HibernateUtil;
 import java.math.BigInteger;
@@ -102,5 +103,22 @@ public class offererDAO extends HibernateUtil implements IBaseDAO <Offerer,Integ
         }
     return listofferers;
     }
-    
+    public Offerer findByIdLogin(String idLogin){
+        Offerer o = null;
+        List<Offerer> ol = new ArrayList();
+        try{
+            operationStart();
+            String sql = "select *from offerer where login="+"'"+idLogin+"';";
+            ol = getSesion().createSQLQuery(sql).addEntity(Offerer.class).list();
+            o = ol.get(0);
+            
+        }catch(HibernateException he){
+        handleException(he);
+            throw he;
+        }
+         finally{
+        getSesion().close();
+        }
+        return o;
+    }
 }

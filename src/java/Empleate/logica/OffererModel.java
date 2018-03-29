@@ -45,7 +45,9 @@ public class OffererModel {
          ArrayList<Offerer> listOfferer = new ArrayList<Offerer>(offDAO.findAll());
          return listOfferer;
      }
-    
+    public Offerer findByIdLogin(int idLogin){
+        return offDAO.findByIdLogin(String.valueOf(idLogin));
+    }
     
     
 }//fin clase

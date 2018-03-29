@@ -48,7 +48,12 @@ public class CompanyModel {
         }catch(Exception e){}
         return null;
     }
-    
+    public Company findCompanyByIdLogin(String id)throws Exception{
+        try{
+        return compDAO.findByIdLogin(id);
+        }catch(Exception e){}
+        return null;
+    }
     public List<Company> findAllCompanies()throws Exception{
         try{
         return compDAO.findAll();
