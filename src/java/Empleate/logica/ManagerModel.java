@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *
  * @author Addiel
  */
-class ManagerModel {
+public class ManagerModel {
      private managerDAO managerDAO;
     private static ManagerModel uniqueInstance;
     public static ManagerModel instance(){
@@ -45,5 +45,9 @@ class ManagerModel {
          ArrayList<Manager> listManager = new ArrayList<Manager>(managerDAO.findAll());
          return listManager;
      }
+
+    public Manager findByIdLogin(int idLogin) {
+        return managerDAO.findByIdLogin(idLogin);
+    }
     
 }// Fin de la clase

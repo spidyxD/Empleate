@@ -7,9 +7,11 @@ package Empleate.controller;
 
 import Empleate.domain.Company;
 import Empleate.domain.Login;
+import Empleate.domain.Manager;
 import Empleate.domain.Offerer;
 import Empleate.logica.CompanyModel;
 import Empleate.logica.LoginModel;
+import Empleate.logica.ManagerModel;
 import Empleate.logica.OffererModel;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -103,16 +105,28 @@ public class login extends HttpServlet {
                      Company c = new Company();
                      c =CompanyModel.instance().findCompanyByIdLogin(String.valueOf(l.getIdLogin()));
                      s.setAttribute("company", c);
+                     s.setAttribute("login", l);
+                     request.getRequestDispatcher("Home.jsp").forward( request, response);
                  break;
                  case "offerer":
                      Offerer o = new Offerer();
                      o = OffererModel.instance().findByIdLogin(l.getIdLogin());
                      s.setAttribute("offerer", o);
+                     s.setAttribute("login", l);
+                     request.getRequestDispatcher("Home.jsp").forward( request, response);
                  break;
-                 default:break;
+                 case "manager":
+                     Manager m= new Manager();
+                     m = ManagerModel.instance().findByIdLogin(l.getIdLogin());
+                     s.setAttribute("manager", m);
+                     s.setAttribute("login", l);
+                     request.getRequestDispatcher("Home.jsp").forward( request, response);
+                 break;    
+                 default:
+                     request.getRequestDispatcher("Error.jsp").forward(request, response);
+                     break;
          }
-        s.setAttribute("login", l);
-        request.getRequestDispatcher("Home.jsp").forward( request, response);
+       
        }
        }catch(Exception e){
             String error = "Error de credenciales del usuario: "+ request.getParameter("username") + " idRegister: " +l.getIdLogin() + " type: " + l.getType_log();

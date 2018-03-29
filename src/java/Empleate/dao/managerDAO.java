@@ -70,10 +70,11 @@ public class managerDAO  extends HibernateUtil implements IBaseDAO <Manager,Inte
 
     @Override
     public Manager findById(Integer id) {
-         Manager manag = null;
+         Manager manag = new Manager();
+         
          try{
             operationStart();
-            manag = (Manager)getSesion().get(Manager.class,id);
+            manag = (Manager) getSesion().get(Manager.class,id);
             getTransac().commit();
         }
         catch(HibernateException he){
@@ -102,6 +103,26 @@ public class managerDAO  extends HibernateUtil implements IBaseDAO <Manager,Inte
         getSesion().close();
         }
     return listManag;
+    }
+
+    public Manager findByIdLogin(int idLogin) {
+        List<Manager> ma = new ArrayList();
+        Manager m = new Manager();
+        String sql = "select *from manager where login= '"+idLogin+"';";
+        try{
+            operationStart();
+            ma = getSesion().createSQLQuery(sql).addEntity(Manager.class).list();
+            getTransac().commit();
+            m = ma.get(0);
+        }
+        catch(HibernateException he){
+            handleException(he);
+            throw he;
+        }
+        finally{
+        getSesion().close();
+        }
+        return m;
     }
     
     
