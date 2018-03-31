@@ -76,4 +76,8 @@
 input[type=text]{
     color: white;
 }
+#log{
+    background-color:#53167db3;
+    
+}
 </style>
