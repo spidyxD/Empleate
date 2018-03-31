@@ -4,16 +4,19 @@
 <div id="registroSelector" class="modal">
     <div class="row">
         <div class="col s12">
-            <h4>Escoja tipo de registro</h4>
+           <br> <h4> Escoja tipo de registro</h4><br><br>
         </div>
     </div>
     <div class="row">
-        <div class="col s6">
-            <a class="waves-effect waves-light btn" href="registCompany.jsp" >Compania</a>
+        <div class="col s12" >
+            <a class="waves-effect waves-light btn" href="registCompany.jsp" style= "display: grid">Compania</a><br><br><br>
         </div>
-        <div class="col s6">
-            <a class="waves-effect waves-light btn" href="registOfferer.jsp" >Oferente</a>
+    </div>
+    <div class="row">
+        <div class="col s12" >
+            <a class="waves-effect waves-light btn" href="registOfferer.jsp" style= "display: grid" >Oferente</a><br>
         </div>
+    </div>
     </div>
 </div>
 
@@ -26,7 +29,7 @@
     top: 0;
     width: 450px;
     height: 400px;
-    background-color:#c4c4c4;
+    background-color:#53167dcc;
     overflow: auto; /* Enable scroll if needed */
 }
 

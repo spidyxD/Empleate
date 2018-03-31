@@ -113,14 +113,14 @@ public class login extends HttpServlet {
                      o = OffererModel.instance().findByIdLogin(l.getIdLogin());
                      s.setAttribute("offerer", o);
                      s.setAttribute("login", l);
-                     request.getRequestDispatcher("Home.jsp").forward( request, response);
+                     request.getRequestDispatcher("Home").forward( request, response);
                  break;
                  case "manager":
                      Manager m= new Manager();
                      m = ManagerModel.instance().findByIdLogin(l.getIdLogin());
                      s.setAttribute("manager", m);
                      s.setAttribute("login", l);
-                     request.getRequestDispatcher("Home.jsp").forward( request, response);
+                     request.getRequestDispatcher("Home").forward( request, response);
                  break;    
                  default:
                      request.getRequestDispatcher("Error.jsp").forward(request, response);
@@ -138,7 +138,7 @@ public class login extends HttpServlet {
     protected void doLogout(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             request.getSession().invalidate();
-            request.getRequestDispatcher("Home.jsp").forward( request, response);          
+            request.getRequestDispatcher("Home").forward( request, response);          
     }    
    public boolean verifyLogin(Login l,HttpServletRequest request, 
         HttpServletResponse response){
