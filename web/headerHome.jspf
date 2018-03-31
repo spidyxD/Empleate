@@ -1,7 +1,13 @@
 <%-- any content can be specified here e.g.: --%>
+<%@page import="Empleate.domain.Manager"%>
+<%@page import="Empleate.domain.Offerer"%>
+<%@page import="Empleate.domain.Company"%>
+<%@page import="Empleate.domain.Login"%>
 <%@ page pageEncoding="UTF-8" %>
 <%@include file="Login1.0.jspf"%>
 <%@include file="registroSelector.jspf"%>
+
+
 <div class="header">
   <div class="titulo">
     <h1>Empleate</h1>
@@ -11,11 +17,39 @@
     <nav>
       <div class="nav-wrapper">
         <ul class="right hide-on-med-and-down">
+                <% Login l= (Login) session.getAttribute("login");%>
+                <% Company c= (Company) session.getAttribute("company");%>
+                <% Offerer o= (Offerer) session.getAttribute("offerer");%>
+                <% Manager m= (Manager) session.getAttribute("manager");%>
+              
           <li><input id="icon_prefix" type="text" class="validate"></li>
           <li><a href="#"><i class="material-icons right">search</i></a></li>
-          <li><a class="waves-effect waves-light btn modal-trigger" href="#registroSelector">Registrarse</a></li>
-          <li><a class="waves-effect waves-light btn modal-trigger" href="#Log">Iniciar sesion</a></li>
+          <% if (l!=null){%>
+          <% if(l.getType_log().equals("company")){ %>
+          <li style="display: flex "><img class="inline" style="width: 30px; height: 40px;" src="images/company.png" alt="company"><a href="#">usuario: <%=c.getNameCompany()%>/  email: <%= c.getEmail() %></a>
+                <ul class="menuitem" display="block"> <li> <a href="Logout">Salir</a></li> </ul>
+                </li>
+               <% } %>
+                 <%if(l.getType_log().equals("offerer")){ %>
+                 <li style="display: flex "><img class="inline" style="width: 30px; height: 30px;" src="images/offerer.png" alt="offerer"><a href="#">usuario:<%=o.getNameOfferer()%>/  email: <%=o.getEmail()%></a>
+                <ul class="menuitem" display="block"> <li> <a href="Logout">Salir</a></li> </ul>
+                 </li>    
+                 <% } %>
+                <% if(l.getType_log().equals("manager")){ %>
+                <li style="display: flex "><img class="inline" style="width: 30px; height: 30px;" src="images/manager.png" alt="manager"><a href="#">usuario: <%=l.getUsername()%>/  email: <%=m.getEmail()%></a>
+                <ul class="menuitem" display="block"> <li> <a href="Logout">Salir</a></li> </ul>
+                </li>  
+                <% } %>
+            <% }%> 
+             <% if (l==null){%>
+             <h><a class="materialize-red waves-light btn modal-trigger">Para empezar inicia sesion o registrate!</a></h>
+             <li><a class="waves-effect waves-light btn modal-trigger" href="#registroSelector">Registrarse</a></li>
+             <li><a class="waves-effect waves-light btn modal-trigger" href="#Log">Iniciar sesion</a></li>
+             
+            <% }%>  
+          
         </ul>
+         
       </div>
     </nav>
   </div>

@@ -37,7 +37,8 @@
     top: 0;
     width: 450px;
     height: 400px;
-    background-color:#c4c4c4;
+    background-color:#1e0233;
+    
     overflow: auto; /* Enable scroll if needed */
 }
 
