@@ -79,6 +79,6 @@
 }
 .modal.open{
     background-color:#53167dcc;
-    
+    border-radius: 15px;
 }
 </style>
