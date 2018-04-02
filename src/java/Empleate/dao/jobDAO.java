@@ -16,177 +16,162 @@ import org.hibernate.HibernateException;
  *
  * @author Addiel
  */
-public class jobDAO extends HibernateUtil implements IBaseDAO <Job, Integer> {
+public class jobDAO extends HibernateUtil implements IBaseDAO<Job, Integer> {
 
     @Override
     public void add(Job o) {
-        try{
+        try {
             operationStart();
             getSesion().save(o);
             getTransac().commit();
-        }
-        catch(HibernateException he){
+        } catch (HibernateException he) {
             handleException(he);
             throw he;
-        }
-        finally{
-        getSesion().close();
+        } finally {
+            getSesion().close();
         }
     }
 
-    
     @Override
     public Job merge(Job o) {
-         try{
+        try {
             operationStart();
-            o = (Job)getSesion().merge(o);
+            o = (Job) getSesion().merge(o);
             getTransac().commit();
-        }
-        catch(HibernateException he){
+        } catch (HibernateException he) {
             handleException(he);
             throw he;
+        } finally {
+            getSesion().close();
         }
-        finally{
-        getSesion().close();
-        }
-         return o;
+        return o;
     }
 
     @Override
     public void delete(Job o) {
-        try{
+        try {
             operationStart();
             getSesion().delete(o);
             getTransac().commit();
-        }
-        catch(HibernateException he){
+        } catch (HibernateException he) {
             handleException(he);
             throw he;
-        }
-        finally{
-        getSesion().close();
+        } finally {
+            getSesion().close();
         }
     }
 
     @Override
     public Job findById(Integer id) {
-         Job job = null;
-         try{
+        Job job = null;
+        try {
             operationStart();
-            job = (Job)getSesion().get(Job.class,id);
+            job = (Job) getSesion().get(Job.class, id);
             getTransac().commit();
-        }
-        catch(HibernateException he){
+        } catch (HibernateException he) {
             handleException(he);
             throw he;
+        } finally {
+            getSesion().close();
         }
-        finally{
-        getSesion().close();
-        }
-         return job;
+        return job;
     }
 
     @Override
     public List<Job> findAll() {
-         List<Job> listJobs = new ArrayList();
-         try{
+        List<Job> listJobs = new ArrayList();
+        try {
             operationStart();
             listJobs = getSesion().createQuery("from Job").list();
             getTransac().commit();
-        }
-        catch(HibernateException he){
+        } catch (HibernateException he) {
             handleException(he);
             throw he;
+        } finally {
+            getSesion().close();
         }
-        finally{
-        getSesion().close();
-        }
-    return listJobs;
+        return listJobs;
     }
-    public ArrayList<Job> findByCategory(String cat,String p){
+
+    public ArrayList<Job> findByCategory(String cat, String p) {
         ArrayList<Job> jobs = new ArrayList();
-        try{
-           operationStart();
-           int percent = Integer.parseInt(p);
-           if(percent != 0){
-           String sql = "select job.idJob,job.name_job,job.description_job,salary,type_job,job.comp,job.status_job from job,jobCategory,category where job.idJob=jobCategory.j and jobCategory.cat = category.idCategory and Job.type_Job= 0 and category.name_category="+"'"+cat+"'and jobCategory.percentage="+String.valueOf(percent)+";";
-           getSesion().createSQLQuery(sql).addEntity(Job.class).list();
-           getTransac().commit();
-           }else{
-           String sql = "select job.idJob,job.name_job,job.description_job,salary,type_job,job.comp,job.status_job from job,jobCategory,category where job.idJob=jobCategory.j and jobCategory.cat = category.idCategory and Job.type_Job= 0 and category.name_category="+"'"+cat+"';";
-            getSesion().createSQLQuery(sql).addEntity(Job.class).list();
-           getTransac().commit();
-           }
-          
-        }
-        catch(HibernateException he){
+        try {
+            operationStart();
+            int percent = Integer.parseInt(p);
+            if (percent != 0) {
+                String sql = "select job.idJob,job.name_job,job.description_job,salary,type_job,job.comp,job.status_job from job,jobCategory,category where job.idJob=jobCategory.j and jobCategory.cat = category.idCategory and Job.type_Job= 0 and category.name_category=" + "'" + cat + "'and jobCategory.percentage=" + String.valueOf(percent) + ";";
+                getSesion().createSQLQuery(sql).addEntity(Job.class).list();
+                getTransac().commit();
+            } else {
+                String sql = "select job.idJob,job.name_job,job.description_job,salary,type_job,job.comp,job.status_job from job,jobCategory,category where job.idJob=jobCategory.j and jobCategory.cat = category.idCategory and Job.type_Job= 0 and category.name_category=" + "'" + cat + "';";
+                getSesion().createSQLQuery(sql).addEntity(Job.class).list();
+                getTransac().commit();
+            }
+
+        } catch (HibernateException he) {
             handleException(he);
             throw he;
-        }
-        finally{
-        getSesion().close();
+        } finally {
+            getSesion().close();
         }
         return jobs;
     }
-    
-     public List<Job> findGeneralByCategory(String cat,String p){
+
+    public List<Job> findGeneralByCategory(String cat, String p) {
         List<Job> jobs = new ArrayList();
-        try{
-           operationStart();
-           int percent = Integer.parseInt(p);
-           if(percent != 0){
-           String sql = "select job.idJob,job.name_job,job.description_job,salary,type_job,job.comp,job.status_job from job,jobCategory,category where job.idJob=jobCategory.j and jobCategory.cat = category.idCategory and category.name_category="+"'"+cat+"'and jobCategory.percentage="+String.valueOf(percent)+";";
-           getSesion().createSQLQuery(sql).addEntity(Job.class).list();
-           getTransac().commit();
-           }else{
-           String sql = "select job.idJob,job.name_job,job.description_job,salary,type_job,job.comp,job.status_job from job,jobCategory,category where job.idJob=jobCategory.j and jobCategory.cat = category.idCategory and category.name_category="+"'"+cat+"';";
-            jobs = getSesion().createSQLQuery(sql).addEntity(Job.class).list();
-           getTransac().commit();
-           }
-          
-        }
-        catch(HibernateException he){
+        List<Job> njobs = new ArrayList();
+        try {
+            operationStart();
+            int percent = Integer.parseInt(p);
+            if (percent != 0) {
+                String sql = "select job.idJob,job.name_job,job.description_job,salary,type_job,job.comp,job.status_job from job,jobCategory,category where job.idJob=jobCategory.j and jobCategory.cat = category.idCategory and category.name_category=" + "'" + cat + "'and jobCategory.percentage=" + String.valueOf(percent) + ";";
+                getSesion().createSQLQuery(sql).addEntity(Job.class).list();
+                getTransac().commit();
+            } else {
+                String sql = "select job.idJob,job.name_job,job.description_job,salary,type_job,job.comp,job.status_job from job,jobCategory,category where job.idJob=jobCategory.j and jobCategory.cat = category.idCategory and category.name_category=" + "'" + cat + "';";
+                jobs = getSesion().createSQLQuery(sql).addEntity(Job.class).list();
+                getTransac().commit();
+            }
+
+        } catch (HibernateException he) {
             handleException(he);
             throw he;
+        } finally {
+            getSesion().close();
         }
-        finally{
-        getSesion().close();
-        }
-        return jobs;
+        return jobs;//retorno la lista con objetos completos
     }
-    public List<Job> giveTop5(){
+
+    public List<Job> giveTop5() {
         List<Job> top = new ArrayList();
-        try{
-           operationStart();
-           top = getSesion().createSQLQuery("select *from job where type_Job = 'public' and status_Job = 1 order by idJob DESC limit 5;").addEntity(Job.class).list();
-           getTransac().commit();
-        }
-        catch(HibernateException he){
+        try {
+            operationStart();
+            top = getSesion().createSQLQuery("select *from job where type_Job = 'public' and status_Job = 1 order by idJob DESC limit 5;").addEntity(Job.class).list();
+            getTransac().commit();
+        } catch (HibernateException he) {
             handleException(he);
             throw he;
-        }
-        finally{
-        getSesion().close();
+        } finally {
+            getSesion().close();
         }
         return top;
     }
+
     //NUEVA PROPIEDAD PARA LA FUNCIONALIDAD DE BUSQUEDA DE COMPAÑIA POR PUESTO
-    public Job giveJobComplete(int idJob){
-       Job job = new Job();
-       List<Job> jl = new ArrayList();
-        try{
-           operationStart();
-           String sql = "select *from job j inner join company c on j.comp = c.idCompany where j.idJob like "+idJob+";";
-           jl =  getSesion().createSQLQuery(sql).addEntity(Job.class).list();
-           job=jl.get(0);
-           getTransac().commit();
-        }
-        catch(HibernateException he){
+    public Job giveJobComplete(int idJob) {
+        Job job = new Job();
+        List<Job> jl = new ArrayList();
+        try {
+            operationStart();
+            String sql = "select *from job j inner join company c on j.comp = c.idCompany where j.idJob like " + idJob + ";";
+            jl = getSesion().createSQLQuery(sql).addEntity(Job.class).list();
+            job = jl.get(0);
+            getTransac().commit();
+        } catch (HibernateException he) {
             handleException(he);
             throw he;
-        }
-        finally{
-        getSesion().close();
+        } finally {
+            getSesion().close();
         }
         return job;
     }
