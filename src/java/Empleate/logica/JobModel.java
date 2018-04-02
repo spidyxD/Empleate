@@ -54,10 +54,17 @@ public class JobModel {
         return null;
     }
       public List findGeneralJobByCategory(String c,String id) throws Exception{
+        List<Job> jobs = jDAO.findGeneralByCategory(c, id);
+        List<Job> njobs = new ArrayList();
         try{
-        return jDAO.findGeneralByCategory(c, id);
+            for (int i = 0; i < jobs.size(); i++) {
+                int idJ = jobs.get(i).getIdJob();
+                Job nj = this.giveJobComplete(idJ);
+                njobs.add(nj);
+            }
+            return njobs;
         }catch(Exception e ){}
-        return null;
+            return null;
     }
     public List<Job> findAllJobs() throws Exception{
         try{

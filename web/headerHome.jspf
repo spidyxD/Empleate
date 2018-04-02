@@ -22,8 +22,7 @@
                 <% Offerer o= (Offerer) session.getAttribute("offerer");%>
                 <% Manager m= (Manager) session.getAttribute("manager");%>
               
-          <li><input id="icon_prefix" type="text" class="validate"></li>
-          <li><a href="#"><i class="material-icons right">search</i></a></li>
+          <li><a class="btn" href="busquedaForm.jsp">Buscar</a></li>
           <% if (l!=null){%>
           <% if(l.getType_log().equals("company")){ %>
           <li style="display: flex "><img class="inline" style="width: 30px; height: 40px;" src="images/company.png" alt="company"><a href="#">usuario: <%=c.getNameCompany()%>/  email: <%= c.getEmail() %></a>
