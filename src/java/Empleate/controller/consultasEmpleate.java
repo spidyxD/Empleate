@@ -5,6 +5,7 @@
  */
 package Empleate.controller;
 
+import Empleate.domain.Job;
 import Empleate.logica.JobModel;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,14 +53,19 @@ public class consultasEmpleate extends HttpServlet {
     }
 
     private void doSearchPublicJobsByCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try{ 
-        HttpSession s =  request.getSession( true);
-        ArrayList jobs = new ArrayList();
-        String p = request.getParameter("percentage");
-        jobs = JobModel.instance().findJobByCategory(request.getParameter("category"),p);
-        s.setAttribute("jobsByCategory", jobs);
-         request.getRequestDispatcher("main.jsp").
-                forward( request, response);
+       try{ 
+            HttpSession s =  request.getSession( true);
+            List<Job> jobs = new ArrayList<Job>();
+            String select[] = request.getParameterValues("cbx"); //trae todos los checks que fueron checked
+            //String p = request.getParameter("percentage");
+            if (select != null && select.length != 0) {
+                for (int i = 0; i < select.length; i++) {
+                    jobs.addAll(JobModel.instance().findGeneralJobByCategory(select[i],"0"));
+                }
+            }
+            request.setAttribute("jobs", jobs);//jobsByCategory
+            request.getRequestDispatcher("ResultadosBusquedas.jsp").
+                    forward( request, response);
         }catch(Exception e){
             String error = e.getMessage();
             request.setAttribute("error",error);
