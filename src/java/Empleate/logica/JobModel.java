@@ -68,4 +68,8 @@ public class JobModel {
      public List<Job> top5() throws Exception{//para el carusel
         return jDAO.giveTop5();
     }
+    
+    public Job giveJobComplete(int id){
+        return jDAO.giveJobComplete(id);
+    }
 }

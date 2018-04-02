@@ -5,6 +5,7 @@
  */
 package Empleate.dao;
 
+import Empleate.domain.Company;
 import Empleate.domain.Job;
 import Empleate.utils.HibernateUtil;
 import java.util.ArrayList;
@@ -168,5 +169,25 @@ public class jobDAO extends HibernateUtil implements IBaseDAO <Job, Integer> {
         getSesion().close();
         }
         return top;
+    }
+    //NUEVA PROPIEDAD PARA LA FUNCIONALIDAD DE BUSQUEDA DE COMPAÑIA POR PUESTO
+    public Job giveJobComplete(int idJob){
+       Job job = new Job();
+       List<Job> jl = new ArrayList();
+        try{
+           operationStart();
+           String sql = "select *from job j inner join company c on j.comp = c.idCompany where j.idJob like "+idJob+";";
+           jl =  getSesion().createSQLQuery(sql).addEntity(Job.class).list();
+           job=jl.get(0);
+           getTransac().commit();
+        }
+        catch(HibernateException he){
+            handleException(he);
+            throw he;
+        }
+        finally{
+        getSesion().close();
+        }
+        return job;
     }
 }

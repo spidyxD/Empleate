@@ -56,6 +56,9 @@ public class TESTMYOWN {
         String descript = "lol";
         String addres = "lagunilla";
         String phone = "506 52156";
+        JobModel jm = new JobModel();
+        Job j = new Job();
+        j = jm.giveJobComplete(1);
         
        /* c.setNameCompany(name);
         c.setEmail(email);
@@ -74,5 +77,6 @@ public class TESTMYOWN {
        
         cm.addCompany(c);*/
        System.out.println(lm.findLoginByData(user, key).getUsername());
+       System.out.println(j.getCompany().getDescription());
     }
 }
