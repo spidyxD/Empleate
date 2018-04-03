@@ -103,7 +103,68 @@ public class categoryDAO extends HibernateUtil implements IBaseDAO <Category, In
         }
     return listCategories;
     }
+    public List<Category> giveParentRoots(){
+      List<Category> cl = new ArrayList();
+      String sql = "select *from category where parentCategory IS NULL ;";
+        try{
+            operationStart();
+            cl = getSesion().createSQLQuery(sql).addEntity(Category.class).list();
+            getTransac().commit();
+        }
+        catch(HibernateException he){
+            handleException(he);
+            throw he;
+        }
+        finally{
+        getSesion().close();
+        }
+      return cl;
+  }
+  /*public List<Category> giveParentCategories(){
+      List<Category> cl = new ArrayList();
+      String sql = "select *from category where categ IS NULL OR parentCategory = idCategory;";
+        try{
+            operationStart();
+            cl = getSesion().createSQLQuery(sql).addEntity(Category.class).list();
+            getTransac().commit();
+        }
+        catch(HibernateException he){
+            handleException(he);
+            throw he;
+        }
+        finally{
+        getSesion().close();
+        }
+      return cl;
+  }*/
+ 
+  public List<Category> giveChildCategory(int idParent){
+      List<Category> cl = new ArrayList();
+       String sqlT = "select  idCategory, name_Category, parentCategory from (select * from category order by parentCategory, idCategory) category_sorted,(select @pv \\:="+ idParent + ") initialisation where find_in_set(parentCategory, @pv) and length(@pv \\:= concat(@pv, ',', idCategory));";
 
+      
+      String sql = "select  idCategory,\n" +
+        " name_Category,\n" +
+        " parentCategory \n" +
+        " from (select * from category\n" +
+        " order by parentCategory, idCategory) category_sorted,\n" +
+        " (select @pv \\:=" + " '"+idParent+"'"+") initialisation\n" +
+        "where find_in_set(parentCategory, @pv)\n" +
+        "and length(@pv \\:= concat(@pv, ',', idCategory));";
+        try{
+            operationStart();
+            cl = getSesion().createSQLQuery(sql).addEntity(Category.class).list();
+            getTransac().commit();
+        }
+        catch(HibernateException he){
+            handleException(he);
+            throw he;
+        }
+        finally{
+        getSesion().close();
+        }
+      return cl;
+  }
   
-    
+
 }

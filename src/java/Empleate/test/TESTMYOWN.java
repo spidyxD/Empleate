@@ -15,7 +15,9 @@ import Empleate.logica.jobCategoryModel;
 import Empleate.logica.CategoryModel;
 import Empleate.logica.CompanyModel;
 import Empleate.logica.LoginModel;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 /**
  *
@@ -33,7 +35,7 @@ public class TESTMYOWN {
         //jcm.deleteJobCategory(jc2);
         //String info = jm.top5().get(1).getNameJob();
         //System.out.println(info);*/
-        Company c = new Company();
+       /* Company c = new Company();
         Login l = new Login();
         
         CompanyModel cm = new CompanyModel();
@@ -76,7 +78,15 @@ public class TESTMYOWN {
         c.setJobs(jobs);
        
         cm.addCompany(c);*/
-       System.out.println(lm.findLoginByData(user, key).getUsername());
-       System.out.println(j.getCompany().getDescription());
+      /* System.out.println(lm.findLoginByData(user, key).getUsername());
+       System.out.println(j.getCompany().getDescription());*/
+      
+      CategoryModel cm = new CategoryModel();
+      List<Category> cl = new ArrayList();
+      cl = cm.giveChilds(3);
+      for(Category c:cl){
+          System.out.println(c.getNameCategory());
+      }
+      
     }
 }
