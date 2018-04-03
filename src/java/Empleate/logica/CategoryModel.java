@@ -8,6 +8,7 @@ import Empleate.dao.categoryDAO;
 import Empleate.domain.Category;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.List;
 /**
  *
  * @author Addiel
@@ -45,6 +46,13 @@ public class CategoryModel {
          ArrayList<Category> listCategory = new ArrayList<Category>(catDAO.findAll());
          return listCategory;
      }
-   
+    
+   /* METODOS NECESARIOS PARA EL Arbol MYSQL  */ 
+   public List<Category> giveRootParents(){
+        return catDAO.giveParentRoots();
+   }
+   public List<Category> giveChilds(int parent){
+        return catDAO.giveChildCategory(parent);
+   }
     
 }//fin clase

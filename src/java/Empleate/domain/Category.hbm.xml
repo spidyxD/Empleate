@@ -9,7 +9,7 @@
             <generator class="assigned" />
         </id>
         <many-to-one name="category" class="Empleate.domain.Category" fetch="select">
-            <column name="categ" />
+            <column name="parentCategory" />
         </many-to-one>
         <property name="nameCategory" type="string">
             <column name="name_Category" length="45" />
