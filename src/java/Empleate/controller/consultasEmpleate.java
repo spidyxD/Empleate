@@ -23,7 +23,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Addiel
  */
-@WebServlet(name = "consultasEmpleate", urlPatterns = {"consultasEmpleateJobsByCategory","/consultasEmpleateJobsByLocation","consultasEmpleateAllJobsByCategory","/consultasEmpleateAllJobsByLocation","/desplegar"})
+@WebServlet(name = "consultasEmpleate", urlPatterns = {"consultasEmpleateJobsByCategory","/iniciar","/consultasEmpleateJobsByLocation","consultasEmpleateAllJobsByCategory","/consultasEmpleateAllJobsByLocation","/desplegar"})
 public class consultasEmpleate extends HttpServlet {
 
     /**
@@ -37,6 +37,8 @@ public class consultasEmpleate extends HttpServlet {
      */
     
     List<Category> resumen = new ArrayList<Category>();
+    List<Category> hijosFijos = new ArrayList<Category>();
+    List<Category> roots=CategoryModel.instance().giveRootParents();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
          switch(request.getServletPath()){
@@ -55,16 +57,32 @@ public class consultasEmpleate extends HttpServlet {
             case "/desplegar":
                 this.doDesplegar(request,response);
                 break;
+            case "/iniciar":
+                this.iniciar(request,response);
+                break;
         }
     }
 
     private void doSearchPublicJobsByCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        try{ 
             HttpSession s =  request.getSession( true);
-            List<Category> cat = new ArrayList<Category>();
+            List<Category> cat = 
             //String p = request.getParameter("percentage");
             cat = CategoryModel.instance().giveChilds(1);//1 por programacion perrito
             s.setAttribute("cat", cat);
+            request.getRequestDispatcher("busquedaForm.jsp").
+                    forward( request, response);
+        }catch(Exception e){
+            String error = e.getMessage();
+            request.setAttribute("error",error);
+            request.getRequestDispatcher("Error.jsp").forward(request, response);
+            
+        }
+    }
+private void iniciar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+       try{ 
+            HttpSession s =  request.getSession( true);
+            request.setAttribute("roots", roots);
             request.getRequestDispatcher("busquedaForm.jsp").
                     forward( request, response);
         }catch(Exception e){
@@ -80,9 +98,13 @@ public class consultasEmpleate extends HttpServlet {
             List<Category> cat = new ArrayList<Category>();
             String aux = request.getParameter("papa");
             cat = CategoryModel.instance().giveChilds(Integer.parseInt(aux));
+            roots.addAll(cat);
             resumen.add(CategoryModel.instance().findCategoryById(Integer.parseInt(aux)));
+            request.setAttribute("roots", roots);
             request.setAttribute("cat", cat);
             request.setAttribute("resumen", resumen);
+            //hijosFijos.addAll(cat);
+            //request.setAttribute("hijosFijos", hijosFijos);
             request.getRequestDispatcher("busquedaForm.jsp").
                     forward( request, response);
         }catch(Exception e){

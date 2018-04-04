@@ -46,6 +46,10 @@
         <servlet-name>consultasEmpleate</servlet-name>
         <url-pattern>/consultasEmpleate</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>consultasEmpleate</servlet-name>
+        <url-pattern>/iniciar</url-pattern>
+    </servlet-mapping>
      <servlet-mapping>
         <servlet-name>consultasEmpleate</servlet-name>
         <url-pattern>/desplegar</url-pattern>
