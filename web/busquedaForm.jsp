@@ -4,6 +4,7 @@
     Author     : Andrés Gutiérrez
 --%>
 
+<%@page import="java.util.List"%>
 <%@page import="Empleate.domain.Category"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Empleate.logica.CategoryModel"%>
@@ -17,52 +18,39 @@
     </head>
     <body>
         <%@ include file="header.jspf" %>
-        <div class="row">
-            <div class="cuerpo container">
-               <h2 class="col s12">Busqueda por categoria<h2>
-                       <h4>Categorias</h4>
-                <form action="consultasEmpleateJobsByCategory" method="post">
-                    <%ArrayList<Category> ct = CategoryModel.instance().findAllCategories(); %>
-                    <%for(int i=0;i<ct.size();i++){%>
-                    <p>
-                        <label>
-                            <input type="checkbox" name="cbx" onclick="myFunction()" value="<%=ct.get(i).getNameCategory()%>" id="<%=ct.get(i).getNameCategory()%>">
-                            <span><%=ct.get(i).getNameCategory()%></span>
-                            <%}%>
-                        </label>
-                    </p>
-                      <div class="input-field col s12">
-                        <input class="btn"  type="submit" value="Buscar">
-                      </div>
-                </form>
-            </div>
-        </div>
+        <jsp:useBean id="cat" scope="request" type="List<Category>" class="java.util.ArrayList"/>
+        <jsp:useBean id="resumen" scope="request" type="List<Category>" class="java.util.ArrayList"/>
+        <%List<Category> ls =CategoryModel.instance().giveRootParents();%>
+           <%for (Category j : ls) {%>
+                    <div>
+                        <ul>
+                            <li><a href="desplegar?papa=<%=j.getIdCategory()%>"><%=j.getNameCategory()%></a><li>
+                            <%for (Category h : cat) {//hijos%>
+                                <%if(cat.size()>0 && h.getCategory().getIdCategory()==j.getIdCategory()){%>
+                                <ul>
+                                    <li><a href="desplegar?papa=<%=h.getIdCategory()%>"><%=h.getNameCategory()%></a></li>
+                                </ul>
+                                <%}%>
+                        </ul>
+                    </div>
+             <%}%>
+           <%}%>
+           <div class="resumen">
+            <%for(Category j : resumen){%>
+            <p><%=j.getNameCategory()%></p>
+            <%}%>
+           </div>
     </div>
 </div>
 <%@ include file="footer.jspf" %>
 </body>
 </html>
 
-<script type="text/javascript">
-function myFunction() {
-    /*var newE = document.createElement("input"); 
-    newE.setAttribute("type", "text");
-    var newContent = document.createTextNode("sexo"); 
-    //newE.appendChild(newContent);
-   
-    var x = document.getElementsByName("cbx");
-    var current = document.getElementById("demo"); //x[0].value
-    //document.body.insertBefore(newE, current);
-    current.appendChild(newE); 
-    var i;
-    for(i=0;i<x.length;i++) {
-        if(x[0].checked){
-            var current = document.getElementById(x[i].value); 
-            //document.body.insertBefore(newE, current);
-            current.appendChild(newE); 
-            //return x[i].value;
-        }
-    }*/
-   // return "";
-}
-</script>
+<style>
+    .resumen{
+        text-align: right;
+        background-color: green;
+        height: 200px;
+        color: white;
+    }
+</style>

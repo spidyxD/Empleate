@@ -5,9 +5,12 @@
  */
 package Empleate.test;
 
+import Empleate.domain.Category;
 import Empleate.domain.Job;
+import Empleate.logica.CategoryModel;
 import Empleate.logica.JobModel;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -15,11 +18,10 @@ import java.util.ArrayList;
  */
 public class TEST2 {
     public static void main(String[] arg) throws Exception{
-        JobModel jM = new JobModel();
-        ArrayList<Job> js = (ArrayList<Job>) jM.top5();
-        for (int i = 0; i < js.size(); i++) {
-            System.out.println(js.get(i).getNameJob());
-        }     
+        List<Category> ls =CategoryModel.instance().giveChilds(4);
+        for (int i = 0; i < ls.size(); i++) {
+            System.out.println(ls.get(i).getNameCategory());
+        }
                
     }
     

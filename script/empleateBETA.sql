@@ -1,6 +1,6 @@
 -- MySQL Workbench Forward Engineering
 
-DROP IF EXISTS DATABASE empleateBETA;
+DROP DATABASE empleateBETA;
 CREATE DATABASE empleateBETA;
 USE empleateBETA ;
 
@@ -15,22 +15,38 @@ DROP TABLE Offerer;
 
 
 -- -----------------------------------------------------
+-- Table  login
+-- -----------------------------------------------------
+
+
+CREATE TABLE Login (
+  idLogin INT NOT NULL AUTO_INCREMENT,
+  username VARCHAR(45) NULL,
+  password VARCHAR(45) NULL,
+  type_log VARCHAR(45) NULL,
+  enable INT,
+  PRIMARY KEY (idLogin));
+
+-- -----------------------------------------------------
 -- Table manager
 -- -----------------------------------------------------
 
 
 CREATE TABLE Manager (
-  email VARCHAR(45) NULL,
-  idManager INT NOT NULL,
-  PRIMARY KEY ( idManager));
+  idManager INT NOT NULL AUTO_INCREMENT,
+  email VARCHAR(45),
+  login INT NOT NULL,
+  PRIMARY KEY (idManager),
+  CONSTRAINT fkManager FOREIGN KEY (login) REFERENCES Login(idLogin));
 
 
 -- -----------------------------------------------------
 -- Table Company
 -- -----------------------------------------------------
 
+
 CREATE TABLE Company (
-  idCompany INT NOT NULL,
+  idCompany INT NOT NULL  AUTO_INCREMENT,
   name_company VARCHAR(45) NULL,
   email VARCHAR(45) NULL,
   phone VARCHAR(45) NULL,
@@ -38,7 +54,9 @@ CREATE TABLE Company (
   location_X float,
   location_Y float,
   address VARCHAR(45) NULL,
-  PRIMARY KEY (idCompany));
+  login INT NOT NULL,
+  PRIMARY KEY (idCompany),
+  CONSTRAINT fkCompany FOREIGN KEY (login) REFERENCES Login(idLogin));
 
 
 -- -----------------------------------------------------
@@ -47,39 +65,19 @@ CREATE TABLE Company (
 
 
 CREATE TABLE Offerer( 
-  idOfferer INT NOT NULL,
+  idOfferer INT NOT NULL AUTO_INCREMENT,
   name_offerer VARCHAR(45) NULL,
   lastname VARCHAR(45) NULL,
   nationality VARCHAR(45) NULL,
   email VARCHAR(45) NULL,
   phone VARCHAR(45) NULL,
   residence VARCHAR(45) NULL,
-  PRIMARY KEY (idOfferer));
+  login INT NOT NULL,
+  PRIMARY KEY (idOfferer),
+   CONSTRAINT fkOfferer FOREIGN KEY (login) REFERENCES Login(idLogin));
 
 
--- -----------------------------------------------------
--- Table  login
--- -----------------------------------------------------
 
-
-CREATE TABLE Login (
-  idLogin INT NOT NULL,
-  username VARCHAR(45) NULL,
-  password_log VARCHAR(45) NULL,
-  type_Log VARCHAR(45) NULL,
-  manag INT NOT NULL,
-  comp INT NOT NULL,
-  offer INT NOT NULL,
-  PRIMARY KEY (idLogin),
-  CONSTRAINT fk_Login_Manager1
-    FOREIGN KEY (manag)
-    REFERENCES  manager (idManager),
-  CONSTRAINT fk_Login_Company1
-    FOREIGN KEY (comp)
-    REFERENCES  company (idCompany),
-  CONSTRAINT fk_Login_Offerer1
-    FOREIGN KEY (offer)
-    REFERENCES  offerer (idOfferer));
 
 -- -----------------------------------------------------
 -- Table  job
@@ -87,7 +85,7 @@ CREATE TABLE Login (
 
 
 CREATE TABLE Job (
-  idJob INT NOT NULL,
+  idJob INT NOT NULL AUTO_INCREMENT,
   name_Job VARCHAR(45) NULL,
   description_Job VARCHAR(45) NULL,
   salary INT NULL,
@@ -106,12 +104,12 @@ CREATE TABLE Job (
 
 
 CREATE TABLE Category (
-  idCategory INT NOT NULL,
+  idCategory INT NOT NULL AUTO_INCREMENT,
   name_Category VARCHAR(45) NULL,
-  categ INT NULL,
+  parentCategory INT NULL,
   PRIMARY KEY (idCategory),
   CONSTRAINT fk_Category_Category1
-    FOREIGN KEY (categ)
+    FOREIGN KEY (parentCategory)
     REFERENCES Category (idCategory));
 
 
@@ -153,38 +151,54 @@ CREATE TABLE offerCategory (
 	-- -----------------------------------------------------
 -- TValores para las tablas
 -- -----------------------------------------------------
-
-
- insert into Manager (idManager,email) values (001,'BDA@system.com');
- insert into Manager (idManager,email) values(002, 'm@gmail.com');
+insert into Login(username,password,type_log,enable) values ('SYS_BDA','adm001','manager',1);
+insert into Login(username,password,type_log,enable) values ('ICODER_CR','comp001','company',1);
+insert into Login(username,password,type_log,enable) values ('ICAFE_CR','comp002','company',1);
+insert into Login(username,password,type_log,enable) values ('INTEL_CO','comp003','company',1);
+insert into Login(username,password,type_log,enable) values ('HP_INC','comp004','company',1);
+insert into Login(username,password,type_log,enable) values ('SAMSUNG_INC','comp005','company',1);
+insert into Login(username,password,type_log,enable) values ('MUNI_HERED','comp006','company',1);
+insert into Login(username,password,type_log,enable) values ('andres_G','user001','offerer',1);
+insert into Login(username,password,type_log,enable) values ('spidyxD','user002','offerer',1);
  
-insert into Company (idCompany,name_company,email,phone,description,location_X,location_Y,address) values(006,'ICODER','ICODER.COM','123456','KKKJJJJ',100.96,93.58,'');
- insert into Company (idCompany,name_company,email,phone,description,location_X,location_Y,address) values(005,'ICAFE','ICAFE.COM','2651556','CVDVEDVF',58.15,74.26,'');
- insert into Company (idCompany,name_company,email,phone,description,location_X,location_Y,address) values(003,'INTEL','INTEL.COM','1274513456','CDVGFD',89.25,24.36,'');
- insert into Company (idCompany,name_company,email,phone,description,location_X,location_Y,address) values(004,'HP','HP.COM','51165151','ERFVVD',561.58,15.36,'');
- insert into Company (idCompany,name_company,email,phone,description,location_X,location_Y,address) values (001,'ICAFE','icafe@gmail.com','123456','Instituto del Cafe',835.36,58.12,'') ;
- insert into Company (idCompany,name_company,email,phone,description,location_X,location_Y,address) values (002,'Municipalidad','muni@gmail.com','789456','MunicipalidadHeredia',45.36,12.45,'') ;
+ insert into Manager (email,login) values ('BDA@system.com',1);
  
-update Company set address ='SABANA' where idCompany = 006;
-update Company set address ='SANTA BARBARA' where idCompany = 005;
-update Company set address ='LAGUNILLA' where idCompany = 003;
-update Company set address ='SANTA CECILIA' where idCompany = 004;
-update Company set address ='HEREDIA' where idCompany = 002;
+ insert into Company (name_company,email,phone,description,location_X,location_Y,address,login) values('ICODER','ICODER.COM','123456','KKKJJJJ',100.96,93.58,'',2);
+ insert into Company (name_company,email,phone,description,location_X,location_Y,address,login) values('ICAFE','ICAFE.COM','2651556','CVDVEDVF',58.15,74.26,'',3);
+ insert into Company (name_company,email,phone,description,location_X,location_Y,address,login) values('INTEL','INTEL.COM','1274513456','CDVGFD',89.25,24.36,'',4);
+ insert into Company (name_company,email,phone,description,location_X,location_Y,address,login) values('HP','HP.COM','51165151','ERFVVD',561.58,15.36,'',5);
+ insert into Company (name_company,email,phone,description,location_X,location_Y,address,login) values ('SAMSUNG','samsung.com','123456','Instituto del Cafe',835.36,58.12,'',6) ;
+ insert into Company (name_company,email,phone,description,location_X,location_Y,address,login) values ('Municipalidad','muni@gmail.com','789456','MunicipalidadHeredia',45.36,12.45,'',7) ;
+ 
+update Company set address ='SABANA' where idCompany = 6;
+update Company set address ='SANTA BARBARA' where idCompany = 5;
+update Company set address ='LAGUNILLA' where idCompany = 3;
+update Company set address ='SANTA CECILIA' where idCompany = 4;
+update Company set address ='HEREDIA' where idCompany = 2;
+update Company set address ='BARVA' where idCompany = 1;
 
-insert into Job (idJob, name_Job, description_Job,salary, type_Job, comp, status_Job) values(561,'Designer','Designing is life',350000,'private',001, 0); 
-insert into Job (idJob, name_Job, description_Job,salary, type_Job, comp, status_Job) values(255,'Programmer','Junior Java',250000,'public',001,1);
-insert into Job (idJob, name_Job, description_Job,salary, type_Job, comp, status_Job) values(124,'DBA','Do not touch my data base',450000,'pubic',002, 1); 
-insert into Job (idJob, name_Job, description_Job,salary, type_Job, comp, status_Job) values(962,'Tecnical support','I can fix but is not free',550000,'private',002, 0); 
-insert into Job (idJob, name_Job, description_Job,salary, type_Job, comp, status_Job) values(586,'Developer','Junior Java',3750000,'public',003,1);
+insert into Job (name_Job, description_Job,salary, type_Job, comp, status_Job) values('Designer','Designing is life',350000,'public',1, 1); 
+insert into Job (name_Job, description_Job,salary, type_Job, comp, status_Job) values('Programmer','Junior Java',250000,'public',1,1);
+insert into Job (name_Job, description_Job,salary, type_Job, comp, status_Job) values('DBA','Do not touch my data base',450000,'public',2, 1); 
+insert into Job (name_Job, description_Job,salary, type_Job, comp, status_Job) values('Tecnical support','I can fix but is not free',550000,'public',2, 1); 
+insert into Job (name_Job, description_Job,salary, type_Job, comp, status_Job) values('Developer','Junior Java',3750000,'public',3,1);
 
-insert into Offerer (idOfferer, name_offerer, lastname, nationality, phone, email, residence) values (111,'Andres','Gutierrez','CR','61688613','a@gmail.com','Heredia');
-insert into Offerer (idOfferer, name_offerer, lastname, nationality, phone, email, residence) values (222,'Roger','Amador','CR','83656107','r@gmail.com','Desamparados');
+insert into Offerer (name_offerer, lastname, nationality, phone, email, residence,login) values ('Andres','Gutierrez','CR','61688613','a@gmail.com','Heredia',8);
+insert into Offerer (name_offerer, lastname, nationality, phone, email, residence,login) values ('Roger','Amador','CR','83656107','r@gmail.com','Desamparados',9);
 
-insert into Category (idCategory, name_Category) values('506','JAVA');
-insert into Category (idCategory, name_Category) values('896','BOOTSTRAP');
+insert into Category (parentCategory,name_Category) values(null,'PROGRAMACION');
+ insert into Category (parentCategory,name_Category) values(null,'Diseño WEB');  
+ insert into Category (parentCategory,name_Category) values(null,'REDES');  
+insert into Category (parentCategory,name_Category) values(1,'JAVA');
+insert into Category (parentCategory,name_Category) values(2,'BOOTSTRAP');
+insert into Category (parentCategory,name_Category) values(3,'CISCO');
 
-insert into jobCategory (j, cat, percentage)values(255,506,85);
-insert into jobCategory (j, cat, percentage)values(561,896,90);
 
-insert into offerCategory (offer, cat, percentage)values(111,506,90);
-insert into offerCategory (offer, cat, percentage)values(222,896,90);
+insert into jobCategory (j, cat, percentage)values(1,2,85);
+insert into jobCategory (j, cat, percentage)values(2,1,90);
+
+insert into offerCategory (offer, cat, percentage)values(1,2,90);
+insert into offerCategory (offer, cat, percentage)values(2,1,90);
+
+
+
