@@ -19,7 +19,7 @@
      <div class="row">
     <div class="area" style="width:100%">   
         <div style="color:black; font-size: 40px;"> <%=error%></div>
-        <div style="color:red; font-size: 40px;"> Nombre de usuario o contraseña incorrecta o no existe intente  <a href="Home.jsp"> ingresar</a> de nuevo</div><br>
+        <div style="color:red; font-size: 40px;"> Nombre de usuario o contraseña incorrecta o no existe intente  <a href="Home"> ingresar</a> de nuevo</div><br>
         <img src="images/notFound.jpg" alt="ERROR" width=100% height=100%>  
     
     </div>
