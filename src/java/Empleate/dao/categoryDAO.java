@@ -7,10 +7,8 @@ package Empleate.dao;
 
 import Empleate.domain.Category;
 import Empleate.utils.HibernateUtil;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import static javassist.CtMethod.ConstParameter.integer;
 import org.hibernate.HibernateException;
 
 /**
