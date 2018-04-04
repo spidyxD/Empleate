@@ -5749,8 +5749,9 @@ button.btn-floating {
   right: 0;
   background-color: #fafafa;
   padding: 0;
-  max-height: 70%;
-  width: 55%;
+  max-height: 200%;
+  width: 450px;
+  height: 500px;
   margin: auto;
   overflow-y: auto;
   border-radius: 2px;
