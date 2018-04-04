@@ -63,7 +63,7 @@
     left: 0;
     top: 0;
     width: 450px;
-    height: 400px;
+    height: 4750px;
     background-color:#53167db3;
     opacity: 0.2;
     overflow: auto; /* Enable scroll if needed */
@@ -80,5 +80,7 @@
 .modal.open{
     background-color:#53167dcc;
     border-radius: 15px;
+    width: 450px;
+    height: 500px;
 }
 </style>

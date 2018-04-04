@@ -5,7 +5,9 @@
  */
 package Empleate.controller;
 
+import Empleate.domain.Category;
 import Empleate.domain.Job;
+import Empleate.logica.CategoryModel;
 import Empleate.logica.JobModel;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Addiel
  */
-@WebServlet(name = "consultasEmpleate", urlPatterns = {"consultasEmpleateJobsByCategory","/consultasEmpleateJobsByLocation","consultasEmpleateAllJobsByCategory","/consultasEmpleateAllJobsByLocation"})
+@WebServlet(name = "consultasEmpleate", urlPatterns = {"consultasEmpleateJobsByCategory","/consultasEmpleateJobsByLocation","consultasEmpleateAllJobsByCategory","/consultasEmpleateAllJobsByLocation","/desplegar"})
 public class consultasEmpleate extends HttpServlet {
 
     /**
@@ -33,6 +35,8 @@ public class consultasEmpleate extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
+    List<Category> resumen = new ArrayList<Category>();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
          switch(request.getServletPath()){
@@ -43,11 +47,13 @@ public class consultasEmpleate extends HttpServlet {
                 this.doSearchPublicJobsByLocate(request,response);
                 break;
             case "/consultasEmpleateAllJobsByCategory":
-                //if(request.getSession().)
                 this.doSearchGeneralJobsByCategory(request,response);
                 break;
             case "/consultasEmpleateAllJobsByLocation":
                 this.doSearchGeneralJobsByLocate(request,response);
+                break;
+            case "/desplegar":
+                this.doDesplegar(request,response);
                 break;
         }
     }
@@ -55,16 +61,29 @@ public class consultasEmpleate extends HttpServlet {
     private void doSearchPublicJobsByCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        try{ 
             HttpSession s =  request.getSession( true);
-            List<Job> jobs = new ArrayList<Job>();
-            String select[] = request.getParameterValues("cbx"); //trae todos los checks que fueron checked
+            List<Category> cat = new ArrayList<Category>();
             //String p = request.getParameter("percentage");
-            if (select != null && select.length != 0) {
-                for (int i = 0; i < select.length; i++) {
-                    jobs.addAll(JobModel.instance().findGeneralJobByCategory(select[i],"0"));
-                }
-            }
-            request.setAttribute("jobs", jobs);//jobsByCategory
-            request.getRequestDispatcher("ResultadosBusquedas.jsp").
+            cat = CategoryModel.instance().giveChilds(1);//1 por programacion perrito
+            s.setAttribute("cat", cat);
+            request.getRequestDispatcher("busquedaForm.jsp").
+                    forward( request, response);
+        }catch(Exception e){
+            String error = e.getMessage();
+            request.setAttribute("error",error);
+            request.getRequestDispatcher("Error.jsp").forward(request, response);
+            
+        }
+    }
+    private void doDesplegar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+       try{ 
+            HttpSession s =  request.getSession( true);
+            List<Category> cat = new ArrayList<Category>();
+            String aux = request.getParameter("papa");
+            cat = CategoryModel.instance().giveChilds(Integer.parseInt(aux));
+            resumen.add(CategoryModel.instance().findCategoryById(Integer.parseInt(aux)));
+            request.setAttribute("cat", cat);
+            request.setAttribute("resumen", resumen);
+            request.getRequestDispatcher("busquedaForm.jsp").
                     forward( request, response);
         }catch(Exception e){
             String error = e.getMessage();
