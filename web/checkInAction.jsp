@@ -57,7 +57,7 @@
     left: 0;
     top: 0;
     width: 450px;
-    height: 400px;
+    height: 500px;
     background-color:#53167dcc;
     overflow: auto; /* Enable scroll if needed */
 }

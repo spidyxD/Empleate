@@ -106,7 +106,7 @@ public class login extends HttpServlet {
                      c =CompanyModel.instance().findCompanyByIdLogin(String.valueOf(l.getIdLogin()));
                      s.setAttribute("company", c);
                      s.setAttribute("login", l);
-                     request.getRequestDispatcher("Home.jsp").forward( request, response);
+                     request.getRequestDispatcher("Home").forward( request, response);
                  break;
                  case "offerer":
                      Offerer o = new Offerer();
