@@ -18,30 +18,28 @@
     </head>
     <body>
         <%@ include file="header.jspf" %>
+        <jsp:useBean id="roots" scope="request" type="List<Category>" class="java.util.ArrayList"/>
         <jsp:useBean id="cat" scope="request" type="List<Category>" class="java.util.ArrayList"/>
         <jsp:useBean id="resumen" scope="request" type="List<Category>" class="java.util.ArrayList"/>
-        <%List<Category> ls =CategoryModel.instance().giveRootParents();%>
-           <%for (Category j : ls) {%>
-                    <div>
-                        <ul>
-                            <li><a href="desplegar?papa=<%=j.getIdCategory()%>"><%=j.getNameCategory()%></a><li>
-                            <%for (Category h : cat) {//hijos%>
-                                <%if(cat.size()>0 && h.getCategory().getIdCategory()==j.getIdCategory()){%>
-                                <ul>
-                                    <li><a href="desplegar?papa=<%=h.getIdCategory()%>"><%=h.getNameCategory()%></a></li>
-                                </ul>
-                                <%}%>
-                        </ul>
-                    </div>
-             <%}%>
+           <%for (Category j : roots) {//for root%>
+            <div>
+                <ol>
+                <li><a href="desplegar?papa=<%=j.getIdCategory()%>"><%=j.getNameCategory()%></a><li>
+                <%for (Category h : cat) {//for hijos%>
+                    <%if(cat.size()>0 && h.getCategory().getIdCategory()==j.getIdCategory()){//if%>
+                        <ol>
+                            <li><a href="desplegar?papa=<%=h.getIdCategory()%>">&nbsp;&nbsp;<%=h.getNameCategory()%></a></li>
+                        </ol>
+                    <%}%>
+                    <%}%>
+                </ol>
+            </div>
            <%}%>
            <div class="resumen">
             <%for(Category j : resumen){%>
             <p><%=j.getNameCategory()%></p>
             <%}%>
            </div>
-    </div>
-</div>
 <%@ include file="footer.jspf" %>
 </body>
 </html>
@@ -49,7 +47,7 @@
 <style>
     .resumen{
         text-align: right;
-        background-color: green;
+        background-color: yellow;
         height: 200px;
         color: white;
     }
