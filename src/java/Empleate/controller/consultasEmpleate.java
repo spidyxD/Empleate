@@ -36,7 +36,7 @@ public class consultasEmpleate extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     
-    List<Category> resumen = new ArrayList<Category>();
+    public List<Category> resumen = new ArrayList<Category>();
     List<Category> hijosFijos = new ArrayList<Category>();
     List<Category> roots=new ArrayList<Category>();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -85,7 +85,7 @@ private void iniciar(HttpServletRequest request, HttpServletResponse response) t
             roots = CategoryModel.instance().giveRootParents();
             HttpSession s =  request.getSession( true);
             request.setAttribute("roots", roots);
-            request.getRequestDispatcher("busquedaForm.jsp").
+            request.getRequestDispatcher("categoryTree.jsp").
                     forward( request, response);
             
         }catch(Exception e){

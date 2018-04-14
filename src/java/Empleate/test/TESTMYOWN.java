@@ -83,10 +83,16 @@ public class TESTMYOWN {
       
       CategoryModel cm = new CategoryModel();
       List<Category> cl = new ArrayList();
-      cl = cm.giveChilds(3);
-      for(Category c:cl){
-          System.out.println(c.getNameCategory());
+      List<Category> c2 = new ArrayList();
+      List<Category> c3 = new ArrayList();
+      List<Category> aux = new ArrayList();
+      cl = cm.findAllCategories();
+      c2 =  cm.giveRootParents();
+      for(int i=0;i<c2.size();i++){
+         aux.add(cm.giveChilds(c2.get(i).getIdCategory()).get(i));
+         
       }
-      
+      for(int i=0;i<aux.size();i++)
+       System.out.println(aux.get(i).getNameCategory());
     }
 }
