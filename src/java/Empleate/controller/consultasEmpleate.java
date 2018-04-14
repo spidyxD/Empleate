@@ -38,7 +38,7 @@ public class consultasEmpleate extends HttpServlet {
     
     List<Category> resumen = new ArrayList<Category>();
     List<Category> hijosFijos = new ArrayList<Category>();
-    List<Category> roots=CategoryModel.instance().giveRootParents();
+    List<Category> roots=new ArrayList<Category>();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
          switch(request.getServletPath()){
@@ -81,10 +81,13 @@ public class consultasEmpleate extends HttpServlet {
     }
 private void iniciar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        try{ 
+            resumen = new ArrayList();
+            roots = CategoryModel.instance().giveRootParents();
             HttpSession s =  request.getSession( true);
             request.setAttribute("roots", roots);
             request.getRequestDispatcher("busquedaForm.jsp").
                     forward( request, response);
+            
         }catch(Exception e){
             String error = e.getMessage();
             request.setAttribute("error",error);
@@ -98,20 +101,18 @@ private void iniciar(HttpServletRequest request, HttpServletResponse response) t
             List<Category> cat = new ArrayList<Category>();
             String aux = request.getParameter("papa");
             cat = CategoryModel.instance().giveChilds(Integer.parseInt(aux));
-            roots.addAll(cat);
             resumen.add(CategoryModel.instance().findCategoryById(Integer.parseInt(aux)));
-            request.setAttribute("roots", roots);
             request.setAttribute("cat", cat);
             request.setAttribute("resumen", resumen);
             //hijosFijos.addAll(cat);
             //request.setAttribute("hijosFijos", hijosFijos);
-            request.getRequestDispatcher("busquedaForm.jsp").
+            request.getRequestDispatcher("categoryTree.jsp").
                     forward( request, response);
         }catch(Exception e){
             String error = e.getMessage();
             request.setAttribute("error",error);
             request.getRequestDispatcher("Error.jsp").forward(request, response);
-            
+            resumen = new ArrayList();
         }
     }
 
