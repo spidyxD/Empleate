@@ -141,4 +141,24 @@ public class loginDAO extends HibernateUtil implements IBaseDAO <Login,Integer> 
          return log;
     }
     
+    public Login findByUsername(String user) {
+        Login log = new Login();
+        List<Login> l= new ArrayList();
+         String sql = "select *from login where username="+ "'"+ user +"'"+";";
+         try{
+            operationStart();
+            l = getSesion().createSQLQuery(sql).addEntity(Login.class).list();
+            log = l.get(0);
+            getTransac().commit();
+        }
+        catch(HibernateException he){
+            handleException(he);
+            throw he;
+        }
+        finally{
+        getSesion().close();
+        }
+         return log;
+    }
+    
 }

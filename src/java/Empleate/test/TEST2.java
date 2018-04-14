@@ -7,8 +7,10 @@ package Empleate.test;
 
 import Empleate.domain.Category;
 import Empleate.domain.Job;
+import Empleate.domain.Login;
 import Empleate.logica.CategoryModel;
 import Empleate.logica.JobModel;
+import Empleate.logica.LoginModel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,11 +20,9 @@ import java.util.List;
  */
 public class TEST2 {
     public static void main(String[] arg) throws Exception{
-        List<Category> ls =CategoryModel.instance().giveChilds(4);
-        for (int i = 0; i < ls.size(); i++) {
-            System.out.println(ls.get(i).getNameCategory());
-        }
-               
+        LoginModel lm = new LoginModel();
+        Login lg = lm.findLoginByUserName("spidyxD");
+        System.out.println(lg.getUsername());
     }
     
 }
