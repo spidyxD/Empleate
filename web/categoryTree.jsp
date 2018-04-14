@@ -5,6 +5,7 @@
 --%>
 
 
+<%@page import="Empleate.controller.consultasEmpleate"%>
 <%@page import="java.util.List"%>
 <%@page import="Empleate.domain.Category"%>
 <%@page import="java.util.ArrayList"%>
@@ -21,24 +22,31 @@
         <%@ include file="header.jspf" %>
         <jsp:useBean id="cat" scope="request" type="List<Category>" class="java.util.ArrayList"/>
         <jsp:useBean id="resumen" scope="request" type="List<Category>" class="java.util.ArrayList"/>
+        
         <%List<Category> ls =CategoryModel.instance().giveRootParents();%>
-        <%List<Category> chC =new ArrayList();%>
-           <%for (Category j:ls) {%>
-                    <div style="display: inline">
+        <%List<Category> chC =CategoryModel.instance().findAllCategories();%>        
+                <div style="display: inline">
+                    <%for (Category j: ls) {%> 
                         <ul>
+                            
                             <li><a href="desplegar?papa=<%=j.getIdCategory()%>"><%=j.getNameCategory()%></a>     
-                            <%for (Category h:cat) {//hijos%>
-                                <%if(cat.size()>0 && h.getCategory().getIdCategory()==j.getIdCategory()){%>
+                                <%for (Category r: resumen) { %>   
+                                <%for (Category h: cat) {//hijos%>
+                                 
+                                <%if(h.getCategory().getIdCategory()==r.getIdCategory()){%>
                                 <ul>
                                     <li><a href="desplegar?papa=<%=h.getIdCategory()%>"><%=h.getNameCategory()%></a></li>
-                                    <% chC = CategoryModel.instance().giveChilds(h.getIdCategory()); %>
+                                   
                                 </ul>
-                                <%}%>
+                                    <%}%>
+                                 <%}%>
+                                 <%}%>
                                 </li>           
                         </ul>
-                    </div>
-             <%}%>
-           <%}%>
+                    <%}%>
+                </div>
+            
+           
            <div class="resumen" style="display: inline">
             <%for(Category j : resumen){%>
             <p><%=j.getNameCategory()%></p>
