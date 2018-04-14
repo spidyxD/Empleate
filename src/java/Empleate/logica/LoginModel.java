@@ -64,5 +64,10 @@ public class LoginModel {
         }catch(Exception e){}
         return null;
     }
-    
+    public Login findLoginByUserName(String username) {
+        try{
+        return logD.findByUsername(username);
+        }catch(Exception e){}
+        return null;
+    }
 }
