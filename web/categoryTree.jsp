@@ -25,29 +25,32 @@
         
         <%List<Category> ls =CategoryModel.instance().giveRootParents();%>
         <%List<Category> chC =CategoryModel.instance().findAllCategories();%>        
-                <div style="display: inline">
-                    <%for (Category j: ls) {%> 
-                        <ul>
-                            
-                            <li><a href="desplegar?papa=<%=j.getIdCategory()%>"><%=j.getNameCategory()%></a>     
+                <div >
+                     
+                        <ul class="collapsible expandable">
+                            <%for (Category j: ls){%>
+                            <li><div class="collapsible-header"><i class="material-icons">whatshot</i> <a href="desplegar?papa=<%=j.getIdCategory()%>"><%=j.getNameCategory()%></a></div> 
+                                 <%}%>
                                 <%for (Category r: resumen) { %>   
                                 <%for (Category h: cat) {//hijos%>
                                  
                                 <%if(h.getCategory().getIdCategory()==r.getIdCategory()){%>
                                 <ul>
-                                    <li><a href="desplegar?papa=<%=h.getIdCategory()%>"><%=h.getNameCategory()%></a></li>
-                                   
+                                    <li><div class="collapsible-header"><i class="material-icons">whatshot</i>><span><a href="desplegar?papa=<%=h.getIdCategory()%>"><%=h.getNameCategory()%></a></span></div></li><br>
+                                    
                                 </ul>
+                                    <%cat = new ArrayList();%>
                                     <%}%>
                                  <%}%>
                                  <%}%>
-                                </li>           
-                        </ul>
-                    <%}%>
-                </div>
+                               
+                                </li><br>    
+                        </ul><br>   
+                   
+                </div><br>   
             
            
-           <div class="resumen" style="display: inline">
+           <div class="resumen">
             <%for(Category j : resumen){%>
             <p><%=j.getNameCategory()%></p>
             <%}%>
@@ -61,8 +64,9 @@
 <style>
     .resumen{
         text-align: right;
-        background-color: green;
+        background-color:  wheat;
         height: 200px;
-        color: white;
+        color: black;
+       
     }
 </style>
