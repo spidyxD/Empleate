@@ -141,11 +141,8 @@ public class categoryDAO extends HibernateUtil implements IBaseDAO <Category, In
       String sql = "select  idCategory,\n" +
         " name_Category,\n" +
         " parentCategory \n" +
-        " from (select * from category\n" +
-        " order by parentCategory, idCategory) category_sorted,\n" +
-        " (select @pv \\:=" + " '"+idParent+"'"+") initialisation\n" +
-        "where find_in_set(parentCategory, @pv)\n" +
-        "and length(@pv \\:= concat(@pv, ',', idCategory));";
+        " from category\n" +
+        "where category.parentCategory="+"'"+idParent+"'";
         try{
             operationStart();
             cl = getSesion().createSQLQuery(sql).addEntity(Category.class).list();
