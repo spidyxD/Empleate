@@ -19,15 +19,14 @@
                     <div class="carousel carousel-slider center">
                         <div class="carousel-fixed-item center">
                         </div>
-                        <%String colores[]={"black","red","amber","green","blue"};//los colores para el carrusel%>
                         <%int cont =0;%>
                         <%for (Job j : top) {%>
-                        <div class="carousel-item <%=colores[cont++]%> white-text" href="#one!">                            
-                            
+                        <div class="carousel-item white-text" href="#one!">                            
+                            <div class="aches">
                             <h4><%=j.getNameJob()%></h4>
                             <h3><%=j.getDescriptionJob()%></h3>
                             <h2><%=j.getSalary()%>&nbsp colones</h2>
-                            
+                            </div>
                         </div>
                         <%}%>
                     </div>
@@ -48,12 +47,16 @@
 </html>
 
 <style>
-    .carousel-item{
+    
+.carousel-item{
    background-image: url("images/4.jpg");
-   background-color: #cccccc;
-        
-        
-    } 
-    
-    
+   background-color: #cccccc; 
+   display: flex;
+   align-items: center;
+
+} 
+.aches{
+    margin: 0 auto;
+}
+
 </style>

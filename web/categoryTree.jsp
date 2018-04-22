@@ -21,52 +21,33 @@
     <body>
         <%@ include file="header.jspf" %>
         <jsp:useBean id="cat" scope="request" type="List<Category>" class="java.util.ArrayList"/>
-        <jsp:useBean id="resumen" scope="request" type="List<Category>" class="java.util.ArrayList"/>
-        
-        <%List<Category> ls =CategoryModel.instance().giveRootParents();%>
-        <%List<Category> chC =CategoryModel.instance().findAllCategories();%>        
-                <div >
-                     
-                        <ul class="collapsible expandable">
-                            <%for (Category j: ls){%>
-                            <li><div class="collapsible-header"><i class="material-icons">whatshot</i> <a href="desplegar?papa=<%=j.getIdCategory()%>"><%=j.getNameCategory()%></a></div> 
-                                 <%}%>
-                                <%for (Category r: resumen) { %>   
-                                <%for (Category h: cat) {//hijos%>
-                                 
-                                <%if(h.getCategory().getIdCategory()==r.getIdCategory()){%>
-                                <ul>
-                                    <li><div class="collapsible-header"><i class="material-icons">whatshot</i>><span><a href="desplegar?papa=<%=h.getIdCategory()%>"><%=h.getNameCategory()%></a></span></div></li><br>
-                                    
-                                </ul>
-                                    <%cat = new ArrayList();%>
-                                    <%}%>
-                                 <%}%>
-                                 <%}%>
-                               
-                                </li><br>    
-                        </ul><br>   
-                   
-                </div><br>   
-            
-           
-           <div class="resumen">
-            <%for(Category j : resumen){%>
-            <p><%=j.getNameCategory()%></p>
-            <%}%>
-           </div>
-    </div>
+        <jsp:useBean id="resumen" scope="session" type="List<Category>" class="java.util.ArrayList"/>
+        <div class="cuerpoConsulta container">
+            <div>
+                <ul>
+                    <%for (Category j: cat){%>
+                    <%if(CategoryModel.instance().giveChilds(j.getIdCategory()).size() == 0){%>
+                        <li><div class="collapsible-header"><i class="material-icons">fiber_manual_record</i> <a href="desplegar?papa=<%=j.getIdCategory()%>"><%=j.getNameCategory()%></a></div></li> 
+                    <%}else{%>
+                        <li><div class="collapsible-header"><i class="material-icons">add</i> <a href="desplegar?papa=<%=j.getIdCategory()%>"><%=j.getNameCategory()%></a></div></li> 
+                    <%}%>
+                    <%}%>
+                </ul>
+            </div><br>  
+            <div class = "row">
+                <a class="col s2 btn mybtn" href="iniciar">Regresar por mas</a>
+                <a class="col s2 btn mybtn" href="iniciar?limpiar=1">Limpiar consulta</a>
+            </div>
+            <div class="resumen row">
+             <%for(Category j : resumen){%>
+                <p><%=j.getNameCategory()%></p>
+             <%}%>
+            </div>
+            <div class="row">
+                <a class="col s2 btn mybtn" href="#">Consultar</a>
+            </div>
+        </div>
 </div>
 <%@ include file="footer.jspf" %>
 </body>
 </html>
-
-<style>
-    .resumen{
-        text-align: right;
-        background-color:  wheat;
-        height: 200px;
-        color: black;
-       
-    }
-</style>

@@ -12,6 +12,7 @@ import Empleate.logica.JobModel;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,6 +40,7 @@ public class consultasEmpleate extends HttpServlet {
     public List<Category> resumen = new ArrayList<Category>();
     List<Category> hijosFijos = new ArrayList<Category>();
     List<Category> roots=new ArrayList<Category>();
+    List<Category> cat = new ArrayList<>();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
          switch(request.getServletPath()){
@@ -81,10 +83,14 @@ public class consultasEmpleate extends HttpServlet {
     }
 private void iniciar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        try{ 
-            resumen = new ArrayList();
             roots = CategoryModel.instance().giveRootParents();
+            cat = roots;
             HttpSession s =  request.getSession( true);
-            request.setAttribute("roots", roots);
+            String op = request.getParameter("limpiar");
+            if(Objects.equals(op, new String("1"))){//limpiar busqueda
+                resumen.clear();
+            }
+            request.setAttribute("cat", cat);
             request.getRequestDispatcher("categoryTree.jsp").
                     forward( request, response);
             
@@ -92,20 +98,20 @@ private void iniciar(HttpServletRequest request, HttpServletResponse response) t
             String error = e.getMessage();
             request.setAttribute("error",error);
             request.getRequestDispatcher("Error.jsp").forward(request, response);
-            
         }
     }
     private void doDesplegar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        try{ 
             HttpSession s =  request.getSession( true);
-            List<Category> cat = new ArrayList<Category>();
+            cat = new ArrayList<Category>();
             String aux = request.getParameter("papa");
             cat = CategoryModel.instance().giveChilds(Integer.parseInt(aux));
-            resumen.add(CategoryModel.instance().findCategoryById(Integer.parseInt(aux)));
+            Category cth = CategoryModel.instance().findCategoryById(Integer.parseInt(aux));
+            if(CategoryModel.instance().giveChilds( Integer.parseInt(aux) ).size() == 0 ){
+                resumen.add(cth);// solo add hojas
+            }
             request.setAttribute("cat", cat);
-            request.setAttribute("resumen", resumen);
-            //hijosFijos.addAll(cat);
-            //request.setAttribute("hijosFijos", hijosFijos);
+            s.setAttribute("resumen", resumen);
             request.getRequestDispatcher("categoryTree.jsp").
                     forward( request, response);
         }catch(Exception e){

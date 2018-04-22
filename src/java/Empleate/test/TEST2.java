@@ -20,9 +20,10 @@ import java.util.List;
  */
 public class TEST2 {
     public static void main(String[] arg) throws Exception{
-        LoginModel lm = new LoginModel();
-        Login lg = lm.findLoginByUserName("spidyxD");
-        System.out.println(lg.getUsername());
+        ArrayList<Category> ls = (ArrayList<Category>) CategoryModel.instance().giveChilds(1);
+        for(Category c : ls){
+            System.out.println(c.getNameCategory());
+        }
     }
     
 }
