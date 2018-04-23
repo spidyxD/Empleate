@@ -17,7 +17,7 @@
     <body>
         <%@include file="header.jspf"%>
         <h1>Resultados</h1>
-        <jsp:useBean id="jobs" scope="request" type="List<Job>" class="java.util.ArrayList"/>
+        <jsp:useBean id="jobsByCategory" scope="request" type="List<Job>" class="java.util.ArrayList"/>
         <!-- -->
         <div class="container">
         <table>
@@ -29,7 +29,7 @@
                     <th>Empresa</th>
                 </tr>
             </thead>
-            <%for (Job j : jobs) {%>   
+            <%for (Job j : jobsByCategory) {%>   
             <tbody>
                 <tr>
                     <td><%=j.getNameJob()%></td>

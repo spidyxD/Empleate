@@ -27,7 +27,12 @@
                 <ul>
                     <%for (Category j: cat){%>
                     <%if(CategoryModel.instance().giveChilds(j.getIdCategory()).size() == 0){%>
-                        <li><div class="collapsible-header"><i class="material-icons">fiber_manual_record</i> <a href="desplegar?papa=<%=j.getIdCategory()%>"><%=j.getNameCategory()%></a></div></li> 
+                        <li><div class="collapsible-header">
+                                <i class="material-icons">fiber_manual_record</i> 
+                                <a href="desplegar?papa=<%=j.getIdCategory()%>&porcentaje=porcnje"><%=j.getNameCategory()%></a>
+                                <input name="porcnje" id="porcentaje" type="text" class="validate" style="color:black;width: 30px;margin-left: 100px;" placeholder="porcentaje"> 
+                            </div>
+                        </li> 
                     <%}else{%>
                         <li><div class="collapsible-header"><i class="material-icons">add</i> <a href="desplegar?papa=<%=j.getIdCategory()%>"><%=j.getNameCategory()%></a></div></li> 
                     <%}%>
@@ -44,7 +49,7 @@
              <%}%>
             </div>
             <div class="row">
-                <a class="col s2 btn mybtn" href="#">Consultar</a>
+                <a class="col s2 btn mybtn" href="consultasEmpleateAllJobsByCategory">Consultar</a>
             </div>
         </div>
 </div>
