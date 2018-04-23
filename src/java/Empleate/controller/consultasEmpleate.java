@@ -39,27 +39,29 @@ public class consultasEmpleate extends HttpServlet {
     
     public List<Category> resumen = new ArrayList<Category>();
     List<Category> hijosFijos = new ArrayList<Category>();
-    List<Category> roots=new ArrayList<Category>();
-    List<Category> cat = new ArrayList<>();
+    List<Category> roots=new ArrayList<Category>();//Para imprimir los roots
+    List<Category> cat = new ArrayList<>();//Mostrar las categorias en un momento dado
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
          switch(request.getServletPath()){
-            case "/consultasEmpleateJobsByCategory":
+                //Para Jobs
+            case "/consultasEmpleateJobsByCategory"://Publico
                 this.doSearchPublicJobsByCategory(request,response);
                 break;
-            case "/consultasEmpleateJobsByLocation":
+            case "/consultasEmpleateJobsByLocation"://Publico
                 this.doSearchPublicJobsByLocate(request,response);
                 break;
-            case "/consultasEmpleateAllJobsByCategory":
+            case "/consultasEmpleateAllJobsByCategory"://Privado,public (Sesion iniciada)
                 this.doSearchGeneralJobsByCategory(request,response);
                 break;
-            case "/consultasEmpleateAllJobsByLocation":
+            case "/consultasEmpleateAllJobsByLocation"://Privado,public (Sesion iniciada)
                 this.doSearchGeneralJobsByLocate(request,response);
                 break;
-            case "/desplegar":
+                //Para Categorias
+            case "/desplegar"://sirve para desplegar las categorias deseadas(como si fuera el publico)
                 this.doDesplegar(request,response);
                 break;
-            case "/iniciar":
+            case "/iniciar"://al inicio de la busqueda
                 this.iniciar(request,response);
                 break;
         }
@@ -105,6 +107,7 @@ private void iniciar(HttpServletRequest request, HttpServletResponse response) t
             HttpSession s =  request.getSession( true);
             cat = new ArrayList<Category>();
             String aux = request.getParameter("papa");
+            String pr = request.getParameter("porcentaje");
             cat = CategoryModel.instance().giveChilds(Integer.parseInt(aux));
             Category cth = CategoryModel.instance().findCategoryById(Integer.parseInt(aux));
             if(CategoryModel.instance().giveChilds( Integer.parseInt(aux) ).size() == 0 ){
@@ -132,16 +135,18 @@ private void iniciar(HttpServletRequest request, HttpServletResponse response) t
             
         }
     }
-  
+  /**
+   *@return  lista de jobs que concuerdan con las cateogrias 
+   */
     private void doSearchGeneralJobsByCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-         try{ 
-        HttpSession s =  request.getSession( true);
-        List jobs = new ArrayList();
-        String p = request.getParameter("percentage");
-        jobs = JobModel.instance().findGeneralJobByCategory(request.getParameter("category"),p);
-        s.setAttribute("jobsByCategory", jobs);
-         request.getRequestDispatcher("main.jsp").
-                forward( request, response);
+        try{ 
+            HttpSession s =  request.getSession( true);
+            List jobs = new ArrayList();
+            //String p = request.getParameter("percentage");
+            jobs = JobModel.instance().getAllJobsByCategory(this.resumen);
+            request.setAttribute("jobsByCategory", jobs);
+             request.getRequestDispatcher("ResultadosBusquedas.jsp").
+                    forward( request, response);
         }catch(Exception e){
             String error = e.getMessage();
             request.setAttribute("error",error);

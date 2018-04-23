@@ -5,6 +5,7 @@
  */
 package Empleate.logica;
 import Empleate.dao.jobDAO;
+import Empleate.domain.Category;
 import Empleate.domain.Job;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,19 +54,28 @@ public class JobModel {
         }catch(Exception e ){}
         return null;
     }
-      public List findGeneralJobByCategory(String c,String id) throws Exception{
+    public List findGeneralJobByCategory(String c,String id) throws Exception{//retorna una lista de jobs con categoria "c"
         List<Job> jobs = jDAO.findGeneralByCategory(c, id);
-        List<Job> njobs = new ArrayList();
+        List<Job> njobs = new ArrayList();//
         try{
             for (int i = 0; i < jobs.size(); i++) {
                 int idJ = jobs.get(i).getIdJob();
-                Job nj = this.giveJobComplete(idJ);
+                Job nj = this.giveJobComplete(idJ);//metodo que retorna category con company
                 njobs.add(nj);
             }
             return njobs;
         }catch(Exception e ){}
             return null;
     }
+    
+    public List getAllJobsByCategory(List<Category> resumen) throws Exception{
+        List<Category> ls = new ArrayList<>();// para ir colocando los resultados
+        for (Category ct : resumen) {
+            ls.addAll(findGeneralJobByCategory(ct.getNameCategory(),"0"));
+        }
+        return ls;
+    }   
+    
     public List<Job> findAllJobs() throws Exception{
         try{
         return jDAO.findAll();
