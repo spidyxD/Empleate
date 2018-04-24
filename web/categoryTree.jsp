@@ -5,6 +5,7 @@
 --%>
 
 
+<%@page import="Empleate.domain.Login"%>
 <%@page import="Empleate.controller.consultasEmpleate"%>
 <%@page import="java.util.List"%>
 <%@page import="Empleate.domain.Category"%>
@@ -22,6 +23,8 @@
         <%@ include file="header.jspf" %>
         <jsp:useBean id="cat" scope="request" type="List<Category>" class="java.util.ArrayList"/>
         <jsp:useBean id="resumen" scope="session" type="List<Category>" class="java.util.ArrayList"/>
+        <jsp:useBean id="por" scope="request" type="String" class="java.lang.String"/>
+        <jsp:useBean id="login" scope="session" type="Login"/>
         <div class="cuerpoConsulta container">
             <div>
                 <ul>
@@ -29,8 +32,8 @@
                     <%if(CategoryModel.instance().giveChilds(j.getIdCategory()).size() == 0){%>
                         <li><div class="collapsible-header">
                                 <i class="material-icons">fiber_manual_record</i> 
-                                <a href="desplegar?papa=<%=j.getIdCategory()%>&porcentaje=porcnje"><%=j.getNameCategory()%></a>
-                                <input name="porcnje" id="porcentaje" type="text" class="validate" style="color:black;width: 30px;margin-left: 100px;" placeholder="porcentaje"> 
+                                <a href="desplegar?papa=<%=j.getIdCategory()%>"><%=j.getNameCategory()%></a>
+                                <input name="porcentaje" id="porcentaje" type="text" class="validate" style="color:black;width: 30px;margin-left: 100px;" placeholder="porcentaje"> 
                             </div>
                         </li> 
                     <%}else{%>
@@ -48,9 +51,11 @@
                 <p><%=j.getNameCategory()%></p>
              <%}%>
             </div>
+            
             <div class="row">
                 <a class="col s2 btn mybtn" href="consultasEmpleateAllJobsByCategory">Consultar</a>
             </div>
+            <p><%=login.getUsername()%></p>
         </div>
 </div>
 <%@ include file="footer.jspf" %>
