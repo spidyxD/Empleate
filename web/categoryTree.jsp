@@ -53,9 +53,13 @@
             </div>
             
             <div class="row">
+                <%if(!login.getUsername().isEmpty()){%>
                 <a class="col s2 btn mybtn" href="consultasEmpleateAllJobsByCategory">Consultar</a>
+                <%} else{%>
+                 <a class="col s2 btn mybtn" href="consultasEmpleateJobsByCategory">Consultar</a>
+                <%}%>
             </div>
-            <p><%=login.getUsername()%></p>
+           
         </div>
 </div>
 <%@ include file="footer.jspf" %>

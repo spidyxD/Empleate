@@ -6,10 +6,10 @@
 package Empleate.controller;
 
 import Empleate.domain.Job;
+import Empleate.domain.Login;
 import Empleate.logica.JobModel;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,7 +25,7 @@ import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "Home", urlPatterns = {"/Home"})
 public class Home extends HttpServlet {
-
+    Login l = new Login();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -48,6 +48,7 @@ public class Home extends HttpServlet {
         HttpSession s =  request.getSession( true);
         List<Job> top = JobModel.instance().top5();
         request.setAttribute("top", top);
+        s.setAttribute("login", l);
         request.getRequestDispatcher("Home.jsp").
                 forward( request, response);
         }catch(Exception e){

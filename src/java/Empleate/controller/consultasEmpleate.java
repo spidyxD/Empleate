@@ -73,11 +73,11 @@ public class consultasEmpleate extends HttpServlet {
     private void doSearchPublicJobsByCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             HttpSession s = request.getSession(true);
-            List<Category> cat
-                    = //String p = request.getParameter("percentage");
-                    cat = CategoryModel.instance().giveChilds(1);//1 por programacion perrito
-            s.setAttribute("cat", cat);
-            request.getRequestDispatcher("busquedaForm.jsp").
+            List jobs = new ArrayList();
+            //String p = request.getParameter("percentage");
+            jobs = JobModel.instance().getAllJobsByCategoryPublic(resumenCompleto);
+            request.setAttribute("jobsByCategory", jobs);
+            request.getRequestDispatcher("ResultadosBusquedas.jsp").
                     forward(request, response);
         } catch (Exception e) {
             String error = e.getMessage();

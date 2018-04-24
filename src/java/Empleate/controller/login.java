@@ -94,10 +94,10 @@ public class login extends HttpServlet {
         Login l = new Login();
         try{ 
             HttpSession s =  request.getSession(true);
-            
+            l = (Login) s.getAttribute("login");
             l.setUsername(request.getParameter("username"));
             l.setPassword(request.getParameter("password"));
-        
+            
         if(verifyLogin(l,request,response)){
              l = LoginModel.instance().findLoginByData(request.getParameter("username"), request.getParameter("password"));
              switch(l.getType_log()){
@@ -122,7 +122,7 @@ public class login extends HttpServlet {
                      s.setAttribute("login", l);
                      request.getRequestDispatcher("Home").forward( request, response);
                  break;    
-                 default:
+                 default: 
                      request.getRequestDispatcher("Error.jsp").forward(request, response);
                      break;
          }
