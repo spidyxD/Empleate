@@ -1,17 +1,7 @@
 -- MySQL Workbench Forward Engineering
-
-DROP DATABASE empleateBETA;
 CREATE DATABASE empleateBETA;
 USE empleateBETA ;
 
-DROP TABLE jobCategory;
-DROP TABLE offerCategory;
-DROP TABLE Job;
-DROP TABLE Login;
-DROP TABLE Category;
-DROP TABLE Manager ;
-DROP TABLE Company;
-DROP TABLE Offerer;
 
 
 -- -----------------------------------------------------
@@ -21,7 +11,7 @@ DROP TABLE Offerer;
 
 CREATE TABLE Login (
   idLogin INT NOT NULL AUTO_INCREMENT,
-  username VARCHAR(45) NULL,
+  username VARCHAR(45) NULL UNIQUE,
   password VARCHAR(45) NULL,
   type_log VARCHAR(45) NULL,
   enable INT,
@@ -186,19 +176,21 @@ insert into Job (name_Job, description_Job,salary, type_Job, comp, status_Job) v
 insert into Offerer (name_offerer, lastname, nationality, phone, email, residence,login) values ('Andres','Gutierrez','CR','61688613','a@gmail.com','Heredia',8);
 insert into Offerer (name_offerer, lastname, nationality, phone, email, residence,login) values ('Roger','Amador','CR','83656107','r@gmail.com','Desamparados',9);
 
-insert into Category (parentCategory,name_Category) values(null,'PROGRAMACION');
- insert into Category (parentCategory,name_Category) values(null,'Diseño WEB');  
- insert into Category (parentCategory,name_Category) values(null,'REDES');  
-insert into Category (parentCategory,name_Category) values(1,'JAVA');
-insert into Category (parentCategory,name_Category) values(2,'BOOTSTRAP');
-insert into Category (parentCategory,name_Category) values(3,'CISCO');
+insert into Category (parentCategory,name_Category) values(null,'PROGRAMACION');-- 1
+insert into Category (parentCategory,name_Category) values(null,'Diseño WEB');  -- 2
+insert into Category (parentCategory,name_Category) values(null,'REDES'); -- 3 
+insert into Category (parentCategory,name_Category) values(1,'JAVA');-- 4
+insert into Category (parentCategory,name_Category) values(1,'C++');-- 5 
+insert into Category (parentCategory,name_Category) values(2,'CSS');-- 6
+insert into Category (parentCategory,name_Category) values(3,'CISCO');-- 7
+
+insert into Category (parentCategory,name_Category) values(4,'JSON');-- 8
+insert into Category (parentCategory,name_Category) values(6,'BOOTSTRAP');-- 9
+insert into Category (parentCategory,name_Category) values(6,'MATERIALIZE');-- 10
 
 
-insert into jobCategory (j, cat, percentage)values(1,2,85);
-insert into jobCategory (j, cat, percentage)values(2,1,90);
+insert into jobCategory (j, cat, percentage)values(1,5,85);
+insert into jobCategory (j, cat, percentage)values(2,4,90);
 
 insert into offerCategory (offer, cat, percentage)values(1,2,90);
 insert into offerCategory (offer, cat, percentage)values(2,1,90);
-
-
-
