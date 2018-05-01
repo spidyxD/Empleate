@@ -41,7 +41,8 @@
             </tbody>
         </table>
         <!-- -->
-        <h>Resultados de busqueda: <%=jobsByCategory.size()%></h>
+        <h>Resultados de busqueda: <%=jobsByCategory.size()%></h><br><br>
+        <a class="col s2 btn mybtn" href="iniciar">Regresar </a><br><br>
         </div>
         <%@include file="footer.jspf"%>
     </body>
