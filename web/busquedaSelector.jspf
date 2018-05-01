@@ -1,0 +1,44 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<!-- Modal Structure -->
+<div id="busquedaSelector" class="modal">
+    <div class="row">
+        <div class="col s12">
+           <br> <h4> Seleccione tipo de busqueda</h4><br><br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12" >
+            <a class="waves-effect waves-light btn" href="iniciar" style= "display: grid">Busqueda por Categorías</a><br><br><br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12" >
+            <a class="waves-effect waves-light btn" href="#" style= "display: grid" >Busqueda por ubicación de empresa</a><br>
+        </div>
+    </div>
+    </div>
+</div>
+
+<style>
+    .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 450px;
+    height: 400px;
+    background-color:#53167dcc;
+    overflow: auto; /* Enable scroll if needed */
+}
+
+.input-field label{
+  color:black;
+}
+
+.btn{
+    text-align:center;
+}
+    
+</style>

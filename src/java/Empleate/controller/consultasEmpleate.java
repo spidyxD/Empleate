@@ -4,13 +4,15 @@
  * and open the template in the editor.
  */
 package Empleate.controller;
-
+import com.google.gson.Gson;
 import Empleate.domain.Category;
 import Empleate.domain.Job;
 import Empleate.logica.CategoryModel;
 import Empleate.logica.JobModel;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import javax.servlet.ServletException;
@@ -24,7 +26,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Addiel
  */
-@WebServlet(name = "consultasEmpleate", urlPatterns = {"consultasEmpleateJobsByCategory","/iniciar","/consultasEmpleateJobsByLocation","consultasEmpleateAllJobsByCategory","/consultasEmpleateAllJobsByLocation","/desplegar"})
+@WebServlet(name = "consultasEmpleate", urlPatterns = {"consultasEmpleateJobsByCategory", "/iniciar", "/consultasEmpleateJobsByLocation", "consultasEmpleateAllJobsByCategory", "/consultasEmpleateAllJobsByLocation", "/desplegar"})
 public class consultasEmpleate extends HttpServlet {
 
     /**
@@ -36,122 +38,136 @@ public class consultasEmpleate extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
     public List<Category> resumen = new ArrayList<Category>();
     List<Category> hijosFijos = new ArrayList<Category>();
-    List<Category> roots=new ArrayList<Category>();//Para imprimir los roots
+    List<Category> roots = new ArrayList<Category>();//Para imprimir los roots
     List<Category> cat = new ArrayList<>();//Mostrar las categorias en un momento dado
+    String pr = "";
+    HashMap<Category, String> resumenCompleto = new HashMap();//nuevo resumen
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         switch(request.getServletPath()){
-                //Para Jobs
+        switch (request.getServletPath()) {
+            //Para Jobs
             case "/consultasEmpleateJobsByCategory"://Publico
-                this.doSearchPublicJobsByCategory(request,response);
+                this.doSearchPublicJobsByCategory(request, response);
                 break;
             case "/consultasEmpleateJobsByLocation"://Publico
-                this.doSearchPublicJobsByLocate(request,response);
+                this.doSearchPublicJobsByLocate(request, response);
                 break;
             case "/consultasEmpleateAllJobsByCategory"://Privado,public (Sesion iniciada)
-                this.doSearchGeneralJobsByCategory(request,response);
+                this.doSearchGeneralJobsByCategory(request, response);
                 break;
             case "/consultasEmpleateAllJobsByLocation"://Privado,public (Sesion iniciada)
-                this.doSearchGeneralJobsByLocate(request,response);
+                this.doSearchGeneralJobsByLocate(request, response);
                 break;
-                //Para Categorias
+            //Para Categorias
             case "/desplegar"://sirve para desplegar las categorias deseadas(como si fuera el publico)
-                this.doDesplegar(request,response);
+                this.doDesplegar(request, response);
                 break;
             case "/iniciar"://al inicio de la busqueda
-                this.iniciar(request,response);
+                this.iniciar(request, response);
                 break;
         }
     }
-
-    private void doSearchPublicJobsByCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-       try{ 
-            HttpSession s =  request.getSession( true);
-            List<Category> cat = 
-            //String p = request.getParameter("percentage");
-            cat = CategoryModel.instance().giveChilds(1);//1 por programacion perrito
-            s.setAttribute("cat", cat);
-            request.getRequestDispatcher("busquedaForm.jsp").
-                    forward( request, response);
-        }catch(Exception e){
-            String error = e.getMessage();
-            request.setAttribute("error",error);
-            request.getRequestDispatcher("Error.jsp").forward(request, response);
-            
-        }
-    }
-private void iniciar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-       try{ 
+    
+    private void iniciar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
             roots = CategoryModel.instance().giveRootParents();
             cat = roots;
-            HttpSession s =  request.getSession( true);
+            HttpSession s = request.getSession(true);
             String op = request.getParameter("limpiar");
-            if(Objects.equals(op, new String("1"))){//limpiar busqueda
+            if (Objects.equals(op, new String("1"))) {//limpiar busqueda
                 resumen.clear();
+                resumenCompleto.clear();                
             }
+            s.setAttribute("resumen", resumen);
+            s.setAttribute("resumenCompleto", resumenCompleto);
             request.setAttribute("cat", cat);
             request.getRequestDispatcher("categoryTree.jsp").
-                    forward( request, response);
-            
-        }catch(Exception e){
+                    forward(request, response);
+        } catch (Exception e) {
             String error = e.getMessage();
-            request.setAttribute("error",error);
+            request.setAttribute("error", error);
             request.getRequestDispatcher("Error.jsp").forward(request, response);
         }
     }
+    
     private void doDesplegar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-       try{ 
-            HttpSession s =  request.getSession( true);
+        try {
+            HttpSession s = request.getSession(true);
             cat = new ArrayList<Category>();
             String aux = request.getParameter("papa");
-            String pr = request.getParameter("porcentaje");
+            pr = request.getParameter("porcentaje");
             cat = CategoryModel.instance().giveChilds(Integer.parseInt(aux));
             Category cth = CategoryModel.instance().findCategoryById(Integer.parseInt(aux));
-            if(CategoryModel.instance().giveChilds( Integer.parseInt(aux) ).size() == 0 ){
+            if (CategoryModel.instance().giveChilds(Integer.parseInt(aux)).isEmpty()) {
                 resumen.add(cth);// solo add hojas
+                resumenCompleto.put(cth, "90");//cambiar el string por el parametro del usuario
             }
             request.setAttribute("cat", cat);
             s.setAttribute("resumen", resumen);
+            s.setAttribute("resumenCompleto", resumenCompleto);
+            request.setAttribute("por", pr);
             request.getRequestDispatcher("categoryTree.jsp").
-                    forward( request, response);
-        }catch(Exception e){
+                    forward(request, response);
+        } catch (Exception e) {
             String error = e.getMessage();
-            request.setAttribute("error",error);
+            request.setAttribute("error", error);
             request.getRequestDispatcher("Error.jsp").forward(request, response);
-            resumen = new ArrayList();
+            resumen.clear();
+            resumenCompleto.clear();  
+}
+    
+
+    }
+
+    private void doSearchPublicJobsByCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+       try {
+            HttpSession s = request.getSession(true);
+            List jobs = new ArrayList();  
+            jobs = JobModel.instance().getAllJobsByCategoryPublic((HashMap<Category, String>) s.getAttribute("resumenCompleto"));
+            if(!jobs.isEmpty()){
+            s.setAttribute("jobsByCategory", jobs);}
+            request.getRequestDispatcher("ResultadosBusquedas.jsp").
+                    forward(request, response);
+        } catch (Exception e) {
+            String error = e.getMessage();
+            request.setAttribute("error", error);
+            request.getRequestDispatcher("Error.jsp").forward(request, response);
+
+}
+    }
+
+
+    private void doSearchPublicJobsByLocate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            HttpSession s = request.getSession(true);
+        } catch (Exception e) {
+            String error = e.getMessage();
+            request.setAttribute("error", error);
+            request.getRequestDispatcher("Error.jsp").forward(request, response);
+
         }
     }
 
-    private void doSearchPublicJobsByLocate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-       try{ 
-        HttpSession s =  request.getSession( true);
-        }catch(Exception e){
-            String error = e.getMessage();
-            request.setAttribute("error",error);
-            request.getRequestDispatcher("Error.jsp").forward(request, response);
-            
-        }
-    }
-  /**
-   *@return  lista de jobs que concuerdan con las cateogrias 
-   */
+    /**
+     * @return lista de jobs que concuerdan con las cateogrias
+     */
     private void doSearchGeneralJobsByCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try{ 
-            HttpSession s =  request.getSession( true);
-            List jobs = new ArrayList();
-            //String p = request.getParameter("percentage");
-            jobs = JobModel.instance().getAllJobsByCategory(this.resumen);
-            request.setAttribute("jobsByCategory", jobs);
-             request.getRequestDispatcher("ResultadosBusquedas.jsp").
-                    forward( request, response);
-        }catch(Exception e){
+        try {
+            HttpSession s = request.getSession(true);
+            List jobs = new ArrayList();      
+            jobs = JobModel.instance().getAllJobsByCategory((HashMap<Category, String>) s.getAttribute("resumenCompleto"));
+              if(!jobs.isEmpty()){
+            s.setAttribute("jobsByCategory", jobs);}
+            request.getRequestDispatcher("ResultadosBusquedas.jsp").
+                    forward(request, response);
+        } catch (Exception e) {
             String error = e.getMessage();
-            request.setAttribute("error",error);
+            request.setAttribute("error", error);
             request.getRequestDispatcher("Error.jsp").forward(request, response);
-            
+
         }
     }
 

@@ -117,18 +117,18 @@ public class jobDAO extends HibernateUtil implements IBaseDAO<Job, Integer> {
         return jobs;
     }
 
-    
+    //busqueda privada
     public List<Job> findGeneralByCategory(String cat, String p) {
         List<Job> jobs = new ArrayList();
-        List<Job> njobs = new ArrayList();
         try {
             operationStart();
-            int percent = Integer.parseInt(p);
-            if (percent != 0) {
+           
+            if (!p.isEmpty() || !p.equals("0")) {
+                 int percent = Integer.parseInt(p);
                 String sql = "select job.idJob,job.name_job,job.description_job,salary,type_job,job.comp,job.status_job from "
                         + "job,jobCategory,category where job.idJob=jobCategory.j and jobCategory.cat = category.idCategory and "
-                        + "category.name_category=" + "'" + cat + "'and jobCategory.percentage=" + String.valueOf(percent) + ";";
-                getSesion().createSQLQuery(sql).addEntity(Job.class).list();
+                        + "category.name_category=" + "'"+ cat +"'"+" and jobCategory.percentage=" +"'"+ percent + "'"+";";
+                jobs = getSesion().createSQLQuery(sql).addEntity(Job.class).list();
                 getTransac().commit();
             } else {
                 String sql = "select job.idJob,job.name_job,job.description_job,salary,type_job,"
@@ -146,6 +146,43 @@ public class jobDAO extends HibernateUtil implements IBaseDAO<Job, Integer> {
         }
         return jobs;//retorno la lista con objetos completos
     }
+    
+    
+    
+    //busqueda publica
+    
+    public List<Job> findPublicByCategory(String cat, String p) {
+        List<Job> jobs = new ArrayList();
+        try {
+            operationStart();
+            
+            if (!p.isEmpty() || !p.equals("0")) {
+                int percent = Integer.parseInt(p);
+                String sql = "select job.idJob,job.name_job,job.description_job,salary,type_job,job.comp,job.status_job from "
+                        + "job,jobCategory,category where job.idJob=jobCategory.j and jobCategory.cat = category.idCategory and "
+                        + "category.name_category=" + "'"+ cat +"'"+" and jobCategory.percentage=" +"'"+ percent + "'"
+                        +" and job.type_Job = 'public'"+";";
+                jobs = getSesion().createSQLQuery(sql).addEntity(Job.class).list();
+                getTransac().commit();
+            } else {
+                String sql = "select job.idJob,job.name_job,job.description_job,salary,type_job,"
+                        + "job.comp,job.status_job from job,jobCategory,category where job.idJob=jobCategory.j "
+                        + "and jobCategory.cat = category.idCategory and category.name_category=" + "'" + cat + "'"
+                        + " and job.type_Job = 'public'" +";";
+                jobs = getSesion().createSQLQuery(sql).addEntity(Job.class).list();
+                getTransac().commit();
+            }
+
+        } catch (HibernateException he) {
+            handleException(he);
+            throw he;
+        } finally {
+            getSesion().close();
+        }
+        return jobs;//retorno la lista con objetos completos
+    }
+    
+    
 
     public List<Job> giveTop5() {
         List<Job> top = new ArrayList();
