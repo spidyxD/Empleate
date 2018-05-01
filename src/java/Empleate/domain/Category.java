@@ -14,6 +14,7 @@ public class Category  implements java.io.Serializable {
      private int idCategory;
      private Category category;
      private String nameCategory;
+     private int percent;
      private Set<Category> categories = new HashSet<Category>(0);
      private Set<Jobcategory> jobcategories = new HashSet<Jobcategory>(0);
      private Set<Offercategory> offercategories = new HashSet<Offercategory>(0);
@@ -22,8 +23,9 @@ public class Category  implements java.io.Serializable {
     }
 
 	
-    public Category(int idCategory) {
+    public Category(int idCategory,int percent) {
         this.idCategory = idCategory;
+        this.percent=percent;
     }
     public Category(int idCategory, Category category, String nameCategory, Set<Category> categories, Set<Jobcategory> jobcategories, Set<Offercategory> offercategories) {
        this.idCategory = idCategory;
@@ -83,6 +85,14 @@ public class Category  implements java.io.Serializable {
         this.offercategories = offercategories;
     }
 
+    public int getPercent() {
+        return percent;
+    }
+
+    public void setPercent(int percent) {
+        this.percent = percent;
+    }
+    
 
 
 

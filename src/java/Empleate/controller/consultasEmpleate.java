@@ -4,11 +4,12 @@
  * and open the template in the editor.
  */
 package Empleate.controller;
-
+import com.google.gson.Gson;
 import Empleate.domain.Category;
 import Empleate.domain.Job;
 import Empleate.logica.CategoryModel;
 import Empleate.logica.JobModel;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -69,24 +70,7 @@ public class consultasEmpleate extends HttpServlet {
                 break;
         }
     }
-
-    private void doSearchPublicJobsByCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            HttpSession s = request.getSession(true);
-            List jobs = new ArrayList();
-            //String p = request.getParameter("percentage");
-            jobs = JobModel.instance().getAllJobsByCategoryPublic(resumenCompleto);
-            request.setAttribute("jobsByCategory", jobs);
-            request.getRequestDispatcher("ResultadosBusquedas.jsp").
-                    forward(request, response);
-        } catch (Exception e) {
-            String error = e.getMessage();
-            request.setAttribute("error", error);
-            request.getRequestDispatcher("Error.jsp").forward(request, response);
-
-        }
-    }
-
+    
     private void iniciar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             roots = CategoryModel.instance().giveRootParents();
@@ -95,18 +79,20 @@ public class consultasEmpleate extends HttpServlet {
             String op = request.getParameter("limpiar");
             if (Objects.equals(op, new String("1"))) {//limpiar busqueda
                 resumen.clear();
+                resumenCompleto.clear();                
             }
+            s.setAttribute("resumen", resumen);
+            s.setAttribute("resumenCompleto", resumenCompleto);
             request.setAttribute("cat", cat);
             request.getRequestDispatcher("categoryTree.jsp").
                     forward(request, response);
-
         } catch (Exception e) {
             String error = e.getMessage();
             request.setAttribute("error", error);
             request.getRequestDispatcher("Error.jsp").forward(request, response);
         }
     }
-
+    
     private void doDesplegar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             HttpSession s = request.getSession(true);
@@ -115,12 +101,13 @@ public class consultasEmpleate extends HttpServlet {
             pr = request.getParameter("porcentaje");
             cat = CategoryModel.instance().giveChilds(Integer.parseInt(aux));
             Category cth = CategoryModel.instance().findCategoryById(Integer.parseInt(aux));
-            if (CategoryModel.instance().giveChilds(Integer.parseInt(aux)).size() == 0) {
+            if (CategoryModel.instance().giveChilds(Integer.parseInt(aux)).isEmpty()) {
                 resumen.add(cth);// solo add hojas
-                resumenCompleto.put(cth, "0");//cambiar el string por el parametro del usuario
+                resumenCompleto.put(cth, "90");//cambiar el string por el parametro del usuario
             }
             request.setAttribute("cat", cat);
             s.setAttribute("resumen", resumen);
+            s.setAttribute("resumenCompleto", resumenCompleto);
             request.setAttribute("por", pr);
             request.getRequestDispatcher("categoryTree.jsp").
                     forward(request, response);
@@ -128,9 +115,30 @@ public class consultasEmpleate extends HttpServlet {
             String error = e.getMessage();
             request.setAttribute("error", error);
             request.getRequestDispatcher("Error.jsp").forward(request, response);
-            resumen = new ArrayList();
-        }
+            resumen.clear();
+            resumenCompleto.clear();  
+}
+    
+
     }
+
+    private void doSearchPublicJobsByCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+       try {
+            HttpSession s = request.getSession(true);
+            List jobs = new ArrayList();  
+            jobs = JobModel.instance().getAllJobsByCategoryPublic((HashMap<Category, String>) s.getAttribute("resumenCompleto"));
+            if(!jobs.isEmpty()){
+            s.setAttribute("jobsByCategory", jobs);}
+            request.getRequestDispatcher("ResultadosBusquedas.jsp").
+                    forward(request, response);
+        } catch (Exception e) {
+            String error = e.getMessage();
+            request.setAttribute("error", error);
+            request.getRequestDispatcher("Error.jsp").forward(request, response);
+
+}
+    }
+
 
     private void doSearchPublicJobsByLocate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
@@ -149,10 +157,10 @@ public class consultasEmpleate extends HttpServlet {
     private void doSearchGeneralJobsByCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             HttpSession s = request.getSession(true);
-            List jobs = new ArrayList();
-            //String p = request.getParameter("percentage");
-            jobs = JobModel.instance().getAllJobsByCategory(resumenCompleto);
-            request.setAttribute("jobsByCategory", jobs);
+            List jobs = new ArrayList();      
+            jobs = JobModel.instance().getAllJobsByCategory((HashMap<Category, String>) s.getAttribute("resumenCompleto"));
+              if(!jobs.isEmpty()){
+            s.setAttribute("jobsByCategory", jobs);}
             request.getRequestDispatcher("ResultadosBusquedas.jsp").
                     forward(request, response);
         } catch (Exception e) {

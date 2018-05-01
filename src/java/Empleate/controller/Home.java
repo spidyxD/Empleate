@@ -48,7 +48,12 @@ public class Home extends HttpServlet {
         HttpSession s =  request.getSession( true);
         List<Job> top = JobModel.instance().top5();
         request.setAttribute("top", top);
-        s.setAttribute("login", l);
+         l = (Login) s.getAttribute("login");
+         if(l == null){
+             l = new Login();
+         }
+         s.setAttribute("login", l);
+        
         request.getRequestDispatcher("Home.jsp").
                 forward( request, response);
         }catch(Exception e){

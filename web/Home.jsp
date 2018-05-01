@@ -15,7 +15,6 @@
         <div class="cuerpo">
             <section class="section">
                 <jsp:useBean id="top" scope="request" type="List<Job>" class="java.util.ArrayList"/>
-               <jsp:useBean id="login" scope="session" type="Login"/>
                 <div class="row">
                     <div class="carousel carousel-slider center">
                         <div class="carousel-fixed-item center">

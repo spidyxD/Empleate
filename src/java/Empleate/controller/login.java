@@ -94,7 +94,7 @@ public class login extends HttpServlet {
         Login l = new Login();
         try{ 
             HttpSession s =  request.getSession(true);
-            l = (Login) s.getAttribute("login");
+           
             l.setUsername(request.getParameter("username"));
             l.setPassword(request.getParameter("password"));
             

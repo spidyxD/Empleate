@@ -5,6 +5,7 @@
 --%>
 
 
+<%@page import="java.util.HashMap"%>
 <%@page import="Empleate.domain.Login"%>
 <%@page import="Empleate.controller.consultasEmpleate"%>
 <%@page import="java.util.List"%>
@@ -24,7 +25,8 @@
         <jsp:useBean id="cat" scope="request" type="List<Category>" class="java.util.ArrayList"/>
         <jsp:useBean id="resumen" scope="session" type="List<Category>" class="java.util.ArrayList"/>
         <jsp:useBean id="por" scope="request" type="String" class="java.lang.String"/>
-        <jsp:useBean id="login" scope="session" type="Login"/>
+        <jsp:useBean id="resumenCompleto" scope="session" type="HashMap<Category, String>" />
+        <%Login login = (Login)session.getAttribute("login");%>
         <div class="cuerpoConsulta container">
             <div>
                 <ul>
@@ -32,8 +34,30 @@
                     <%if(CategoryModel.instance().giveChilds(j.getIdCategory()).size() == 0){%>
                         <li><div class="collapsible-header">
                                 <i class="material-icons">fiber_manual_record</i> 
-                                <a href="desplegar?papa=<%=j.getIdCategory()%>"><%=j.getNameCategory()%></a>
-                                <input name="porcentaje" id="porcentaje" type="text" class="validate" style="color:black;width: 30px;margin-left: 100px;" placeholder="porcentaje"> 
+                                <a href="desplegar?papa=<%=j.getIdCategory()%>" id="code"><%=j.getNameCategory()%></a>
+                                <input name="porcentaje" id="porcentaje" type="text" class="validate" style="color:black;width: 90px;margin-left: 100px;" placeholder="porcentaje"> 
+                                <script>
+                                    function percent(){
+                                        if(document.getElementById("porcentaje").value = ""){
+                                            console.log('Porcentaje no almacenado');
+                                        }
+                                        else{
+                                             p = {percent:document.getElementById("porcentaje").value}    
+                                             console.log(document.getElementById("porcentaje").value);
+                                              ajax({"method": "POST", 
+                                                "url":"desplegar", 
+                                                "data": p, 
+                                                "success": 
+                                                  function(obj){
+                                                      console.log("success");
+                                                  },
+                                                "error": function(status){
+                                                       window.alert("Error");
+                                                  }                    
+                                              });  
+                                        }
+                                    }   
+                                </script>
                             </div>
                         </li> 
                     <%}else{%>
@@ -59,9 +83,10 @@
                  <a class="col s2 btn mybtn" href="consultasEmpleateJobsByCategory">Consultar</a>
                 <%}%>
             </div>
-           
+                <h> <%=login.getUsername()%></h>
         </div>
 </div>
 <%@ include file="footer.jspf" %>
+
 </body>
 </html>

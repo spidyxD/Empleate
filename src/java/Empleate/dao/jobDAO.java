@@ -120,11 +120,11 @@ public class jobDAO extends HibernateUtil implements IBaseDAO<Job, Integer> {
     //busqueda privada
     public List<Job> findGeneralByCategory(String cat, String p) {
         List<Job> jobs = new ArrayList();
-        List<Job> njobs = new ArrayList();
         try {
             operationStart();
-            int percent = Integer.parseInt(p);
-            if (percent != 0) {
+           
+            if (!p.isEmpty() || !p.equals("0")) {
+                 int percent = Integer.parseInt(p);
                 String sql = "select job.idJob,job.name_job,job.description_job,salary,type_job,job.comp,job.status_job from "
                         + "job,jobCategory,category where job.idJob=jobCategory.j and jobCategory.cat = category.idCategory and "
                         + "category.name_category=" + "'"+ cat +"'"+" and jobCategory.percentage=" +"'"+ percent + "'"+";";
@@ -153,22 +153,22 @@ public class jobDAO extends HibernateUtil implements IBaseDAO<Job, Integer> {
     
     public List<Job> findPublicByCategory(String cat, String p) {
         List<Job> jobs = new ArrayList();
-        List<Job> njobs = new ArrayList();
         try {
             operationStart();
-            int percent = Integer.parseInt(p);
-            if (percent != 0) {
+            
+            if (!p.isEmpty() || !p.equals("0")) {
+                int percent = Integer.parseInt(p);
                 String sql = "select job.idJob,job.name_job,job.description_job,salary,type_job,job.comp,job.status_job from "
                         + "job,jobCategory,category where job.idJob=jobCategory.j and jobCategory.cat = category.idCategory and "
                         + "category.name_category=" + "'"+ cat +"'"+" and jobCategory.percentage=" +"'"+ percent + "'"
-                        +" and job.status_Job = 0"+";";
+                        +" and job.type_Job = 'public'"+";";
                 jobs = getSesion().createSQLQuery(sql).addEntity(Job.class).list();
                 getTransac().commit();
             } else {
                 String sql = "select job.idJob,job.name_job,job.description_job,salary,type_job,"
                         + "job.comp,job.status_job from job,jobCategory,category where job.idJob=jobCategory.j "
                         + "and jobCategory.cat = category.idCategory and category.name_category=" + "'" + cat + "'"
-                        + " and job.status_Job = 0" +";";
+                        + " and job.type_Job = 'public'" +";";
                 jobs = getSesion().createSQLQuery(sql).addEntity(Job.class).list();
                 getTransac().commit();
             }
