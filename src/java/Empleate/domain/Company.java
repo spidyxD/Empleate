@@ -16,8 +16,8 @@ public class Company  implements java.io.Serializable {
      private String email;
      private String phone;
      private String description;
-     private float location_X;
-     private float location_Y;
+     private double location_X;
+     private double location_Y;
      private String address;
      private int login;
      private Set<Job> jobs = new HashSet<Job>(0);
@@ -41,7 +41,7 @@ public class Company  implements java.io.Serializable {
         this.idCompany = idCompany;
     }
     
-    public Company(int idCompany, String nameCompany, String email, String phone, String description, float location_X,float location_Y, String address, int login,Set<Job> jobs, Set<Login> logins) {
+    public Company(int idCompany, String nameCompany, String email, String phone, String description, double location_X,double location_Y, String address, int login,Set<Job> jobs, Set<Login> logins) {
        this.idCompany = idCompany;
        this.nameCompany = nameCompany;
        this.email = email;
@@ -55,7 +55,7 @@ public class Company  implements java.io.Serializable {
        this.login = login;
     }
 
-    public Company(int idCompany,String nameCompany, String email, String phone, String description, float location_X,float location_Y, String address,int login) {
+    public Company(int idCompany,String nameCompany, String email, String phone, String description, double location_X,double location_Y, String address,int login) {
         this.idCompany = idCompany;
         this.nameCompany = nameCompany;
         this.email = email;
@@ -103,19 +103,19 @@ public class Company  implements java.io.Serializable {
         this.description = description;
     }
 
-    public float getLocation_X() {
+    public double getLocation_X() {
         return location_X;
     }
 
-    public void setLocation_X(float location_X) {
+    public void setLocation_X(double location_X) {
         this.location_X = location_X;
     }
 
-    public float getLocation_Y() {
+    public double getLocation_Y() {
         return location_Y;
     }
 
-    public void setLocation_Y(float location_Y) {
+    public void setLocation_Y(double location_Y) {
         this.location_Y = location_Y;
     }
     

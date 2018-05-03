@@ -536,7 +536,18 @@ button:hover {
     overflow: auto;
     background-color: transparent;
 }
-
+#createLocate{
+    display:none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 95%;
+    height: 75%;
+    overflow: hidden;
+    background-color: transparent;
+    
+}
 /* Modal Content Box */
 .modal-content2 {
     background-color: transparent;

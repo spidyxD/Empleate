@@ -10,8 +10,11 @@
 <html>
     <head>
         <meta charset="utf-8">
+         <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
         <title>Empleate</title>
         <%@include file="includesHead.jspf"%>
+        <%@include file="createLocate.jspf"%>
+        
     </head>
     <body>
         <%@include file="header.jspf"%>
@@ -44,8 +47,7 @@
                         </div>
 
                         <div class="input-field col s6">
-                            <input name="location" id="location" type="text" class="validate">
-                            <label for="location">Localizacion</label>
+                           <a class="waves-effect waves-light btn modal-trigger" href="#createLocate">Ubicacion </a>
                         </div>
                     </div>
                     <div class="row">
@@ -103,10 +105,35 @@
     .error p{
         color:red;
     }
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 65%;
+        position: static!important;
+        overflow: visible!important;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+    .input-field label{
+      color:black;
+    }
+
+    .btn{
+        text-align:center;
+    }
+    .modal.open{
+        background-color:#53167dcc;
+        border-radius: 15px;
+        width: 450px;
+        height: 500px;
+    }
+   
 
 </style>
 
-<script type="text/javascript">
-
-</script>
 
