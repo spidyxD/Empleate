@@ -1,4 +1,6 @@
 -- MySQL Workbench Forward Engineering
+
+
 CREATE DATABASE empleateBETA;
 USE empleateBETA ;
 
@@ -41,8 +43,8 @@ CREATE TABLE Company (
   email VARCHAR(45) NULL,
   phone VARCHAR(45) NULL,
   description VARCHAR(45) NULL,
-  location_X float,
-  location_Y float,
+  location_X double,
+  location_Y double,
   address VARCHAR(45) NULL,
   login INT NOT NULL,
   PRIMARY KEY (idCompany),
@@ -166,31 +168,48 @@ update Company set address ='LAGUNILLA' where idCompany = 3;
 update Company set address ='SANTA CECILIA' where idCompany = 4;
 update Company set address ='HEREDIA' where idCompany = 2;
 update Company set address ='BARVA' where idCompany = 1;
-
-insert into Job (name_Job, description_Job,salary, type_Job, comp, status_Job) values('Designer','Designing is life',350000,'public',1, 1); 
+ 
+insert into Job (name_Job, description_Job,salary, type_Job, comp, status_Job) values('Designer','Designing is life',350000,'private',1, 1); 
 insert into Job (name_Job, description_Job,salary, type_Job, comp, status_Job) values('Programmer','Junior Java',250000,'public',1,1);
-insert into Job (name_Job, description_Job,salary, type_Job, comp, status_Job) values('DBA','Do not touch my data base',450000,'public',2, 1); 
+insert into Job (name_Job, description_Job,salary, type_Job, comp, status_Job) values('DBA','Do not touch my data base',450000,'private',2, 1); 
 insert into Job (name_Job, description_Job,salary, type_Job, comp, status_Job) values('Tecnical support','I can fix but is not free',550000,'public',2, 1); 
-insert into Job (name_Job, description_Job,salary, type_Job, comp, status_Job) values('Developer','Junior Java',3750000,'public',3,1);
+insert into Job (name_Job, description_Job,salary, type_Job, comp, status_Job) values('Developer','Junior Java',3750000,'private',3,1);
+insert into Job (name_Job, description_Job,salary, type_Job, comp, status_Job) values('Manager','loquesea Java',3750000,'public',3,1);
+
 
 insert into Offerer (name_offerer, lastname, nationality, phone, email, residence,login) values ('Andres','Gutierrez','CR','61688613','a@gmail.com','Heredia',8);
 insert into Offerer (name_offerer, lastname, nationality, phone, email, residence,login) values ('Roger','Amador','CR','83656107','r@gmail.com','Desamparados',9);
 
-insert into Category (parentCategory,name_Category) values(null,'PROGRAMACION');-- 1
-insert into Category (parentCategory,name_Category) values(null,'Diseño WEB');  -- 2
-insert into Category (parentCategory,name_Category) values(null,'REDES'); -- 3 
-insert into Category (parentCategory,name_Category) values(1,'JAVA');-- 4
-insert into Category (parentCategory,name_Category) values(1,'C++');-- 5 
-insert into Category (parentCategory,name_Category) values(2,'CSS');-- 6
-insert into Category (parentCategory,name_Category) values(3,'CISCO');-- 7
-
-insert into Category (parentCategory,name_Category) values(4,'JSON');-- 8
-insert into Category (parentCategory,name_Category) values(6,'BOOTSTRAP');-- 9
-insert into Category (parentCategory,name_Category) values(6,'MATERIALIZE');-- 10
 
 
-insert into jobCategory (j, cat, percentage)values(1,5,85);
-insert into jobCategory (j, cat, percentage)values(2,4,90);
+insert into Category (name_Category) values('PROGRAMACION');                       
+insert into Category (name_Category) values('Diseño WEB');                          
+insert into Category (name_Category) values('REDES');                              
+insert into Category (name_Category) values('Manager');                             
+insert into Category (name_Category) values('Support Manintenence');                
+insert into Category (parentCategory,name_Category) values(1,'JAVA');               
+insert into Category (parentCategory,name_Category) values(1,'C++');	            
+insert into Category (parentCategory,name_Category) values(2,'CSS');                
+insert into Category (parentCategory,name_Category) values(3,'CISCO');              
+insert into Category (parentCategory,name_Category) values(6,'JSON');               
+insert into Category (parentCategory,name_Category) values(8,'BOOTSTRAP');           
+insert into Category (parentCategory,name_Category) values(8,'MATERIALIZE');        
+insert into Category (parentCategory,name_Category) values(4,'DBA');                   
+insert into Category (parentCategory,name_Category) values(5,'support tecnician');	
+insert into Category (parentCategory,name_Category) values(4,'administer');       	
+
+
+
+insert into jobCategory (j, cat, percentage)values(1,11,85);
+insert into jobCategory (j, cat, percentage)values(2,10,90);
+insert into jobCategory (j, cat, percentage)values(6,13,90);	
+insert into jobCategory (j, cat, percentage)values(4,14,90);
+insert into jobCategory (j, cat, percentage)values(3,15,90);
+insert into jobCategory (j, cat, percentage)values(5,7,90);
+insert into jobCategory (j, cat, percentage)values(1,12,90);
 
 insert into offerCategory (offer, cat, percentage)values(1,2,90);
 insert into offerCategory (offer, cat, percentage)values(2,1,90);
+
+
+
