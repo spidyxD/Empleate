@@ -55,14 +55,44 @@
      </div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         <div class="row">
             <div class="col s12">
-                
                 <a class="btn-floating btn-large waves-effect waves-light red" onclick="alerta()"><i class="material-icons">add</i></a>
-            </div>   
+            
+           </div>   
             </div>
     </div>
 </div> 
 <script>
     function alerta(){
-        windows.alert("Ubicacion añadida!");
+        giveLat();
+        giveLng();
+        window.alert("Ubicacion añadida!");
+        
     }
+</script>
+<script>
+    function showX(x){
+        document.getElementById("localeX").value = x;
+    }  
+    function giveLat(){
+        var x = marker.getPosition().lat();
+        showX(x);
+        
+    }        
+    
+    document.addEventListener("DOMContentLoaded",loaded);
+    
+    
+</script>
+<script>
+     function showY(y){
+	document.getElementById("localeY").value = y;
+    }  
+    function giveLng(){
+        var y = marker.getPosition().lng();  
+        showY(y);
+      
+    }
+   
+    document.addEventListener("DOMContentLoaded",loaded);
+
 </script>

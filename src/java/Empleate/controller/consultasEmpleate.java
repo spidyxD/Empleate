@@ -143,6 +143,7 @@ public class consultasEmpleate extends HttpServlet {
     private void doSearchPublicJobsByLocate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             HttpSession s = request.getSession(true);
+            
         } catch (Exception e) {
             String error = e.getMessage();
             request.setAttribute("error", error);
