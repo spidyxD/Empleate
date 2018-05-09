@@ -124,8 +124,7 @@ public class Register extends HttpServlet {
             String user = request.getParameter("username");
             param.add(user);
             String key = request.getParameter("password");
-             BufferedReader reader = request.getReader();
-             Gson gson = new Gson();
+             
             double locateX = Double.parseDouble(request.getParameter("localeX"));
             
             double locateY = Double.parseDouble(request.getParameter("localeY"));

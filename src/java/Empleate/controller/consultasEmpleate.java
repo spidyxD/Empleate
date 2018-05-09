@@ -4,11 +4,11 @@
  * and open the template in the editor.
  */
 package Empleate.controller;
-import com.google.gson.Gson;
 import Empleate.domain.Category;
-import Empleate.domain.Job;
+import Empleate.domain.Porcentaje;
 import Empleate.logica.CategoryModel;
 import Empleate.logica.JobModel;
+import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -98,26 +98,41 @@ public class consultasEmpleate extends HttpServlet {
             HttpSession s = request.getSession(true);
             cat = new ArrayList<Category>();
             String aux = request.getParameter("papa");
-            pr = request.getParameter("porcentaje");
+            
+            /*String p = gson.fromJson(reader, String.class);
+            if(!p.isEmpty()){
+                pr = p;
+            }else{
+            pr = "90";
+            }*/
+            
             cat = CategoryModel.instance().giveChilds(Integer.parseInt(aux));
             Category cth = CategoryModel.instance().findCategoryById(Integer.parseInt(aux));
             if (CategoryModel.instance().giveChilds(Integer.parseInt(aux)).isEmpty()) {
+                BufferedReader reader = request.getReader();
+                Gson gson = new Gson();
+                Porcentaje porcentaje = gson.fromJson(reader, Porcentaje.class);
+                String c = porcentaje.getPercent();
+                System.out.println(c);
+                response.setContentType("application/json; charset=UTF-8");
                 resumen.add(cth);// solo add hojas
-                resumenCompleto.put(cth, "90");//cambiar el string por el parametro del usuario
+                resumenCompleto.put(cth,c);//cambiar el string por el parametro del usuario
+               
             }
             request.setAttribute("cat", cat);
             s.setAttribute("resumen", resumen);
             s.setAttribute("resumenCompleto", resumenCompleto);
-            request.setAttribute("por", pr);
             request.getRequestDispatcher("categoryTree.jsp").
                     forward(request, response);
+             response.setStatus(200);
         } catch (Exception e) {
             String error = e.getMessage();
             request.setAttribute("error", error);
             request.getRequestDispatcher("Error.jsp").forward(request, response);
             resumen.clear();
-            resumenCompleto.clear();  
-}
+            resumenCompleto.clear();
+             response.setStatus(401);
+        }
     
 
     }

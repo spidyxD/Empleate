@@ -23,7 +23,7 @@
                 <% Offerer o= (Offerer) session.getAttribute("offerer");%>
                 <% Manager m= (Manager) session.getAttribute("manager");%>
               
-          <li><a class="waves-effect waves-light btn modal-trigger" href="#busquedaSelector">Buscar</a></li>
+          <li><a class="waves-effect waves-light btn modal-trigger" href="iniciar">Buscar</a></li>
           <% if (l!=null && !l.getUsername().isEmpty()){%>
           <% if(l.getType_log().equals("company")){ %>
           <li style="display: flex "><img class="inline" style="width: 30px; height: 40px;" src="images/company.png" alt="company"><a href="#">usuario: <%=c.getNameCompany()%>/  email: <%= c.getEmail() %></a>
