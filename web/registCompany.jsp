@@ -4,14 +4,18 @@
     Author     : Addiel
 --%>
 
+<%@page import="Empleate.domain.Login"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
+         <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
         <title>Empleate</title>
         <%@include file="includesHead.jspf"%>
+        <%@include file="createLocate.jspf"%>
+        <%Login login = (Login)session.getAttribute("login");%>
     </head>
     <body>
         <%@include file="header.jspf"%>
@@ -38,16 +42,25 @@
 
                     </div>
                     <div class="row">
-                        <div class="input-field col s6">
+                        <div class="input-field col s12">
                             <input name="direccion" id="direccion" type="text" class="validate" <%if(lleno){ %>value="<%=param.get(3)%>" <%}%>>
                             <label for="direccion">Direccion </label>
                         </div>
-
-                        <div class="input-field col s6">
-                            <input name="location" id="location" type="text" class="validate">
-                            <label for="location">Localizacion</label>
+                    </div>         
+                    <div class="row">
+                        <div class="input-field col s4">
+                           <a class="waves-effect waves-light btn modal-trigger" href="#createLocate">Ubicacion </a>
+                        </div>
+                        <div class="input-field col s4">
+                           <input name="localeX" id="localeX" type="value" class="validate" readonly>
+                            <label for="localeX">Locale_lat </label>
+                        </div>    
+                        <div class="input-field col s4">    
+                            <input name="localeY" id="localeY" type="value" class="validate" readonly>
+                            <label for="localeY">Locale_lng </label>
                         </div>
                     </div>
+                           
                     <div class="row">
                         <div class="input-field col s12">
                             <input name="descripcion" id="descripcion" type="text" class="validate" <%if(lleno){ %>value="<%=param.get(4)%>" <%}%>>
@@ -77,6 +90,7 @@
             <%}%>
         </div>
         <h3 id="t"></h3>
+        <h id="login"> <%=login.getUsername()%></h>
         <%@include file="footer.jspf"%>
         <!--JavaScript at end of body for optimized loading-->
         <script type="text/javascript" src="js/jquery.js"></script> <!--necesario para los carruseles-->
@@ -103,10 +117,35 @@
     .error p{
         color:red;
     }
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 65%;
+        position: static!important;
+        overflow: visible!important;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+    .input-field label{
+      color:black;
+    }
+
+    .btn{
+        text-align:center;
+    }
+    .modal.open{
+        background-color:#53167dcc;
+        border-radius: 15px;
+        width: 450px;
+        height: 500px;
+    }
+   
 
 </style>
 
-<script type="text/javascript">
-
-</script>
 

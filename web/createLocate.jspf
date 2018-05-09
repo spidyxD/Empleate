@@ -1,0 +1,98 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<!-- Modal Structure -->
+
+<div id="createLocate" class="modal">
+    <div class="modal-content">
+        
+     <div class="row">
+     <div class="col s12">
+    <div id="map"></div>
+    <script>
+      function initMap() {
+           var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 12,
+          center: {lat: 9.8207388, lng: -84.2153649},
+          mapTypeControl: true,
+          mapTypeControlOptions: {
+              style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+              position: google.maps.ControlPosition.TOP_CENTER
+          },
+          zoomControl: true,
+          zoomControlOptions: {
+              position: google.maps.ControlPosition.LEFT_CENTER
+          },
+          scaleControl: true,
+          streetViewControl: true,
+          streetViewControlOptions: {
+              position: google.maps.ControlPosition.LEFT_TOP
+          },
+          fullscreenControl: true
+        });
+
+        map.addListener('click', function(e) {
+          placeMarkerAndPanTo(e.latLng, map);
+        });
+      }
+      var marker;
+      function placeMarkerAndPanTo(latLng, map) {
+        if ( marker ) {
+          marker.setPosition(latLng);
+          console.log(marker.getPosition().lat()+" "+marker.getPosition().lng());
+        } else {
+          marker = new google.maps.Marker({
+          position: latLng,
+          map: map});
+          console.log(marker.getPosition().lat()+" "+marker.getPosition().lng());
+       }
+      }
+
+      console.log(marker.getPosition());
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIIW69zncu3kQ6KzuQ4xMlheuamnvX5DA&callback=initMap"
+     type="text/javascript"></script>
+     </div>
+     </div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <div class="row">
+            <div class="col s12">
+                <a class="btn-floating btn-large waves-effect waves-light red" onclick="alerta()"><i class="material-icons">add</i></a>
+            
+           </div>   
+            </div>
+    </div>
+</div> 
+<script>
+    function alerta(){
+        giveLat();
+        giveLng();
+        window.alert("Ubicacion añadida!");
+        
+    }
+</script>
+<script>
+    function showX(x){
+        document.getElementById("localeX").value = x;
+    }  
+    function giveLat(){
+        var x = marker.getPosition().lat();
+        showX(x);
+        
+    }        
+    
+    document.addEventListener("DOMContentLoaded",loaded);
+    
+    
+</script>
+<script>
+     function showY(y){
+	document.getElementById("localeY").value = y;
+    }  
+    function giveLng(){
+        var y = marker.getPosition().lng();  
+        showY(y);
+      
+    }
+   
+    document.addEventListener("DOMContentLoaded",loaded);
+
+</script>

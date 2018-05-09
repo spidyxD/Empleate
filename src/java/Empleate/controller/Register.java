@@ -12,6 +12,8 @@ import Empleate.domain.Offerer;
 import Empleate.logica.CompanyModel;
 import Empleate.logica.LoginModel;
 import Empleate.logica.OffererModel;
+import com.google.gson.Gson;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -122,7 +124,11 @@ public class Register extends HttpServlet {
             String user = request.getParameter("username");
             param.add(user);
             String key = request.getParameter("password");
-
+             
+            double locateX = Double.parseDouble(request.getParameter("localeX"));
+            
+            double locateY = Double.parseDouble(request.getParameter("localeY"));
+            
             l.setIdLogin(0);
             l.setUsername(user);
             l.setPassword(key);
@@ -140,8 +146,8 @@ public class Register extends HttpServlet {
             c.setDescription(descript);
             c.setPhone(phone);
             c.setAddress(addres);
-            c.setLocation_X((float) 10.14);
-            c.setLocation_Y((float) 156.425);
+            c.setLocation_X(locateX);
+            c.setLocation_Y(locateY);
             c.setIdCompany(0);
             Set<Login> logins = new HashSet<Login>();
             logins.add(new Login());
@@ -156,11 +162,13 @@ public class Register extends HttpServlet {
 
             request.setAttribute("login", l);
             request.setAttribute("company", c);
+            response.setStatus(200); //si la long y la lat estableciada llega correctamente
             request.getRequestDispatcher("Home").forward(request, response);
         } catch (Exception e) {
             String error = e.getMessage();
             request.setAttribute("error", error);
             request.setAttribute("param", param);
+            response.setStatus(400); //si hay un error en el envio de la ubicacion
             request.getRequestDispatcher("registCompany.jsp").forward(request, response);
         }
     }
