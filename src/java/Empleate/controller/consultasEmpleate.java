@@ -44,7 +44,7 @@ public class consultasEmpleate extends HttpServlet {
     List<Category> cat = new ArrayList<>();//Mostrar las categorias en un momento dado
     String pr = "";
     HashMap<Category, String> resumenCompleto = new HashMap();//nuevo resumen
-
+    List jobs = new ArrayList();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         switch (request.getServletPath()) {
@@ -97,34 +97,22 @@ public class consultasEmpleate extends HttpServlet {
         try {
             HttpSession s = request.getSession(true);
             cat = new ArrayList<Category>();
-            String aux = request.getParameter("papa");
-            
-            /*String p = gson.fromJson(reader, String.class);
-            if(!p.isEmpty()){
-                pr = p;
-            }else{
-            pr = "90";
-            }*/
-            
+              String aux = request.getParameter("papa");
             cat = CategoryModel.instance().giveChilds(Integer.parseInt(aux));
             Category cth = CategoryModel.instance().findCategoryById(Integer.parseInt(aux));
-            if (CategoryModel.instance().giveChilds(Integer.parseInt(aux)).isEmpty()) {
-                BufferedReader reader = request.getReader();
-                Gson gson = new Gson();
-                Porcentaje porcentaje = gson.fromJson(reader, Porcentaje.class);
-                String c = porcentaje.getPercent();
+            if (CategoryModel.instance().giveChilds(Integer.parseInt(aux)).isEmpty()) {              
+                String c = request.getParameter("percent");
                 System.out.println(c);
                 response.setContentType("application/json; charset=UTF-8");
                 resumen.add(cth);// solo add hojas
-                resumenCompleto.put(cth,c);//cambiar el string por el parametro del usuario
-               
+                resumenCompleto.put(cth,c);//cambiar el string por el parametro del usuario    
             }
             request.setAttribute("cat", cat);
             s.setAttribute("resumen", resumen);
             s.setAttribute("resumenCompleto", resumenCompleto);
             request.getRequestDispatcher("categoryTree.jsp").
                     forward(request, response);
-             response.setStatus(200);
+            response.setStatus(200);
         } catch (Exception e) {
             String error = e.getMessage();
             request.setAttribute("error", error);
@@ -140,12 +128,13 @@ public class consultasEmpleate extends HttpServlet {
     private void doSearchPublicJobsByCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        try {
             HttpSession s = request.getSession(true);
-            List jobs = new ArrayList();  
+            jobs.clear();  
             jobs = JobModel.instance().getAllJobsByCategoryPublic((HashMap<Category, String>) s.getAttribute("resumenCompleto"));
             if(!jobs.isEmpty()){
             s.setAttribute("jobsByCategory", jobs);}
             request.getRequestDispatcher("ResultadosBusquedas.jsp").
                     forward(request, response);
+            jobs.clear();
         } catch (Exception e) {
             String error = e.getMessage();
             request.setAttribute("error", error);
@@ -173,12 +162,13 @@ public class consultasEmpleate extends HttpServlet {
     private void doSearchGeneralJobsByCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             HttpSession s = request.getSession(true);
-            List jobs = new ArrayList();      
+            jobs.clear();      
             jobs = JobModel.instance().getAllJobsByCategory((HashMap<Category, String>) s.getAttribute("resumenCompleto"));
               if(!jobs.isEmpty()){
-            s.setAttribute("jobsByCategory", jobs);}
+            request.setAttribute("jobsByCategory", jobs);}
             request.getRequestDispatcher("ResultadosBusquedas.jsp").
                     forward(request, response);
+            jobs.clear();
         } catch (Exception e) {
             String error = e.getMessage();
             request.setAttribute("error", error);

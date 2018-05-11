@@ -11,7 +11,7 @@ package Empleate.domain;
  */
 public class Porcentaje {
     String percent;
-
+    String papa;
     public Porcentaje() {
     }
 
@@ -25,6 +25,14 @@ public class Porcentaje {
 
     public void setPercent(String percent) {
         this.percent = percent;
+    }
+
+    public String getPapa() {
+        return papa;
+    }
+
+    public void setPapa(String papa) {
+        this.papa = papa;
     }
     
 }

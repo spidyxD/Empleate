@@ -21,7 +21,13 @@
         <%@ include file="includesHead.jspf" %>
         <script type="text/javascript" src="js/ajax.js"></script> 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>       
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+        <script>
+        $(document).ready(function(){
+          $('select').formSelect();
+        });
+        
+         </script>
     </head>
     <body>
         <%@ include file="header.jspf" %>
@@ -32,53 +38,43 @@
         <div class="cuerpoConsulta container">
             <div>
                 <ul>
+                    <%int count=0;%>
+                    
                     <%for (Category j: cat){%>
+                   
+                    <h id="papa" hidden ><%=j.getIdCategory()%></h>
+                     <%count = j.getIdCategory();%>
+                    <%String id= "porcentaje_"+count;%>
                     <%if(CategoryModel.instance().giveChilds(j.getIdCategory()).size() == 0){%>
                        
                         <li id="list"><div class="collapsible-header">
-                                <i class="material-icons">fiber_manual_record</i> 
-                                <a href="desplegar?papa=<%=j.getIdCategory()%>" id="code"><%=j.getNameCategory()%></a>
-                                <select id="porcentaje">
-                                    <option value="10">10%</option>
-                                    <option value="20">20%</option>
-                                    <option value="30">30%</option>
-                                    <option value="40">40%</option>
-                                    <option value="50">50%</option>
-                                    <option value="60">60%</option>
-                                    <option value="70">70%</option>
-                                    <option value="80">80%</option>
-                                    <option value="90">90%</option>
-                                    <option value="100">100%</option>
-                                 </select> 
-                                
-                                <script>
-                                    function givePercent(){
-                                            porcentaje = {percent: $("#porcentaje").val()};     
-                                            $.ajax({type: "POST", 
-                                            url:"desplegar", 
-                                            data: JSON.stringify(porcentaje), 
-                                            dataType:"json",
-                                            success: 
-                                              function(){
-                                                  console.log("success");
-                                              },
-                                            error: function(){
-                                                   console.log("error"+porcentaje.percent);
-                                              }                    
-                                          });    
-
-                                    };
-                                    $('#code').click( function(e) {e.preventDefault(); givePercent();return false;} );
-                                  
-                                     
-                                </script>
+                        <i class="material-icons">fiber_manual_record</i>
+                        
+                        <h><a href ="#" onclick="this.href='desplegar?papa=<%=j.getIdCategory()%>&percent='+document.getElementById('<%=id%>').value" id="son"><%=j.getNameCategory()%></a><br>
+                               <div class = "row">
+                                <div class="input-field col s12"> 
+                                <select id="<%=id%>" value="${item.value}">
+                                  <option value="" disabled selected>seleccione su nivel</option>
+                                  <option value="10">10%</option>
+                                  <option value="25">25%</option>
+                                  <option value="50">50%</option>
+                                  <option value="75">75%</option>
+                                  <option value="85">85%</option>
+                                  <option value="90">90%</option>
+                                  <option value="100">100%</option>
+                                </select>
+                                <label>porcentaje</label>
+                              </div>
+                                </div></h>   
                             </div>
+                             
                         </li> 
-                      
+                        
                     <%}else{%>
                         <li><div class="collapsible-header"><i class="material-icons">add</i> <a href="desplegar?papa=<%=j.getIdCategory()%>"><%=j.getNameCategory()%></a></div></li> 
                     <%}%>
                     <%}%>
+                     
                 </ul>
             </div><br>  
             <div class = "row">
