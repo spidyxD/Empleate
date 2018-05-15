@@ -5,11 +5,8 @@
  */
 package Empleate.controller;
 import Empleate.domain.Category;
-import Empleate.domain.Porcentaje;
 import Empleate.logica.CategoryModel;
 import Empleate.logica.JobModel;
-import com.google.gson.Gson;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +23,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Addiel
  */
-@WebServlet(name = "consultasEmpleate", urlPatterns = {"consultasEmpleateJobsByCategory", "/iniciar", "/consultasEmpleateJobsByLocation", "consultasEmpleateAllJobsByCategory", "/consultasEmpleateAllJobsByLocation", "/desplegar"})
+@WebServlet(name = "consultasEmpleate", urlPatterns = {"consultasEmpleateJobsByCategory", "/iniciar", "consultasEmpleateAllJobsByCategory", "/consultarOffrers", "/desplegar"})
 public class consultasEmpleate extends HttpServlet {
 
     /**
@@ -44,6 +41,7 @@ public class consultasEmpleate extends HttpServlet {
     List<Category> cat = new ArrayList<>();//Mostrar las categorias en un momento dado
     String pr = "";
     HashMap<Category, String> resumenCompleto = new HashMap();//nuevo resumen
+    double x,y = 0;
     List jobs = new ArrayList();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -52,16 +50,13 @@ public class consultasEmpleate extends HttpServlet {
             case "/consultasEmpleateJobsByCategory"://Publico
                 this.doSearchPublicJobsByCategory(request, response);
                 break;
-            case "/consultasEmpleateJobsByLocation"://Publico
-                this.doSearchPublicJobsByLocate(request, response);
-                break;
+            //Para Categorias
             case "/consultasEmpleateAllJobsByCategory"://Privado,public (Sesion iniciada)
                 this.doSearchGeneralJobsByCategory(request, response);
                 break;
-            case "/consultasEmpleateAllJobsByLocation"://Privado,public (Sesion iniciada)
-                this.doSearchGeneralJobsByLocate(request, response);
+            case "/consultarOffrers":
+                this.doSearchOfferers(request,response);
                 break;
-            //Para Categorias
             case "/desplegar"://sirve para desplegar las categorias deseadas(como si fuera el publico)
                 this.doDesplegar(request, response);
                 break;
@@ -105,8 +100,10 @@ public class consultasEmpleate extends HttpServlet {
                 System.out.println(c);
                 response.setContentType("application/json; charset=UTF-8");
                 resumen.add(cth);// solo add hojas
-                resumenCompleto.put(cth,c);//cambiar el string por el parametro del usuario    
+                resumenCompleto.put(cth,c);//cambiar el string por el parametro del usuario  
+              
             }
+             
             request.setAttribute("cat", cat);
             s.setAttribute("resumen", resumen);
             s.setAttribute("resumenCompleto", resumenCompleto);
@@ -128,8 +125,10 @@ public class consultasEmpleate extends HttpServlet {
     private void doSearchPublicJobsByCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        try {
             HttpSession s = request.getSession(true);
-            jobs.clear();  
-            jobs = JobModel.instance().getAllJobsByCategoryPublic((HashMap<Category, String>) s.getAttribute("resumenCompleto"));
+            jobs.clear();
+             x = Double.parseDouble(request.getParameter("localeX"));
+             y =Double.parseDouble(request.getParameter("localeY"));
+            jobs = JobModel.instance().getAllJobsByCategoryPublic((HashMap<Category, String>) s.getAttribute("resumenCompleto"),x,y);
             if(!jobs.isEmpty()){
             s.setAttribute("jobsByCategory", jobs);}
             request.getRequestDispatcher("ResultadosBusquedas.jsp").
@@ -140,20 +139,7 @@ public class consultasEmpleate extends HttpServlet {
             request.setAttribute("error", error);
             request.getRequestDispatcher("Error.jsp").forward(request, response);
 
-}
-    }
-
-
-    private void doSearchPublicJobsByLocate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            HttpSession s = request.getSession(true);
-            
-        } catch (Exception e) {
-            String error = e.getMessage();
-            request.setAttribute("error", error);
-            request.getRequestDispatcher("Error.jsp").forward(request, response);
-
-        }
+        }   
     }
 
     /**
@@ -162,8 +148,10 @@ public class consultasEmpleate extends HttpServlet {
     private void doSearchGeneralJobsByCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             HttpSession s = request.getSession(true);
-            jobs.clear();      
-            jobs = JobModel.instance().getAllJobsByCategory((HashMap<Category, String>) s.getAttribute("resumenCompleto"));
+            jobs.clear();   
+             x = Double.parseDouble(request.getParameter("localeX"));
+             y =Double.parseDouble(request.getParameter("localeY"));
+            jobs = JobModel.instance().getAllJobsByCategory((HashMap<Category, String>) s.getAttribute("resumenCompleto"),x,y);
               if(!jobs.isEmpty()){
             request.setAttribute("jobsByCategory", jobs);}
             request.getRequestDispatcher("ResultadosBusquedas.jsp").
@@ -177,9 +165,7 @@ public class consultasEmpleate extends HttpServlet {
         }
     }
 
-    private void doSearchGeneralJobsByLocate(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+  
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -219,5 +205,9 @@ public class consultasEmpleate extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private void doSearchOfferers(HttpServletRequest request, HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }

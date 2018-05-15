@@ -43,7 +43,7 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <input name="direccion" id="direccion" type="text" class="validate" <%if(lleno){ %>value="<%=param.get(3)%>" <%}%>>
+                            <input name="direccion" id="direccion" type="text"   readonly>
                             <label for="direccion">Direccion </label>
                         </div>
                     </div>         
@@ -52,12 +52,12 @@
                            <a class="waves-effect waves-light btn modal-trigger" href="#createLocate">Ubicacion </a>
                         </div>
                         <div class="input-field col s4">
-                           <input name="localeX" id="localeX" type="value" class="validate" readonly>
-                            <label for="localeX">Locale_lat </label>
-                        </div>    
+                           <input name="localeX" id="localeX" type="value" class="validate" readonly hidden>
+                           
+                    </div>
                         <div class="input-field col s4">    
-                            <input name="localeY" id="localeY" type="value" class="validate" readonly>
-                            <label for="localeY">Locale_lng </label>
+                            <input name="localeY" id="localeY" type="value" class="validate" readonly hidden>
+                            
                         </div>
                     </div>
                            
@@ -130,7 +130,59 @@
         margin: 0;
         padding: 0;
       }
+      .gm-style-iw{
+        color:black!important;
+    }
+      .input-field label{
+      color:black;
+     }
+       .controls {
+        margin-top: 10px;
+        border: 1px solid transparent;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        height: 32px;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        color:black;
+      }
 
+      #pac-input {
+        background-color: #ffff!important;
+        font-family: Roboto!important;
+        font-size: 15px!important;
+        font-weight: 200!important;
+        margin-left: 12px!important;
+        padding: 0 11px 0 13px!important;
+        text-overflow: ellipsis!important;
+        height: 40px!important;
+        width: 500px!important;
+        left:0px!important;
+      }
+
+      #pac-input:focus {
+        border-color: #4d90fe!important;
+      }
+
+      .pac-container {
+        font-family: Roboto!important;
+      }
+
+      #type-selector {
+        color: #fff!important;
+        background-color: #4d90fe!important;
+        padding: 5px 11px 0px 11px!important;
+      }
+
+      #type-selector label {
+        font-family: Roboto!important;
+        font-size: 13px!important;
+        font-weight: 300!important;
+      }
+      #target {
+        width: 345px!important;
+      }
     .input-field label{
       color:black;
     }
