@@ -43,8 +43,8 @@ CREATE TABLE Company (
   email VARCHAR(45) NULL,
   phone VARCHAR(45) NULL,
   description VARCHAR(45) NULL,
-  location_X double,
-  location_Y double,
+  location_X float,
+  location_Y float,
   address VARCHAR(45) NULL,
   login INT NOT NULL,
   PRIMARY KEY (idCompany),
@@ -182,21 +182,22 @@ insert into Offerer (name_offerer, lastname, nationality, phone, email, residenc
 
 
 
-insert into Category (name_Category) values('PROGRAMACION');                       
-insert into Category (name_Category) values('Diseño WEB');                          
-insert into Category (name_Category) values('REDES');                              
-insert into Category (name_Category) values('Manager');                             
-insert into Category (name_Category) values('Support Manintenence');                
-insert into Category (parentCategory,name_Category) values(1,'JAVA');               
-insert into Category (parentCategory,name_Category) values(1,'C++');	            
-insert into Category (parentCategory,name_Category) values(2,'CSS');                
-insert into Category (parentCategory,name_Category) values(3,'CISCO');              
-insert into Category (parentCategory,name_Category) values(6,'JSON');               
-insert into Category (parentCategory,name_Category) values(8,'BOOTSTRAP');           
-insert into Category (parentCategory,name_Category) values(8,'MATERIALIZE');        
-insert into Category (parentCategory,name_Category) values(4,'DBA');                   
-insert into Category (parentCategory,name_Category) values(5,'support tecnician');	
-insert into Category (parentCategory,name_Category) values(4,'administer');       	
+insert into Category (name_Category) values('PROGRAMACION');    -- 1                   
+insert into Category (name_Category) values('Diseño WEB');    -- 2                      
+insert into Category (name_Category) values('REDES');        -- 3                      
+insert into Category (name_Category) values('Manager');     -- 4                        
+insert into Category (name_Category) values('Support Manintenence');   -- 5             
+insert into Category (parentCategory,name_Category) values(1,'JAVA');    -- 6           
+insert into Category (parentCategory,name_Category) values(1,'C++');	-- 7            
+insert into Category (parentCategory,name_Category) values(2,'CSS');      -- 8          
+insert into Category (parentCategory,name_Category) values(3,'CISCO');    -- 9          
+insert into Category (parentCategory,name_Category) values(6,'JSON');      -- 10         
+insert into Category (parentCategory,name_Category) values(8,'BOOTSTRAP');       -- 11    
+insert into Category (parentCategory,name_Category) values(8,'MATERIALIZE');    -- 12    
+insert into Category (parentCategory,name_Category) values(4,'DBA');       -- 13            
+insert into Category (parentCategory,name_Category) values(5,'support tecnician');	-- 14
+insert into Category (parentCategory,name_Category) values(4,'administer');       -- 15	
+insert into Category (parentCategory,name_Category) values(1,'AJAX');  -- 16 
 
 
 
@@ -208,8 +209,14 @@ insert into jobCategory (j, cat, percentage)values(3,15,90);
 insert into jobCategory (j, cat, percentage)values(5,7,90);
 insert into jobCategory (j, cat, percentage)values(1,12,90);
 
-insert into offerCategory (offer, cat, percentage)values(1,2,90);
-insert into offerCategory (offer, cat, percentage)values(2,1,90);
+insert into offerCategory (offer, cat, percentage)values(1,6,90);
+insert into offerCategory (offer, cat, percentage)values(1,15,90);
+insert into offerCategory (offer, cat, percentage)values(1,8,90);
+insert into offerCategory (offer, cat, percentage)values(1,13,90);
 
+insert into offerCategory (offer, cat, percentage)values(2,7,90);
+insert into offerCategory (offer, cat, percentage)values(2,6,90);
+insert into offerCategory (offer, cat, percentage)values(2,16,90);
+insert into offerCategory (offer, cat, percentage)values(2,10,90);
 
 
