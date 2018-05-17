@@ -168,6 +168,25 @@ update company set address ='HEREDIA' where idCompany = 2;
 update company set address ='BARVA' where idCompany = 1;
 
 
+update Company set location_X = 9.9340834 where idCompany = 1; -- ICODER
+update Company set location_Y = -84.1006278 where idCompany = 1;
+
+update Company set location_X = 10.0345799 where idCompany = 2; -- ICAFE 
+update Company set location_Y = -84.1374039 where idCompany = 2;
+
+update Company set location_X = 9.9959059 where idCompany = 3;-- INTEL
+update Company set location_Y = -84.1780615 where idCompany = 3;
+
+update Company set location_X = 9.9883804 where idCompany = 4;-- HP
+update Company set location_Y = -84.165239 where idCompany = 4;
+
+update Company set location_X = 9.940428 where idCompany = 5;-- SAMSUNG
+update Company set location_Y = -84.1560109 where idCompany = 5;
+
+update Company set location_X = 9.9989587 where idCompany = 6; -- MUNICIPALIDAD
+update Company set location_Y = -84.1166156 where idCompany = 6;
+
+
 insert into job (name_Job, description_Job,salary, type_Job, comp, status_Job) values('Designer','Designing is life',350000,'private',1, 1); 
 insert into job (name_Job, description_Job,salary, type_Job, comp, status_Job) values('Programmer','Junior Java',250000,'public',1,1);
 insert into job (name_Job, description_Job,salary, type_Job, comp, status_Job) values('DBA','Do not touch my data base',450000,'private',2, 1); 
@@ -205,8 +224,10 @@ insert into jobCategory (j, cat, percentage)values(5,7,90);
 insert into jobCategory (j, cat, percentage)values(1,12,90);
 
 insert into offerCategory (offer, cat, percentage)values(1,2,90);
+insert into offerCategory (offer, cat, percentage)values(1,12,90);
+insert into offerCategory (offer, cat, percentage)values(1,7,90);
+
 insert into offerCategory (offer, cat, percentage)values(2,1,90);
-
-
-
-
+insert into offerCategory (offer, cat, percentage)values(2,14,90);
+insert into offerCategory (offer, cat, percentage)values(2,12,90);
+insert into offerCategory (offer, cat, percentage)values(2,15,90);
