@@ -157,6 +157,24 @@ public class categoryDAO extends HibernateUtil implements IBaseDAO <Category, In
         }
       return cl;
   }
-  
+  public List<Category> findAllCategoriesOfferer(int idOfferer) {
+        List<Category> listCat = new ArrayList();
+        try {
+            operationStart();
+            String sql = "select * from offerCategory,category where "
+                    + "offerCategory.cat = category.idCategory "
+                    + "and offerCategory.offer = " + "'" + idOfferer + "'";
+            // listCat = getSesion().createQuery("from offerCategory,category").list();
+            listCat = getSesion().createSQLQuery(sql).addEntity(Category.class).list();
+            getTransac().commit();
+        } catch (HibernateException he) {
+            handleException(he);
+            throw he;
+        } finally {
+            getSesion().close();
+        }
+        return listCat;
+    }
+
 
 }

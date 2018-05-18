@@ -54,5 +54,8 @@ public class CategoryModel {
    public List<Category> giveChilds(int parent){
         return catDAO.giveChildCategory(parent);
    }
-    
+    public List<Category> findAllCategoriesOfferer(int idOfferer){
+       return catDAO.findAllCategoriesOfferer(idOfferer);
+   }
+        
 }//fin clase

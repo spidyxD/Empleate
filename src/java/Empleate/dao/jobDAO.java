@@ -217,4 +217,20 @@ public class jobDAO extends HibernateUtil implements IBaseDAO<Job, Integer> {
         }
         return job;
     }
+    public List<Job> findAllJobsByCompany(int idCompany) {// por borrar, no se ocupa, lo dejo por si acaso
+        List<Job> listJob = new ArrayList();
+        try {
+            operationStart();
+            String sql = "select * from Job, Company "
+                    + "where Job.comp = Company.idCompany and Company.idCompany =" + "'" + idCompany + "'";
+            listJob = getSesion().createSQLQuery(sql).addEntity(Job.class).list();
+            getTransac().commit();
+        } catch (HibernateException he) {
+            handleException(he);
+            throw he;
+        } finally {
+            getSesion().close();
+        }
+        return listJob;
+    }
 }

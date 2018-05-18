@@ -140,4 +140,7 @@ public class JobModel {
     public Job giveJobComplete(int id) {
         return jDAO.giveJobComplete(id);
     }
+    public List<Job> findAllJobsByCompany(int idCompany){
+        return jDAO.findAllJobsByCompany(idCompany);
+    }
 }

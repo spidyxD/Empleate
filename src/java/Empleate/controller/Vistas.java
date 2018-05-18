@@ -1,0 +1,177 @@
+  /*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Empleate.controller;
+
+import Empleate.domain.Category;
+import Empleate.domain.Company;
+import Empleate.domain.Job;
+import Empleate.domain.Offerer;
+import Empleate.logica.CategoryModel;
+import Empleate.logica.CompanyModel;
+import Empleate.logica.JobModel;
+import Empleate.logica.OffererModel;
+import com.google.gson.Gson;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ *
+ * @author Andrés Gutiérrez
+ */
+@WebServlet(name = "Vistas", urlPatterns = {"/listarOferentes", "/visPubOff", "/visPubCom", "/localizar"})
+@MultipartConfig
+public class Vistas extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            switch(request.getServletPath()){
+                case "/listarOferentes":
+                    this.doListarOferentes(request,response);
+                    break;
+                case "/visPubOff":
+                    this.doVistaPublicaOfferer(request,response);
+                    break;
+                case "/visPubCom":
+                    this.doVistaPublicaCompany(request,response);
+                    break;   
+                case "/localizar":
+                    this.doLocalizarMapa(request,response);
+                    break;  
+        }
+        }
+    }
+    
+    
+    public void doListarOferentes(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
+         try{
+                List<Offerer> oferentesLs = OffererModel.instance().findAll();
+                List<Company> companyLs = CompanyModel.instance().findAllCompanies();
+		request.setAttribute("oferentesLS",oferentesLs);
+                request.setAttribute("companyLs",companyLs);
+                request.getRequestDispatcher("vistas/listarOfferers.jsp").forward( request, response);
+          }
+          catch(Exception e){
+                String error = e.getMessage(); 	
+                request.setAttribute("error",error);
+                request.getRequestDispatcher("Error.jsp").forward( request, response);
+          }
+    }
+    
+        public void doVistaPublicaOfferer(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
+         try{
+                String idOf = request.getParameter("idOf");
+                int id = Integer.parseInt(idOf);
+                Offerer of = OffererModel.instance().findById(id);
+                ArrayList<Category> cats = (ArrayList<Category>) CategoryModel.instance().findAllCategoriesOfferer(id);
+                
+                request.setAttribute("idOf",of);
+                request.setAttribute("cats",cats);
+                request.getRequestDispatcher("vistas/vistaOfferer.jsp").forward( request, response);
+          }
+          catch(Exception e){
+                String error = e.getMessage(); 	
+                request.setAttribute("error",error);
+                request.getRequestDispatcher("Error.jsp").forward( request, response);
+          }
+    }
+        
+ public void doVistaPublicaCompany (HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
+         try{
+                String idCom = request.getParameter("idCom");
+                int id = Integer.parseInt(idCom);
+                Company comp = CompanyModel.instance().findCompanyByID(id);
+                ArrayList<Job> jobs = (ArrayList<Job>) JobModel.instance().findAllJobsByCompany(id);
+                
+                request.setAttribute("comp",comp);
+                request.setAttribute("jobs",jobs);
+                request.getRequestDispatcher("vistas/vistaCompany.jsp").forward( request, response);
+          }
+          catch(Exception e){
+                String error = e.getMessage(); 	
+                request.setAttribute("error",error);
+                request.getRequestDispatcher("Error.jsp").forward( request, response);
+          }
+    }
+ 
+ 
+  public void doLocalizarMapa(HttpServletRequest request, 
+        HttpServletResponse response) throws ServletException, IOException {
+      try{
+        BufferedReader reader = request.getReader();
+        Gson gson = new Gson();
+        Company company = gson.fromJson(reader, Company.class);
+        PrintWriter out = response.getWriter();
+        company = CompanyModel.instance().findCompanyByID(1);//company.getIdCompany()
+        response.setContentType("application/json; charset=UTF-8");
+        out.write(gson.toJson(1));        
+        response.setStatus(200); // ok with content
+      }
+      catch(Exception e){	
+          System.out.println(e.getMessage());
+        response.setStatus(401); //Bad request
+      }		
+    }   
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
+}

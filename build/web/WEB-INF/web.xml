@@ -72,6 +72,26 @@
         <url-pattern>/consultasEmpleateAllJobsByCategory</url-pattern>
     </servlet-mapping>
      <servlet-mapping>
+        <servlet-name>Vistas</servlet-name>
+        <url-pattern>/Vistas</url-pattern>
+    </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>Vistas</servlet-name>
+        <url-pattern>/listarOferentes</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Vistas</servlet-name>
+        <url-pattern>/visPubOff</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Vistas</servlet-name>
+        <url-pattern>/visPubCom</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Vistas</servlet-name>
+        <url-pattern>/localizar</url-pattern>
+    </servlet-mapping>
+     <servlet-mapping>
         <servlet-name>consultasEmpleate</servlet-name>
         <url-pattern>/consultarOffrers</url-pattern>
     </servlet-mapping>
