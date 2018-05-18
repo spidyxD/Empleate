@@ -7,6 +7,7 @@ package Empleate.controller;
 
 import Empleate.domain.Category;
 import Empleate.domain.Company;
+import Empleate.domain.Coordenada;
 import Empleate.domain.Job;
 import Empleate.domain.Offerer;
 import Empleate.logica.CategoryModel;
@@ -122,15 +123,17 @@ public class Vistas extends HttpServlet {
       try{
         BufferedReader reader = request.getReader();
         Gson gson = new Gson();
-        Company company = gson.fromJson(reader, Company.class);
+        Coordenada coo = new Coordenada();/// = gson.fromJson(reader, Coordenada.class);
         PrintWriter out = response.getWriter();
-        company = CompanyModel.instance().findCompanyByID(1);//company.getIdCompany()
+        Company company = CompanyModel.instance().findCompanyByID(1);//company.getIdCompany()
         response.setContentType("application/json; charset=UTF-8");
-        out.write(gson.toJson(1));        
+        coo.setX(company.getLocation_X());
+        coo.setY(company.getLocation_Y());
+        out.write(gson.toJson(coo,Coordenada.class));        
         response.setStatus(200); // ok with content
       }
       catch(Exception e){	
-          System.out.println(e.getMessage());
+        System.out.println(e.getMessage());
         response.setStatus(401); //Bad request
       }		
     }   

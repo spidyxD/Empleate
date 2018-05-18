@@ -132,11 +132,12 @@
 
 </style>
 
-<script>
+<script>    
       function initMap() {
-           var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 12,
-          center: {lat: 10.0345799, lng: -84.1374039}, 
+          var myLatLng = {lat: 10.0345799, lng: -84.1374039};
+          var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 15,
+          center: myLatLng, 
           mapTypeControl: true,
           mapTypeControlOptions: {
               style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
@@ -153,12 +154,18 @@
           },
           fullscreenControl: true
         });
+        
+        var marker = new google.maps.Marker({
+        position: myLatLng,
+        map: map,
+        title: 'Hello World!'
+        });
 
         map.addListener('click', function(e) {
-          placeMarkerAndPanTo(e.latLng, map);
+          //placeMarkerAndPanTo(e.latLng, map);
         });
       }
-      var marker;
+      
       function placeMarkerAndPanTo(latLng, map) {
         if ( marker ) {
           marker.setPosition(latLng);
@@ -172,7 +179,7 @@
       }
       
       function iniciarTodo(){
-          company = {idCompany:1;
+          company = {idCompany:1
 		};
             $.ajax({type: "POST", 
                   url:"localizar", 
