@@ -19,6 +19,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Busqueda</title>
         <%@ include file="includesHead.jspf" %>
+         <script type="text/javascript" src="js/myScript.js"></script>
         <script type="text/javascript" src="js/ajax.js"></script> 
         <link rel="stylesheet" type="text/css" href="css/lightbox.css"/>
         <link rel="stylesheet" type="text/css" href="css/index.css"/>
@@ -27,13 +28,85 @@
         <script type="text/javascript" src="js/lightbox.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
-        <script>
-            
-        $(document).ready(function(){
-          $('select').formSelect();
-        });
-        
-         </script>
+        <script> 
+            $(document).ready(function(){
+            $('select').formSelect();
+            });      
+        </script>
+    <style>
+
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+
+      .input-field label{
+        color:black;
+      }
+      .gm-style{
+          position: relative;
+          z-index: 0;
+          left: 0px;
+          top: 0px;
+          height: 100%!important;
+          width: 100%!important;
+          padding: 0px;
+          border-width: 0px;
+          margin: 0px;
+          display: block;
+      }
+      .controls {
+          margin-top: 10px;
+          border: 1px solid transparent;
+          border-radius: 2px 0 0 2px;
+          box-sizing: border-box;
+          -moz-box-sizing: border-box;
+          height: 32px;
+          outline: none;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        #pac-input {
+          background-color: #ffff!important;
+          font-family: Roboto!important;
+          font-size: 15px!important;
+          font-weight: 200!important;
+          margin-left: 12px!important;
+          padding: 0 11px 0 13px!important;
+          text-overflow: ellipsis!important;
+          height: 30px!important;
+          width: 150px!important;
+        }
+
+        #pac-input:focus {
+          border-color: #4d90fe!important;
+        }
+
+        .pac-container {
+          font-family: Roboto!important;
+        }
+
+        #type-selector {
+          color: #fff!important;
+          background-color: #4d90fe!important;
+          padding: 5px 11px 0px 11px!important;
+        }
+
+        #type-selector label {
+          font-family: Roboto!important;
+          font-size: 13px!important;
+          font-weight: 300!important;
+        }
+        #target {
+          width: 345px!important;
+        }
+
+    </style>
     </head>
     <body>
         <%@ include file="header.jspf" %>
@@ -44,22 +117,30 @@
         <div class="row">
         <div class="col s6">
         <div class="cuerpoConsulta container">
-            <div>
-                <ul>
+            <div id="desplegable">
+                <ul id="categories">
                     <%int count=0;%>
                     
                     <%for (Category j: cat){%>
-                   
-                    <h id="papa" hidden ><%=j.getIdCategory()%></h>
-                     <%count = j.getIdCategory();%>
+                    <%count = j.getIdCategory();%>
                     <%String id= "porcentaje_"+count;%>
+                    <%String idP= "dad"+count;%>
+                    <%String idS= "son"+count;%>
                     <%if(CategoryModel.instance().giveChilds(j.getIdCategory()).size() == 0){%>
-                       
-                        <li id="list"><div class="collapsible-header">
+                    <libody id="listSons">
+                        <li><div class="collapsible-header">
                         <i class="material-icons">fiber_manual_record</i>
-                        
-                        <h><a href ="#" onclick="this.href='desplegar?papa=<%=j.getIdCategory()%>&percent='+document.getElementById('<%=id%>').value" id="son"><%=j.getNameCategory()%></a><br>
-                               <div class = "row">
+                        <h><a href ="#" dat-value="<%=j.getIdCategory()%>" id="<%=idS%>"><%=j.getNameCategory()%></a></h><br>   
+                        </div>                            
+                        </li> 
+                    </libody> 
+                         <script>
+                        $("#<%=idS%>").click(function(){
+                           var i= $("#<%=idS%>").data("value");
+                            giveParent(i);
+                        });
+                        </script>
+                         <div class = "row">
                                 <div class="input-field col s12"> 
                                 <select id="<%=id%>" value="${item.value}">
                                   <option value="" disabled selected>seleccione su nivel</option>
@@ -73,14 +154,23 @@
                                 </select>
                                 <label>porcentaje</label>
                               </div>
-                                </div></h>   
-                            </div>
-                             
-                        </li> 
-                        
+                        </div>  
+                        <script>
+                        $("#<%=id%>").click(function(){
+                           var i= $("#<%=id%>").val();
+                            givePercent(i);
+                        });
+                        </script>
+                      
                     <%}else{%>
-                        <li><div class="collapsible-header"><i class="material-icons">add</i> <a href="desplegar?papa=<%=j.getIdCategory()%>"><%=j.getNameCategory()%></a></div></li> 
-                    <%}%>
+                        <li><div class="collapsible-header"><i class="material-icons">add</i> <a href="#"  data-value="<%=j.getIdCategory()%>"  id="<%=idP%>"><%=j.getNameCategory()%></a></div></li> 
+                        <script>
+                        $("#<%=idP%>").click(function(){
+                           var i= $("#<%=idP%>").data("value");
+                           giveParent(i);
+                        });
+                        </script>
+                        <%}%>
                     <%}%>
                      
                 </ul>
@@ -153,7 +243,7 @@
 
         // Bias the SearchBox results towards current map's viewport.
         map.addListener('bounds_changed', function() {
-          searchBox.setBounds(map.getBounds());
+        searchBox.setBounds(map.getBounds());
         });
 
         var markers = [];
@@ -255,7 +345,7 @@
          
          
          //Muestra las coordenadas en consola del punto seleccionado en el mapa
-         var marker;
+      var marker;
       function placeMarkerAndPanTo(latLng, map) {
         if ( marker ) {
           marker.setPosition(latLng);
@@ -273,7 +363,7 @@
      type="text/javascript"></script>
      </div>  
                
-            </div>    
+        </div>    
         </div>
              <div class = "row">       
              <div class="input-field col s6">
@@ -303,114 +393,6 @@
                 <h id="log"> <%=login.getUsername()%></h>
    
 <%@ include file="footer.jspf" %>
-<script>
-    function alerta(){
-        giveLat();
-        giveLng();
-        window.alert("Ubicacion añadida a la busqueda!");
-        
-    }
-</script>
-<script>
-    function showX(x){
-        document.getElementById("localeX").value = x;
-    } 
-    function giveLat(){
-        var x = marker.getPosition().lat();
-        showX(x);
-        
-    }        
-    
-    //document.addEventListener("DOMContentLoaded",loaded);
-    
-    
-</script>
-<script>
-     function showY(y){
-	document.getElementById("localeY").value = y;
-    } 
-    function giveLng(){
-        var y = marker.getPosition().lng();  
-        showY(y);
-      
-    }
-   
-    //document.addEventListener("DOMContentLoaded",loaded);
 
-</script>
 </body>
 </html>
-<style>
-    
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-
-    .input-field label{
-      color:black;
-    }
-    .gm-style{
-        position: relative;
-        z-index: 0;
-        left: 0px;
-        top: 0px;
-        height: 100%!important;
-        width: 100%!important;
-        padding: 0px;
-        border-width: 0px;
-        margin: 0px;
-        display: block;
-    }
-    .controls {
-        margin-top: 10px;
-        border: 1px solid transparent;
-        border-radius: 2px 0 0 2px;
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        height: 32px;
-        outline: none;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-      }
-
-      #pac-input {
-        background-color: #ffff!important;
-        font-family: Roboto!important;
-        font-size: 15px!important;
-        font-weight: 200!important;
-        margin-left: 12px!important;
-        padding: 0 11px 0 13px!important;
-        text-overflow: ellipsis!important;
-        height: 30px!important;
-        width: 150px!important;
-      }
-
-      #pac-input:focus {
-        border-color: #4d90fe!important;
-      }
-
-      .pac-container {
-        font-family: Roboto!important;
-      }
-
-      #type-selector {
-        color: #fff!important;
-        background-color: #4d90fe!important;
-        padding: 5px 11px 0px 11px!important;
-      }
-
-      #type-selector label {
-        font-family: Roboto!important;
-        font-size: 13px!important;
-        font-weight: 300!important;
-      }
-      #target {
-        width: 345px!important;
-      }
-
-</style>
