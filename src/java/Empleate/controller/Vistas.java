@@ -71,7 +71,7 @@ public class Vistas extends HttpServlet {
                 List<Company> companyLs = CompanyModel.instance().findAllCompanies();
 		request.setAttribute("oferentesLS",oferentesLs);
                 request.setAttribute("companyLs",companyLs);
-                request.getRequestDispatcher("vistas/listarOfferers.jsp").forward( request, response);
+                request.getRequestDispatcher("listarOfferers.jsp").forward( request, response);
           }
           catch(Exception e){
                 String error = e.getMessage(); 	
@@ -89,7 +89,7 @@ public class Vistas extends HttpServlet {
                 
                 request.setAttribute("idOf",of);
                 request.setAttribute("cats",cats);
-                request.getRequestDispatcher("vistas/vistaOfferer.jsp").forward( request, response);
+                request.getRequestDispatcher("vistaOfferer.jsp").forward( request, response);
           }
           catch(Exception e){
                 String error = e.getMessage(); 	
@@ -107,7 +107,7 @@ public class Vistas extends HttpServlet {
                 
                 request.setAttribute("comp",comp);
                 request.setAttribute("jobs",jobs);
-                request.getRequestDispatcher("vistas/vistaCompany.jsp").forward( request, response);
+                request.getRequestDispatcher("vistaCompany.jsp").forward( request, response);
           }
           catch(Exception e){
                 String error = e.getMessage(); 	

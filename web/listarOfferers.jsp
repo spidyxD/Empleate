@@ -14,10 +14,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Oferentes</title>
-        <%@include file="includesHeadVistas.jspf"%>
+        <%@include file="includesHead.jspf"%>
     </head>
     <body>
-        <%@include file="../header.jspf"%>
+        <%@include file="header.jspf"%>
         <jsp:useBean id="oferentesLS" scope="request" type="List<Offerer>" />
         <jsp:useBean id="companyLs" scope="request" type="List<Company>" />
         <h1>Lista oferentes</h1>
@@ -70,10 +70,10 @@
             </table>
             <%}%>
         </div>   
-        <%@include file="../footer.jspf"%>
+        <%@include file="footer.jspf"%>
         <!--JavaScript at end of body for optimized loading-->
-        <script type="text/javascript" src="../js/jquery.js"></script> <!--necesario para los carruseles-->
-        <script type="text/javascript" src="../js/materialize.min.js"></script><!--js de materialize-->
-        <script type="text/javascript" src="../js/myScript.js"></script><!--codigo js para inicializar js-->
+        <script type="text/javascript" src="js/jquery.js"></script> <!--necesario para los carruseles-->
+        <script type="text/javascript" src="js/materialize.min.js"></script><!--js de materialize-->
+        <script type="text/javascript" src="js/myScript.js"></script><!--codigo js para inicializar js-->
     </body>
 </html>

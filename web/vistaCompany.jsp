@@ -14,11 +14,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Perfil</title>
-        <%@include file="../includesHead.jspf"%>
+        <%@include file="includesHead.jspf"%>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>  
     </head>
     <body>
-        <%@include file="../header.jspf"%>
+        <%@include file="header.jspf"%>
         <jsp:useBean id="comp" scope="request" type="Company" />
         <jsp:useBean id="jobs" scope="request" type="List<Job>" />
         <div class="row">
@@ -64,11 +64,11 @@
                 <div id="map"></div>
             </div>
         </div>
-        <%@include file="../footer.jspf"%>
+        <%@include file="footer.jspf"%>
         <!--JavaScript at end of body for optimized loading-->
-        <script type="text/javascript" src="../js/jquery.js"></script> <!--necesario para los carruseles-->
-        <script type="text/javascript" src="../js/materialize.min.js"></script><!--js de materialize-->
-        <script type="text/javascript" src="../js/myScript.js"></script><!--codigo js para inicializar js-->
+        <script type="text/javascript" src="js/jquery.js"></script> <!--necesario para los carruseles-->
+        <script type="text/javascript" src="js/materialize.min.js"></script><!--js de materialize-->
+        <script type="text/javascript" src="js/myScript.js"></script><!--codigo js para inicializar js-->
     </body>
 </html>
 
