@@ -127,13 +127,13 @@
                     <%String idP= "dad"+count;%>
                     <%String idS= "son"+count;%>
                     <%if(CategoryModel.instance().giveChilds(j.getIdCategory()).size() == 0){%>
-                    <libody id="listSons">
+                    <div id="listSons">
                         <li><div class="collapsible-header">
                         <i class="material-icons">fiber_manual_record</i>
                         <h><a href ="#" dat-value="<%=j.getIdCategory()%>" id="<%=idS%>"><%=j.getNameCategory()%></a></h><br>   
                         </div>                            
                         </li> 
-                    </libody> 
+                    </div> 
                          <script>
                         $("#<%=idS%>").click(function(){
                            var i= $("#<%=idS%>").data("value");
