@@ -9,6 +9,7 @@
         <meta charset="utf-8">
         <title>Empleate</title>
         <%@ include file="includesHead.jspf" %>
+        <%@ include file="busquedaSelector.jspf" %>
     </head>
     <body>
         <%@ include file="headerHome.jspf" %>
@@ -21,7 +22,7 @@
                         </div>
                         <%int cont =0;%>
                         <%for (Job j : top) {%>
-                        <div class="carousel-item white-text" href="#one!">                            
+                        <div class="carousel-item white-text" href="busquedaSelector" >                            
                             <div class="aches">
                             <h4><%=j.getNameJob()%></h4>
                             <h3><%=j.getDescriptionJob()%></h3>
@@ -60,3 +61,4 @@
 }
 
 </style>
+

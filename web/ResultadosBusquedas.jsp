@@ -17,7 +17,7 @@
     <body>
         <%@include file="header.jspf"%>
         <h1>Resultados</h1>
-        <jsp:useBean id="jobsByCategory" scope="session" type="List<Job>" class="java.util.ArrayList"/>
+        <jsp:useBean id="jobsByCategory" scope="request" type="List<Job>" class="java.util.ArrayList"/>
         <!-- -->
         <div class="container">
         <table>

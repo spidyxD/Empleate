@@ -15,16 +15,16 @@ public class Porcentaje {
     public Porcentaje() {
     }
 
-    public Porcentaje(String percent) {
-        this.percent = percent;
+    public Porcentaje(String porcentaje) {
+        this.percent = porcentaje;
     }
 
     public String getPercent() {
         return percent;
     }
 
-    public void setPercent(String percent) {
-        this.percent = percent;
+    public void setPercent(String porcentaje) {
+        this.percent = porcentaje;
     }
     
 }
