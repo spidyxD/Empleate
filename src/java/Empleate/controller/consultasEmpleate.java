@@ -102,7 +102,7 @@ public class consultasEmpleate extends HttpServlet {
              Gson gson = new Gson();
              Dad d = gson.fromJson(reader, Dad.class);
              String ex1 = d.getDady();
-            // System.out.println(ex1);
+            // System.out.println(ex1);     
           
             cat = CategoryModel.instance().giveChilds(Integer.parseInt(ex1));
             Category cth = CategoryModel.instance().findCategoryById(Integer.parseInt(ex1));
