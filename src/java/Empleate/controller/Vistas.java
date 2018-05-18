@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "Vistas", urlPatterns = {"/listarOferentes", "/visPubOff", "/visPubCom", "/localizar"})
 @MultipartConfig
 public class Vistas extends HttpServlet {
-
+    int id = 1;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -102,7 +102,7 @@ public class Vistas extends HttpServlet {
  public void doVistaPublicaCompany (HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
          try{
                 String idCom = request.getParameter("idCom");
-                int id = Integer.parseInt(idCom);
+                id = Integer.parseInt(idCom);
                 Company comp = CompanyModel.instance().findCompanyByID(id);
                 ArrayList<Job> jobs = (ArrayList<Job>) JobModel.instance().findAllJobsByCompany(id);
                 
@@ -125,7 +125,7 @@ public class Vistas extends HttpServlet {
         Gson gson = new Gson();
         Coordenada coo = new Coordenada();/// = gson.fromJson(reader, Coordenada.class);
         PrintWriter out = response.getWriter();
-        Company company = CompanyModel.instance().findCompanyByID(1);//company.getIdCompany()
+        Company company = CompanyModel.instance().findCompanyByID(id);//company.getIdCompany()
         response.setContentType("application/json; charset=UTF-8");
         coo.setX(company.getLocation_X());
         coo.setY(company.getLocation_Y());

@@ -133,10 +133,10 @@
 </style>
 
 <script>    
-      function initMap() {
-          var myLatLng = {lat: 10.0345799, lng: -84.1374039};
+      function initMap(x,y) {
+          var myLatLng = {lat: x, lng: y};//{lat: 10.0345799, lng: -84.1374039};
           var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 15,
+          zoom: 16,
           center: myLatLng, 
           mapTypeControl: true,
           mapTypeControlOptions: {
@@ -187,8 +187,8 @@
                   dataType:"json",
                   success: 
                     function(obj){
-                        //initMap(obj.getLocation_X,obj.getLocation_X);
-                        window.alert("Funciona");
+                        initMap(obj.X,obj.Y);
+                        //window.alert(obj.X);
                     },
                   error: function(status){
                          window.alert("Error");
