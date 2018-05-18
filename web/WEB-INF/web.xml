@@ -21,6 +21,10 @@
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
+    </servlet>    
+    <servlet>
+        <servlet-name>Vistas</servlet-name>
+        <servlet-class>Empleate.controller.Vistas</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Register</servlet-name>
@@ -76,6 +80,26 @@
         <servlet-name>consultasEmpleate</servlet-name>
         <url-pattern>/consultarOffrers</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Vistas</servlet-name>
+        <url-pattern>/Vistas</url-pattern>
+    </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>Vistas</servlet-name>
+        <url-pattern>/listarOferentes</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Vistas</servlet-name>
+        <url-pattern>/visPubOff</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Vistas</servlet-name>
+        <url-pattern>/visPubCom</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Vistas</servlet-name>
+        <url-pattern>/localizar</url-pattern>
+    </servlet-mapping>   
     <session-config>
         <session-timeout>
             30
