@@ -1,0 +1,58 @@
+
+
+
+.barra{
+        background-color: #99433D;
+        height: 50px;
+        margin-right: 11.5px;
+        margin-top: 10px;
+    }
+    .barra2{
+        background-color: #99433D;
+        height: 100px;
+    }
+    #foto{
+        height: 200px;
+        width: 200px;
+        /*background-color: #BA68C8;*/
+    }
+
+    .perfil{
+        margin: 5px;
+        width: 800px;
+        aling-items: center;
+        justify-content: center;
+        margin:auto;
+    }    
+    .cat{
+        height: 50px;
+        width: 95%;
+        background-color: #F44336;
+        margin-left: 5px;
+        align-items: center;
+        justify-content: center; display: flex;
+    }
+    .cat h5{
+        color:white;
+    }
+
+    p{
+        color:black;
+    }
+    img {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 5px;
+        width:95%;
+        margin: 5px;
+
+        #puestos{
+            margin: 10px 0px 10px 4px;        
+        }
+    }
+     #map{
+       height: 500px; /*debe ser un valor fijo */
+       border: 2px solid black;
+       border-radius: 5px;
+       margin-top: 10px;
+    }
