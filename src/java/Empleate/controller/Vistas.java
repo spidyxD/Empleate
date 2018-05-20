@@ -9,6 +9,7 @@ import Empleate.domain.Category;
 import Empleate.domain.Company;
 import Empleate.domain.Coordenada;
 import Empleate.domain.Job;
+import Empleate.domain.Login;
 import Empleate.domain.Offerer;
 import Empleate.logica.CategoryModel;
 import Empleate.logica.CompanyModel;
@@ -26,6 +27,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -83,10 +85,12 @@ public class Vistas extends HttpServlet {
     
         public void doVistaPublicaOfferer(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
          try{
+             HttpSession s =  request.getSession(true);
                 String idOf = request.getParameter("idOf");
                 int id = Integer.parseInt(idOf);
                 Offerer of = OffererModel.instance().findById(id);
                 ArrayList<Category> cats = (ArrayList<Category>) CategoryModel.instance().findAllCategoriesOfferer(id);
+                Login l= (Login) s.getAttribute("login");
                 
                 request.setAttribute("idOf",of);
                 request.setAttribute("cats",cats);

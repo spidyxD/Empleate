@@ -4,6 +4,7 @@
     Author     : andres
 --%>
 
+<%@page import="Empleate.domain.Login"%>
 <%@page import="Empleate.domain.Category"%>
 <%@page import="java.util.List"%>
 <%@page import="Empleate.domain.Offerer"%>
@@ -20,6 +21,7 @@
         <%@include file="header.jspf"%>
         <jsp:useBean id="idOf" scope="request" type="Offerer" />
         <jsp:useBean id="cats" scope="request" type="List<Category>" />
+        <jsp:useBean id="login" scope="session" type="Login" />
         <div class="row">
             <div class="perfil col s8">
                 <div class='barra'></div>
@@ -50,6 +52,9 @@
                 <div id="map"></div>
             </div>
         </div>
+                    <%if(login != null){%>
+                        <p><%= login.getUsername()%></p>
+                    <%}%>
         <%@include file="footer.jspf"%>
         <!--JavaScript at end of body for optimized loading-->
         <script type="text/javascript" src="js/jquery.js"></script> <!--necesario para los carruseles-->
