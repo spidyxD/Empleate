@@ -49,7 +49,7 @@
           
            //PARA LA GEOUBICACION ACTUAL DEL USUARIO
         var infoWindow = new google.maps.InfoWindow({map: map});
-
+       	
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
@@ -61,6 +61,14 @@
             infoWindow.setPosition(pos);
             infoWindow.setContent('Location found.');
             map.setCenter(pos);
+             /* click en el mapa traduce (lat,lng)-->texto */
+        var gc = new google.maps.Geocoder();
+        var dr = document.getElementById('direccion');
+        var iw = new google.maps.InfoWindow({map: map});
+        google.maps.event.addListener(map, 'click',	
+          function(e){pickAddress(gc,map,e.latLng,dr,iw);}
+         );
+        pickAddress(gc,map,position.coords,dr,iw);
           }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
           });
@@ -198,7 +206,18 @@
 
 
     }
-        
+        function pickAddress(gc,map,loc,dr,iw){
+            gc.geocode({'latLng': loc }, // (lat,lng)-->texto
+              function(results, status) { // callback
+                    if (status == google.maps.GeocoderStatus.OK) {
+                      if (results[0]) {
+                            dr.value=results[0].formatted_address;
+                            
+                      }
+                    }
+              }
+           );	   
+	}
          
        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         infoWindow.setPosition(pos);
@@ -229,54 +248,22 @@
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXHkW8XZy3R2tQa_326VbuFp29wDJ93Qw&libraries=places&callback=load_peta"
      type="text/javascript"></script>
      </div>
-     </div><br><br><br><br><br><br><br><br><br><br><br><br><br>
+     </div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         <div class="row">
             <div class="col s12">
-                <a class="btn-floating btn-large waves-effect waves-light red" onclick="alerta()"><i class="material-icons">add</i></a>
+                <a class="btn-floating btn-large waves-effect waves-light red" onclick="alertaR()"><i class="material-icons">add</i></a>
             
            </div>   
             </div>
     </div>
 </div> 
 <script>
-    function alerta(){
+    function alertaR(){
         giveLat();
-        giveLng();
-        address();
+        giveLng();       
         window.alert("Ubicacion añadida!");
         
     }
 </script>
-<script>
-   function showX(x){
-        document.getElementById("localeX").value = x;
-    }  
-    function giveLat(){
-        var x = marker.getPosition().lat();
-        showX(x);
-        
-    }        
-    
-    //document.addEventListener("DOMContentLoaded",loaded);
-    
-    
-</script>
-<script>
-    function showY(y){
-	document.getElementById("localeY").value = y;
-    }  
-    function giveLng(){
-        var y = marker.getPosition().lng();  
-        showY(y);
-      
-    }
-   
-    //document.addEventListener("DOMContentLoaded",loaded);
 
-</script>
-<script>
-    function address(){
-        document.getElementById("direccion").value =  document.getElementById("pac-input").value;   
-    }
-    
-</script>    
+  

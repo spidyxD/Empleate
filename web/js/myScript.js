@@ -41,7 +41,7 @@ function autoplay() {
         var y = marker.getPosition().lng();  
         showY(y);     
     }
-
+    //envia el porcentaje escogido en la categoria seleccionada
     function givePercent(i){
         porcentaje = {percent: i};     
         $.ajax({type: "POST", 
@@ -57,7 +57,7 @@ function autoplay() {
           }                    
       });    
     }
-    
+    //envia el id de la categoria para buscar los hijos
     function giveParent(i){
         dad = {dady: i};     //averiguar como extraer el valor del atributo del anchor
         $.ajax({type: "POST", 
@@ -67,7 +67,7 @@ function autoplay() {
         success: 
             function(obj){
               loadList(obj);
-              $("#categories").trigger("reset");
+              $("#listSons").trigger("reset");
               console.log("success"+dad.dady);
           },
         error:
@@ -78,5 +78,21 @@ function autoplay() {
     }
     
     function loadList(num){        
-         var n = num;     
+        var ul =$("<ul />");
+	ul.html( "<li>" + num['dady'] + "</li>" );
+	$("#listSons").append(ul);     
+    }
+    
+    //PARA EL MENU DESPLEGABLE DE CATEGORIAS
+    function expandAll(){
+    $(".collapsible-header").addClass("active");
+    $(".collapsible").collapsible({accordion: false});
+    }
+
+    function collapseAll(){
+    $(".collapsible-header").removeClass(function(){
+    return "active";
+    });
+    $(".collapsible").collapsible({accordion: true});
+    $(".collapsible").collapsible({accordion: false});
     }

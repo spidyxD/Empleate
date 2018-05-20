@@ -16,6 +16,7 @@
         <title>Perfil</title>
         <%@include file="includesHead.jspf"%>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>  
+        <link rel="stylesheet" type="text/css" href="css/vistaCompany.css">
     </head>
     <body>
         <%@include file="header.jspf"%>
@@ -69,131 +70,10 @@
         <script type="text/javascript" src="js/jquery.js"></script> <!--necesario para los carruseles-->
         <script type="text/javascript" src="js/materialize.min.js"></script><!--js de materialize-->
         <script type="text/javascript" src="js/myScript.js"></script><!--codigo js para inicializar js-->
+        <script type="text/javascript" src="js/vistaCompany.js"></script><!--codigo js para inicializar js-->
     </body>
 </html>
 
-
-<style> 
-    .barra{
-        background-color: #99433D;
-        height: 50px;
-        margin-right: 11.5px;
-        margin-top: 10px;
-    }
-    .barra2{
-        background-color: #99433D;
-        height: 100px;
-    }
-    #foto{
-        height: 200px;
-        width: 200px;
-        /*background-color: #BA68C8;*/
-    }
-
-    .perfil{
-        margin: 5px;
-        width: 800px;
-        aling-items: center;
-        justify-content: center;
-        margin:auto;
-    }    
-    .cat{
-        height: 50px;
-        width: 95%;
-        background-color: #F44336;
-        margin-left: 5px;
-        align-items: center;
-        justify-content: center; display: flex;
-    }
-    .cat h5{
-        color:white;
-    }
-
-    p{
-        color:black;
-    }
-    img {
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 5px;
-        width:95%;
-        margin: 5px;
-
-        #puestos{
-            margin: 10px 0px 10px 4px;        
-        }
-    }
-     #map{
-       height: 500px; /*debe ser un valor fijo */
-       border: 2px solid black;
-       border-radius: 5px;
-       margin-top: 10px;
-    }
-
-</style>
-
-<script>
-      function initMap() {
-           var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 12,
-          center: {lat: 10.0345799, lng: -84.1374039}, 
-          mapTypeControl: true,
-          mapTypeControlOptions: {
-              style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-              position: google.maps.ControlPosition.TOP_CENTER
-          },
-          zoomControl: true,
-          zoomControlOptions: {
-              position: google.maps.ControlPosition.LEFT_CENTER
-          },
-          scaleControl: true,
-          streetViewControl: true,
-          streetViewControlOptions: {
-              position: google.maps.ControlPosition.LEFT_TOP
-          },
-          fullscreenControl: true
-        });
-
-        map.addListener('click', function(e) {
-          placeMarkerAndPanTo(e.latLng, map);
-        });
-      }
-      var marker;
-      function placeMarkerAndPanTo(latLng, map) {
-        if ( marker ) {
-          marker.setPosition(latLng);
-          console.log(marker.getPosition().lat()+" "+marker.getPosition().lng());
-        } else {
-          marker = new google.maps.Marker({
-          position: latLng,
-          map: map});
-          console.log(marker.getPosition().lat()+" "+marker.getPosition().lng());
-       }
-      }
-      
-      function iniciarTodo(){
-          company = {idCompany:1;
-		};
-            $.ajax({type: "POST", 
-                  url:"localizar", 
-                  data: JSON.stringify(company), 
-                  dataType:"json",
-                  success: 
-                    function(obj){
-                        //initMap(obj.getLocation_X,obj.getLocation_X);
-                        window.alert("Funciona");
-                    },
-                  error: function(status){
-                         window.alert("Error");
-                         console.log(status);
-                    }                    
-                });          
-      }
-      
-      window.onload = iniciarTodo;
-    </script>
-    
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqQdsFpuwxCwJcv_mFXDemq3DQRApLdJY&callback=initMap"
-            type="text/javascript">
-         
-    </script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqQdsFpuwxCwJcv_mFXDemq3DQRApLdJY&callback=initMap"
+        type="text/javascript">  
+</script>

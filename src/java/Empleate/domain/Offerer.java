@@ -18,12 +18,30 @@ public class Offerer  implements java.io.Serializable {
      private String nationality;
      private String email;
      private String phone;
+     private double location_X;
+     private double location_Y;
      private String residence;
      private int login;
      private Set<Offercategory> offercategories = new HashSet<Offercategory>(0);
      private Set<Login> logins = new HashSet<Login>(0);
 
     public Offerer() {
+    }
+
+    public double getLocation_X() {
+        return location_X;
+    }
+
+    public void setLocation_X(double location_X) {
+        this.location_X = location_X;
+    }
+
+    public void setLocation_Y(double location_Y) {
+        this.location_Y = location_Y;
+    }
+
+    public double getLocation_Y() {
+        return location_Y;
     }
 
 	

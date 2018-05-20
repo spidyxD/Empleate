@@ -7,7 +7,9 @@ package Empleate.controller;
 
 import Empleate.domain.Category;
 import Empleate.domain.Company;
+import Empleate.domain.Coordenada;
 import Empleate.domain.Job;
+import Empleate.domain.Login;
 import Empleate.domain.Offerer;
 import Empleate.logica.CategoryModel;
 import Empleate.logica.CompanyModel;
@@ -25,6 +27,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -33,7 +36,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "Vistas", urlPatterns = {"/listarOferentes", "/visPubOff", "/visPubCom", "/localizar"})
 @MultipartConfig
 public class Vistas extends HttpServlet {
-
+    int id = 1;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -82,10 +85,12 @@ public class Vistas extends HttpServlet {
     
         public void doVistaPublicaOfferer(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
          try{
+             HttpSession s =  request.getSession(true);
                 String idOf = request.getParameter("idOf");
                 int id = Integer.parseInt(idOf);
                 Offerer of = OffererModel.instance().findById(id);
                 ArrayList<Category> cats = (ArrayList<Category>) CategoryModel.instance().findAllCategoriesOfferer(id);
+                Login l= (Login) s.getAttribute("login");
                 
                 request.setAttribute("idOf",of);
                 request.setAttribute("cats",cats);
@@ -101,7 +106,7 @@ public class Vistas extends HttpServlet {
  public void doVistaPublicaCompany (HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
          try{
                 String idCom = request.getParameter("idCom");
-                int id = Integer.parseInt(idCom);
+                id = Integer.parseInt(idCom);
                 Company comp = CompanyModel.instance().findCompanyByID(id);
                 ArrayList<Job> jobs = (ArrayList<Job>) JobModel.instance().findAllJobsByCompany(id);
                 
@@ -122,15 +127,17 @@ public class Vistas extends HttpServlet {
       try{
         BufferedReader reader = request.getReader();
         Gson gson = new Gson();
-        Company company = gson.fromJson(reader, Company.class);
+        Coordenada coo = new Coordenada();/// = gson.fromJson(reader, Coordenada.class);
         PrintWriter out = response.getWriter();
-        company = CompanyModel.instance().findCompanyByID(1);//company.getIdCompany()
+        Company company = CompanyModel.instance().findCompanyByID(id);//company.getIdCompany()
         response.setContentType("application/json; charset=UTF-8");
-        out.write(gson.toJson(1));        
+        coo.setX(company.getLocation_X());
+        coo.setY(company.getLocation_Y());
+        out.write(gson.toJson(coo,Coordenada.class));        
         response.setStatus(200); // ok with content
       }
       catch(Exception e){	
-          System.out.println(e.getMessage());
+        System.out.println(e.getMessage());
         response.setStatus(401); //Bad request
       }		
     }   

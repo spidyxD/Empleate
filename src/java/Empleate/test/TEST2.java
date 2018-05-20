@@ -6,9 +6,11 @@
 package Empleate.test;
 
 import Empleate.domain.Category;
+import Empleate.domain.Company;
 import Empleate.domain.Job;
 import Empleate.domain.Login;
 import Empleate.logica.CategoryModel;
+import Empleate.logica.CompanyModel;
 import Empleate.logica.JobModel;
 import Empleate.logica.LoginModel;
 import java.util.ArrayList;
@@ -20,10 +22,8 @@ import java.util.List;
  */
 public class TEST2 {
     public static void main(String[] arg) throws Exception{
-        ArrayList<Category> ls = (ArrayList<Category>) CategoryModel.instance().giveChilds(1);
-        for(Category c : ls){
-            System.out.println(c.getNameCategory());
-        }
+       Company company = CompanyModel.instance().findCompanyByID(1);
+        System.out.println(company.getLocation_X()+""+company.getLocation_Y());
     }
     
 }
