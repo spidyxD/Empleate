@@ -23,6 +23,12 @@
         <property name="phone" type="string">
             <column name="phone" length="45" />
         </property>
+        <property name="location_X" type="double">
+            <column name="location_X" />
+        </property>
+        <property name="location_Y" type="double">
+            <column name="location_Y" />
+        </property>
         <property name="residence" type="string">
             <column name="residence" length="45" />
         </property>

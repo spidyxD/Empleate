@@ -14,7 +14,7 @@ public class Category  implements java.io.Serializable {
      int idCategory;
      Category category;
      String nameCategory;
-   
+     Integer isDad;
      Set<Category> categories = new HashSet<>(0);
      Set<Jobcategory> jobcategories = new HashSet<>(0);
      Set<Offercategory> offercategories = new HashSet<>(0);
@@ -27,11 +27,12 @@ public class Category  implements java.io.Serializable {
         this.idCategory = idCategory;
         
     }
-    public Category(int idCategory, Category category, String nameCategory, Set<Category> categories, Set<Jobcategory> jobcategories, Set<Offercategory> offercategories) {
+    public Category(int idCategory, Category category, String nameCategory,Integer isDad, Set<Category> categories, Set<Jobcategory> jobcategories, Set<Offercategory> offercategories) {
        this.idCategory = idCategory;
        this.category = category;
        this.nameCategory = nameCategory;
        this.categories = categories;
+       this.isDad = isDad;
        this.jobcategories = jobcategories;
        this.offercategories = offercategories;
     }
@@ -66,6 +67,14 @@ public class Category  implements java.io.Serializable {
     public Set<Category> getCategories() {
         return this.categories;
     }
+
+    public Integer getIsDad() {
+        return this.isDad;
+    }
+
+    public void setIsDad(Integer isDad) {
+        this.isDad = isDad;
+    }
     
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
@@ -84,11 +93,6 @@ public class Category  implements java.io.Serializable {
     public void setOffercategories(Set<Offercategory> offercategories) {
         this.offercategories = offercategories;
     }
-
-   
-    
-
-
 
 }
 

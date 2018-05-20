@@ -118,29 +118,13 @@ public class categoryDAO extends HibernateUtil implements IBaseDAO <Category, In
         }
       return cl;
   }
-  /*public List<Category> giveParentCategories(){
-      List<Category> cl = new ArrayList();
-      String sql = "select *from category where categ IS NULL OR parentCategory = idCategory;";
-        try{
-            operationStart();
-            cl = getSesion().createSQLQuery(sql).addEntity(Category.class).list();
-            getTransac().commit();
-        }
-        catch(HibernateException he){
-            handleException(he);
-            throw he;
-        }
-        finally{
-        getSesion().close();
-        }
-      return cl;
-  }*/
  
   public List<Category> giveChildCategory(int idParent){
       List<Category> cl = new ArrayList();
       String sql = "select  idCategory,\n" +
         " name_Category,\n" +
         " parentCategory \n" +
+        " isDad \n" +      
         " from category\n" +
         "where category.parentCategory="+"'"+idParent+"'";
         try{
@@ -175,6 +159,22 @@ public class categoryDAO extends HibernateUtil implements IBaseDAO <Category, In
         }
         return listCat;
     }
-
+   public Category giveCategoryComplete(int idCat) {
+        Category ct = new Category();
+        List<Category> c1 = new ArrayList();
+        try {
+            operationStart();
+            String sql = "select *from category cp inner join category cs on cp.parentCategory = c.idCategory where cp.idCategory like " + idCat + ";";
+            c1 = getSesion().createSQLQuery(sql).addEntity(Category.class).list();
+            ct = c1.get(0);
+            getTransac().commit();
+        } catch (HibernateException he) {
+            handleException(he);
+            throw he;
+        } finally {
+            getSesion().close();
+        }
+        return ct;
+    }
 
 }

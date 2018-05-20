@@ -74,7 +74,9 @@ public class consultasEmpleate extends HttpServlet {
     private void iniciar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             roots = CategoryModel.instance().giveRootParents();
-            cat = roots;
+            cat = CategoryModel.instance().findAllCategories();
+            int ej = cat.get(1).getIsDad();
+            System.out.println(ej);
             HttpSession s = request.getSession(true);
             String op = request.getParameter("limpiar");
             if (Objects.equals(op, new String("1"))) {//limpiar busqueda
@@ -84,6 +86,7 @@ public class consultasEmpleate extends HttpServlet {
             s.setAttribute("resumen", resumen);
             s.setAttribute("resumenCompleto", resumenCompleto);
             request.setAttribute("cat", cat);
+            request.setAttribute("root", roots);
             request.getRequestDispatcher("categoryTree.jsp").
                     forward(request, response);
         } catch (Exception e) {
@@ -105,6 +108,8 @@ public class consultasEmpleate extends HttpServlet {
             // System.out.println(ex1);     
           
             cat = CategoryModel.instance().giveChilds(Integer.parseInt(ex1));
+            String cl = cat.get(1).getNameCategory(); 
+            System.out.println(cl);
             Category cth = CategoryModel.instance().findCategoryById(Integer.parseInt(ex1));
             if (CategoryModel.instance().giveChilds(Integer.parseInt(ex1)).isEmpty()) {
                 Porcentaje p = gson.fromJson(reader, Porcentaje.class);
@@ -113,11 +118,11 @@ public class consultasEmpleate extends HttpServlet {
                 resumen.add(cth);// solo add hojas
                 resumenCompleto.put(cth,ex2);
                 response.setContentType("application/json; charset=UTF-8");
-                out.write(gson.toJson(resumen));  
+                out.write(gson.toJson(cat));  
                 response.setStatus(200);
             }
             response.setContentType("application/json; charset=UTF-8");
-            out.write(gson.toJson(ex1));   
+            out.write(gson.toJson(resumen));   
             response.setStatus(200);
         } catch (Exception e) {
             String error = e.getMessage();           

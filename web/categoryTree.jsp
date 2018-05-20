@@ -112,71 +112,42 @@
         <%@ include file="header.jspf" %>
         <jsp:useBean id="cat" scope="request" type="List<Category>" class="java.util.ArrayList"/>
         <jsp:useBean id="resumen" scope="session" type="List<Category>" class="java.util.ArrayList"/>
+        <jsp:useBean id="root" scope="request" type="List<Category>" class="java.util.ArrayList"/>
         <jsp:useBean id="resumenCompleto" scope="session" type="HashMap<Category, String>" />
         <%Login login = (Login)session.getAttribute("login");%>
         <div class="row">
         <div class="col s6">
-        <div class="cuerpoConsulta container">
-            <div id="desplegable">
-                <ul id="categories">
-                    <%int count=0;%>
-                    
-                    <%for (Category j: cat){%>
-                    <%count = j.getIdCategory();%>
-                    <%String id= "porcentaje_"+count;%>
-                    <%String idP= "dad"+count;%>
-                    <%String idS= "son"+count;%>
-                    <%if(CategoryModel.instance().giveChilds(j.getIdCategory()).size() == 0){%>
-                    <div id="listSons">
-                        <li><div class="collapsible-header">
-                        <i class="material-icons">fiber_manual_record</i>
-                        <h><a href ="#" dat-value="<%=j.getIdCategory()%>" id="<%=idS%>"><%=j.getNameCategory()%></a></h><br>   
-                        </div>                            
-                        </li> 
-                    </div> 
-                         <script>
-                        $("#<%=idS%>").click(function(){
-                           var i= $("#<%=idS%>").data("value");
-                            giveParent(i);
-                        });
-                        </script>
-                         <div class = "row">
-                                <div class="input-field col s12"> 
-                                <select id="<%=id%>" value="${item.value}">
-                                  <option value="" disabled selected>seleccione su nivel</option>
-                                  <option value="10">10%</option>
-                                  <option value="25">25%</option>
-                                  <option value="50">50%</option>
-                                  <option value="75">75%</option>
-                                  <option value="85">85%</option>
-                                  <option value="90">90%</option>
-                                  <option value="100">100%</option>
-                                </select>
-                                <label>porcentaje</label>
-                              </div>
-                        </div>  
-                        <script>
-                        $("#<%=id%>").click(function(){
-                           var i= $("#<%=id%>").val();
-                            givePercent(i);
-                        });
-                        </script>
-                      
-                    <%}else{%>
-                        <li><div class="collapsible-header"><i class="material-icons">add</i> <a href="#"  data-value="<%=j.getIdCategory()%>"  id="<%=idP%>"><%=j.getNameCategory()%></a></div></li> 
-                        <script>
-                        $("#<%=idP%>").click(function(){
-                           var i= $("#<%=idP%>").data("value");
-                           giveParent(i);
-                        });
-                        </script>
-                        <%}%>
-                    <%}%>
-                     
-                </ul>
-            </div><br> 
-        </div> 
-        </div>            
+        <div class="cuerpoConsulta container" id="categoryList">
+            <ul class="collapsible" data-collapsible = "expandable" id="categories">
+                <li>
+                 <%for (int i=0; i < cat.size(); i++){%>
+                  
+                 <%if(cat.get(i).getIsDad()==1){%>
+                 
+                 <div class="collapsible-header">        
+                  <i class="material-icons">add</i><%=cat.get(i).getNameCategory()%></div>
+                <%}%>
+                
+                    <%for (int j=cat.size()-1; j >0; j--){%>
+                        <%if(cat.get(i).getIsDad()==0 && cat.get(i).getCategory().getIdCategory()==cat.get(j).getIdCategory()){%>
+                
+                <div class="collapsible-body">        
+                <i class="material-icons">fiber_manual_record</i><%=cat.get(i).getNameCategory()%></div>
+
+                            <%}%>
+                       <%}%>
+                  <%}%>
+                 </li>                           
+            </ul>
+                   </div>  
+             </div>              
+          
+         <script>
+            $(document).ready(function(){
+            $('.collapsible').collapsible();
+          });
+
+        </script>          
         <div class="col s6">
         <div class="container map">
          <input id="pac-input" class="controls" type="text" placeholder="Search Box">
@@ -328,8 +299,9 @@
           map: map,
           title: 'Company Information'
         });
-        marker.addListener('click', function() {
+        marker.addListener('click', function(e) {
           infowindow.open(map, marker);
+           placeMarkerAndPanTo(e.latLng, map);
         });
         
       }
