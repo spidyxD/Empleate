@@ -75,14 +75,12 @@ public class consultasEmpleate extends HttpServlet {
         try {
             roots = CategoryModel.instance().giveRootParents();
             cat = CategoryModel.instance().findAllCategories();
-            int ej = cat.get(1).getIsDad();
-            System.out.println(ej);
             HttpSession s = request.getSession(true);
-            String op = request.getParameter("limpiar");
+            /*String op = request.getParameter("limpiar");
             if (Objects.equals(op, new String("1"))) {//limpiar busqueda
                 resumen.clear();
                 resumenCompleto.clear();                
-            }
+            }*/
             s.setAttribute("resumen", resumen);
             s.setAttribute("resumenCompleto", resumenCompleto);
             request.setAttribute("cat", cat);
@@ -91,6 +89,7 @@ public class consultasEmpleate extends HttpServlet {
                     forward(request, response);
         } catch (Exception e) {
             String error = e.getMessage();
+            System.out.println(e.getMessage());
             request.setAttribute("error", error);
             request.getRequestDispatcher("Error.jsp").forward(request, response);
         }

@@ -22,8 +22,10 @@ import java.util.List;
  */
 public class TEST2 {
     public static void main(String[] arg) throws Exception{
-       Company company = CompanyModel.instance().findCompanyByID(1);
-        System.out.println(company.getLocation_X()+""+company.getLocation_Y());
+       ArrayList<Category> roots = (ArrayList<Category>) CategoryModel.instance().giveRootParents();
+       ArrayList<Category> cat = CategoryModel.instance().findAllCategories();
+       System.out.println(roots.size() + "-" + cat.size());
+       System.out.println(cat.get(1).getIsDad());
     }
     
 }
