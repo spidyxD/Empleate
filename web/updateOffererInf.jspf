@@ -1,0 +1,106 @@
+<%-- any content can be specified here e.g.: --%>
+<%@page import="Empleate.domain.Category"%>
+<%@page import="Empleate.domain.Login"%>
+<%@page import="Empleate.domain.Offerer"%>
+<%@ page pageEncoding="UTF-8" %>
+<%@page import="java.util.List"%>
+ <script type="text/javascript" src="js/myScript.js"></script>
+ <jsp:useBean id="idOf" scope="request" type="Offerer" />
+<jsp:useBean id="cats" scope="request" type="List<Category>" />
+<jsp:useBean id="login" scope="session" type="Login" />
+<div id="updateOffererInf" class="modal">
+    <div class="modal-content">
+        
+        
+            <h4>Actualizar informacion de oferente </h4>
+            <div class="row">
+                <form action="javascript:updateOff();" method="post" class="col s12">
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <input id="nombre" type="text" name="nombre" class="validate" style="color:white!important" value="<%=idOf.getNameOfferer() %>">
+                            <label for="nombre">Nombre</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <input id="apellido" type="text" name="apellido" class="validate" style="color:white!important" value="<%=idOf.getLastname() %>">
+                            <label for="apellido">Apellido</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <input id="nacionalidad" type="text" name="nacionalidad" class="validate" style="color:white!important" value="<%=idOf.getNationality() %>" >
+                            <label for="nacionalidad">Nacionalidad</label>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="input-field col s6">
+                            <input id="telefono" type="tel" name="telefono" class="validate" style="color:white!important" value="<%=idOf.getPhone() %>">
+                            <label for="telefono">Telefono</label>
+                        </div>
+
+                        <div class="input-field col s6">
+                            <input id="email" type="email" name="email" class="validate" style="color:white!important" value="<%=idOf.getEmail() %>" >
+                            <label for="email">Email</label>
+                        </div>
+                    </div>
+                    <div class="row">        
+                        <div class="input-field col s12">
+                            <input id="direccion" type="text" name="residencia" class="validate" style="color:white!important" value="<%=idOf.getResidence() %>">
+                            <label for="direccion">Residencia</label>
+                        </div>
+                       
+                    </div>        
+                    <div class="row">
+
+                        <div class="input-field col s6">
+                            <input id="username" type="text" name="username" class="validate" style="color:white!important" value="<%=login.getUsername() %>" >
+                            <label for="username">Username</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input id="password" type="password" name="password" class="validate" style="color:white!important" value="<%=login.getPassword() %>">
+                            <label for="password">Password</label>
+                        </div>
+                    </div>
+                    <div class="input-field col s12">
+                        <input class="btn"  type="submit" value="Actualizar" >
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+    </div>       
+
+<style>
+    .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 5%!important;
+    width: 80%!important;
+    height: 90%!important;
+    background-color:#53167dcc;
+    overflow: auto; /* Enable scroll if needed */
+    color: white;
+    }
+
+    .input-field label{
+      color:black;
+    }
+   
+    .btn{
+        text-align:center;
+    }
+    
+       
+    
+</style>
+<script>
+    function off(){
+        var offerer = {nameOfferer:$("#nombre").val(),lastname:$("#apellido").val(),nationality:$("#nacionalidad").val(),email:$("#email").val(),phone:$("#telefono").val(),residence:$("#direccion").val()}
+        return offerer;
+    }
+    function log(){
+        var login = {username:$("#username").val(),password:$("#password").val()}
+        return login;
+    }
+    
+</script>    

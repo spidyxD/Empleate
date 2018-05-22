@@ -105,8 +105,10 @@ public class Vistas extends HttpServlet {
         
  public void doVistaPublicaCompany (HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
          try{
+                HttpSession s =  request.getSession(true);
                 String idCom = request.getParameter("idCom");
                 id = Integer.parseInt(idCom);
+                Login l= (Login) s.getAttribute("login");
                 Company comp = CompanyModel.instance().findCompanyByID(id);
                 ArrayList<Job> jobs = (ArrayList<Job>) JobModel.instance().findAllJobsByCompany(id);
                 

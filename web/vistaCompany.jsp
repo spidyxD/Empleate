@@ -15,12 +15,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Perfil</title>
         <%@include file="includesHead.jspf"%>
+        <%@include file="updateCompanyInf.jspf"%>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>  
         <link rel="stylesheet" type="text/css" href="css/vistaCompany.css">
     </head>
     <body>
         <%@include file="header.jspf"%>
-        <jsp:useBean id="comp" scope="request" type="Company" />
         <jsp:useBean id="jobs" scope="request" type="List<Job>" />
         <div class="row">
             <div class="perfil col s8">
@@ -65,6 +65,9 @@
                 <div id="map"></div>
             </div>
         </div>
+         <div class="input-field" >
+            <a class="waves-effect waves-light btn modal-trigger" href="#updateCompanyInf" style="margin: 20px!important">Editar perfil </a>
+         </div>                    
         <%@include file="footer.jspf"%>
         <!--JavaScript at end of body for optimized loading-->
         <script type="text/javascript" src="js/jquery.js"></script> <!--necesario para los carruseles-->

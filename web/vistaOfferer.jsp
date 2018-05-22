@@ -15,13 +15,19 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Perfil</title>
         <%@include file="includesHead.jspf"%>
+        <%@include file="header.jspf"%>
+        <%@include file="updateOffererInf.jspf"%>
         <link rel="stylesheet" type="text/css" href="css/vistaOfferer.css">
+        <!--JavaScript at end of body for optimized loading-->
+        <script type="text/javascript" src="js/jquery.js"></script> <!--necesario para los carruseles-->
+        <script type="text/javascript" src="js/materialize.min.js"></script><!--js de materialize-->
+        <script type="text/javascript" src="js/myScript.js"></script><!--codigo js para inicializar js-->
+        <script type="text/javascript" src="js/vistaOfferer.js"></script><!--codigo js para inicializar js-->
+        
     </head>
     <body>
-        <%@include file="header.jspf"%>
-        <jsp:useBean id="idOf" scope="request" type="Offerer" />
-        <jsp:useBean id="cats" scope="request" type="List<Category>" />
-        <jsp:useBean id="login" scope="session" type="Login" />
+        
+       
         <div class="row">
             <div class="perfil col s8">
                 <div class='barra'></div>
@@ -46,24 +52,22 @@
                         </div>
                         <%}%>
                     </div>    
-                </div>               
+                </div>
+                   
             </div>
             <div class="mapa col s4">
                 <div id="map"></div>
+                <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqQdsFpuwxCwJcv_mFXDemq3DQRApLdJY&callback=initMap">  
+                </script>
             </div>
-        </div>
-                    <%if(login != null){%>
-                        <p><%= login.getUsername()%></p>
-                    <%}%>
+            </div>       
+         <div class="input-field" >
+            <a class="waves-effect waves-light btn modal-trigger" href="#updateOffererInf" style="margin: 20px!important">Editar perfil </a>
+         </div>  
         <%@include file="footer.jspf"%>
-        <!--JavaScript at end of body for optimized loading-->
-        <script type="text/javascript" src="js/jquery.js"></script> <!--necesario para los carruseles-->
-        <script type="text/javascript" src="js/materialize.min.js"></script><!--js de materialize-->
-        <script type="text/javascript" src="js/myScript.js"></script><!--codigo js para inicializar js-->
-        <script type="text/javascript" src="js/vistaOfferer.js"></script><!--codigo js para inicializar js-->
+        
     </body>
-</html>
 
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqQdsFpuwxCwJcv_mFXDemq3DQRApLdJY&callback=initMap"
-        type="text/javascript">  
-</script>
+
+
+</html>
