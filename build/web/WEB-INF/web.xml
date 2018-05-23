@@ -81,6 +81,10 @@
         <url-pattern>/consultarOffrers</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>consultasEmpleate</servlet-name>
+        <url-pattern>/colap</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>Vistas</servlet-name>
         <url-pattern>/Vistas</url-pattern>
     </servlet-mapping>

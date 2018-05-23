@@ -1,4 +1,4 @@
-
+/*
 function load_peta()
 {
     var map = new google.maps.Map(document.getElementById('peta'), {
@@ -174,5 +174,25 @@ function placeMarkerAndPanTo(latLng, map) {
     }
 
 }
+*/
+function traerCategories(){
+    
+    category = {idCategory: 1
+    };
+    $.ajax({type: "POST",
+        url: "colap",
+        data: JSON.stringify(company),
+        dataType: "json",
+        success:
+                function (obj) {
+                    window.alert();
+                },
+        error: function (status) {
+            window.alert("Error");
+            console.log(status);
+        }
+    });   
+}
 
-
+var listaCat;
+window.onload = traerCategories;

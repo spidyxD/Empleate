@@ -8,6 +8,7 @@ package Empleate.controller;
 import Empleate.domain.Category;
 import Empleate.domain.Dad;
 import Empleate.domain.Porcentaje;
+import Empleate.domain.categorySimple;
 import Empleate.logica.CategoryModel;
 import Empleate.logica.JobModel;
 import com.google.gson.Gson;
@@ -35,7 +36,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Addiel
  */
-@WebServlet(name = "consultasEmpleate", urlPatterns = {"consultasEmpleateJobsByCategory", "/iniciar", "consultasEmpleateAllJobsByCategory", "/consultarOffrers", "/desplegar", "/colap"})
+@WebServlet(name = "consultasEmpleate", urlPatterns = {"consultasEmpleateJobsByCategory", "/iniciar",
+    "consultasEmpleateAllJobsByCategory", "/consultarOffrers", "/desplegar", "/colap"})
 public class consultasEmpleate extends HttpServlet {
 
     /**
@@ -84,14 +86,23 @@ public class consultasEmpleate extends HttpServlet {
 
     private void doColap(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            /*Reader personaReader = new BufferedReader(new InputStreamReader(request.getPart("persona").getInputStream()));
+            //Reader personaReader = new BufferedReader(new InputStreamReader(request.getPart("persona").getInputStream()));
             Gson gson = new Gson();
-            Persona persona = gson.fromJson(personaReader, Persona.class);
+            //Persona persona = gson.fromJson(personaReader, Persona.class);
             PrintWriter out = response.getWriter();
-            persona = Model.instance().personaAdd(persona);*/
-  
+            ArrayList<Category> ls  = CategoryModel.instance().findAllCategories();
+            ArrayList<categorySimple>catSim = new ArrayList<>();
+            for (Category c : ls) {
+                if(c.getCategory() != null){
+                catSim.add(new categorySimple(c.getIdCategory(),
+                        c.getNameCategory(),c.getCategory().getIdCategory()));
+                }else{
+                    catSim.add(new categorySimple(c.getIdCategory(),
+                        c.getNameCategory(),0));//cero para indicar que no tiene papa
+                }
+            }
             response.setContentType("application/json; charset=UTF-8");
-            //out.write(gson.toJson(ls));//ArrayList<Category> ls
+            out.write(gson.toJson(catSim));
             response.setStatus(200); // ok with content
         } catch (Exception e) {
             response.setStatus(401); //Bad request
@@ -108,10 +119,24 @@ public class consultasEmpleate extends HttpServlet {
                 resumen.clear();
                 resumenCompleto.clear();
             }*/
+            ArrayList<categorySimple> catSim = new ArrayList<>();
+            for (Category c : cat) {
+                if(c.getCategory() != null){
+                catSim.add(new categorySimple(c.getIdCategory(),
+                        c.getNameCategory(),c.getCategory().getIdCategory()));
+                }else{
+                    catSim.add(new categorySimple(c.getIdCategory(),
+                        c.getNameCategory(),0));//cero para indicar que no tiene papa
+                }
+            }
+            String myJson = new Gson().toJson(catSim);
+    
             s.setAttribute("resumen", resumen);
             s.setAttribute("resumenCompleto", resumenCompleto);
             request.setAttribute("cat", cat);
             request.setAttribute("root", roots);
+            request.setAttribute("catSim", catSim);
+            request.setAttribute("myJson",myJson);
             request.getRequestDispatcher("categoryTree.jsp").
                     forward(request, response);
         } catch (Exception e) {

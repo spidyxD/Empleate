@@ -25,7 +25,7 @@ public class TEST2 {
        ArrayList<Category> roots = (ArrayList<Category>) CategoryModel.instance().giveRootParents();
        ArrayList<Category> cat = CategoryModel.instance().findAllCategories();
        System.out.println(roots.size() + "-" + cat.size());
-       System.out.println(cat.get(1).getIsDad());
+       System.out.println(cat.get(6).getCategory().getNameCategory());
     }
     
 }
