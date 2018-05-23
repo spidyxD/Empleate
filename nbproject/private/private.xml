@@ -4,15 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Addiel/Documents/Info%20UNA/Progra%204/Empleate/web/js/myScript.js</file>
-            <file>file:/C:/Users/Addiel/Documents/Info%20UNA/Progra%204/Empleate/web/updateCompanyInf.jspf</file>
-            <file>file:/C:/Users/Addiel/Documents/Info%20UNA/Progra%204/Empleate/src/java/Empleate/domain/Login.java</file>
-            <file>file:/C:/Users/Addiel/Documents/Info%20UNA/Progra%204/Empleate/web/updateOffererInf.jspf</file>
+            <file>file:/C:/Users/Addiel/Documents/Info%20UNA/Progra%204/Empleate/src/java/Empleate/dao/loginDAO.java</file>
+            <file>file:/C:/Users/Addiel/Documents/Info%20UNA/Progra%204/Empleate/src/java/Empleate/controller/Register.java</file>
             <file>file:/C:/Users/Addiel/Documents/Info%20UNA/Progra%204/Empleate/src/java/Empleate/dao/offererDAO.java</file>
-            <file>file:/C:/Users/Addiel/Documents/Info%20UNA/Progra%204/Empleate/src/java/Empleate/logica/OffererModel.java</file>
-            <file>file:/C:/Users/Addiel/Documents/Info%20UNA/Progra%204/Empleate/web/categoryTree.jsp</file>
-            <file>file:/C:/Users/Addiel/Documents/Info%20UNA/Progra%204/Empleate/src/java/Empleate/domain/Category.java</file>
             <file>file:/C:/Users/Addiel/Documents/Info%20UNA/Progra%204/Empleate/src/java/Empleate/controller/updateInf.java</file>
-            <file>file:/C:/Users/Addiel/Documents/Info%20UNA/Progra%204/Empleate/src/java/Empleate/domain/Offerer.java</file>
         </group>
     </open-files>
 </project-private>

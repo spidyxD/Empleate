@@ -5,6 +5,7 @@
  */
 package Empleate.dao;
 
+import Empleate.domain.Job;
 import Empleate.domain.Offerer;
 import Empleate.utils.HibernateUtil;
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class offererDAO extends HibernateUtil implements IBaseDAO <Offerer,Integ
         try{
             operationStart();
             o = (Offerer)getSesion().merge(o);
+            getSesion().flush();
             getTransac().commit();
         }
         catch(HibernateException he){
@@ -121,12 +123,15 @@ public class offererDAO extends HibernateUtil implements IBaseDAO <Offerer,Integ
     }
     
      public void doUpdate(Offerer o){
+         List<Offerer> off = new ArrayList();
         try{
             operationStart();
             String sql = "update offerer set name_offerer = '"+o.getNameOfferer()+"'"+", lastname = '"+o.getLastname()+"'"+", nationality = '"+o.getNationality()+"'"+
                     ", email ='"+o.getEmail()+"'"+", phone = '"+o.getPhone()+"'"+", residence = '"+o.getResidence()+"'" + " where idOfferer = "+o.getIdOfferer()+";";
-           getSesion().createSQLQuery(sql);          
+          getSesion().createSQLQuery(sql).executeUpdate();
+           //Offerer of = off.get(0);          
             getTransac().commit();
+            getSesion().flush();
         }catch(HibernateException he){
         handleException(he);
             throw he;

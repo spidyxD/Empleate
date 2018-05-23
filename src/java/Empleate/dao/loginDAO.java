@@ -5,6 +5,7 @@
  */
 package Empleate.dao;
 
+import Empleate.domain.Job;
 import Empleate.domain.Login;
 import Empleate.utils.HibernateUtil;
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class loginDAO extends HibernateUtil implements IBaseDAO <Login,Integer> 
         try{
             operationStart();
             o = (Login)getSesion().merge(o);
+            getSesion().flush();
             getTransac().commit();
         }
         catch(HibernateException he){
@@ -161,11 +163,15 @@ public class loginDAO extends HibernateUtil implements IBaseDAO <Login,Integer> 
          return log;
     }
     public void doUpdate(Login user) {
+        List<Login> lg = new ArrayList();
          String sql = "update login set username ='"+user.getUsername()+"'"+", password ='"+user.getPassword()+"'"+" where idLogin= "+user.getIdLogin()+";";
          try{
             operationStart();
-            getSesion().createSQLQuery(sql);
-            getTransac().commit();
+           getSesion().createSQLQuery(sql).executeUpdate();
+           //Login log = lg.get(0);
+           getTransac().commit();
+            getSesion().flush();
+            
         }
         catch(HibernateException he){
             handleException(he);

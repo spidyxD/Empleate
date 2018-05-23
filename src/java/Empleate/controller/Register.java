@@ -123,7 +123,7 @@ public class Register extends HttpServlet {
             param.add(descript);
             String user = request.getParameter("username");
             param.add(user);
-            String key = request.getParameter("password");
+            String key = request.getParameter("key");
              
             double locateX = Double.parseDouble(request.getParameter("localeX"));
             
@@ -198,7 +198,7 @@ public class Register extends HttpServlet {
             param.add(email);            
             String user = request.getParameter("username");
             param.add(user);
-            String key = request.getParameter("password");           
+            String key = request.getParameter("key");           
 
             l.setIdLogin(0);
             l.setUsername(user);

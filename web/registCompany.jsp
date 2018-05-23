@@ -75,9 +75,26 @@
                             <label for="username">Username</label>
                         </div>
                         <div class="input-field col s6">
-                            <input name="password" id="password" type="password" class="validate">
+                            <input name="password" id="key" type="password" class="validate">
                             <label for="password">Password</label>
+                              <p>
+                            <label>
+                            <input type="checkbox" onclick="showPass()">
+                            <span>Show Password</span>
+                            </label>
+                            </p>
+                            <script>
+                            function showPass() {
+                                var x = document.getElementById("key");
+                                if (x.type === "password") {
+                                    x.type = "text";
+                                } else {
+                                    x.type = "password";
+                                }
+                            }
+                            </script>
                         </div>
+                          
                     </div>
                     <div class="input-field col s12">
                         <input class="btn"  type="submit" value="Ingresar">

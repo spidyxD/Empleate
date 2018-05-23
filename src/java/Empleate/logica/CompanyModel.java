@@ -33,7 +33,7 @@ public class CompanyModel {
     }
     public void updateCompany(Company c)throws Exception{
         try{
-        compDAO.merge(c);
+        compDAO.doUpdate(c);
         }catch(Exception e){}
     
     }
