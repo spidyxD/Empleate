@@ -99,7 +99,7 @@ function autoplay() {
     
     //PARA LA ACTUALIZACION DE DATOS DEL OFERENTE
     function giveOfferer(){
-        offerer = {nameOfferer:$("#nombre").val(),lastname:$("#apellido").val(),nationality:$("#nacionalidad").val(),email:$("#email").val(),phone:$("#telefono").val(),residence:$("#direccion").val()};     
+        offerer = {idOfferer:$("#idOff").val(),nameOfferer:$("#nombre").val(),lastname:$("#apellido").val(),nationality:$("#nacionalidad").val(),email:$("#email").val(),phone:$("#telefono").val(),residence:$("#direccion").val()};     
         $.ajax({type: "POST", 
         url:"UpdateInfOfferer", 
         data: JSON.stringify(offerer), 
@@ -129,10 +129,10 @@ function autoplay() {
       });    
     }
      function updateOff(){
-       offerer = {nameOfferer:$("#nombre").val(),lastname:$("#apellido").val(),nationality:$("#nacionalidad").val(),email:$("#email").val(),phone:$("#telefono").val(),residence:$("#direccion").val()};     
-        login = {username:$("#username").val(),password:$("#password").val()};     
+        offerer = {idOfferer:$("#idOff").data("value"),nameOfferer:$("#nombre").val(),lastname:$("#apellido").val(),nationality:$("#nacionalidad").val(),email:$("#email").val(),phone:$("#telefono").val(),residence:$("#direccion").val()};     
+        login = {idLogin:$("#idLog").data("value"),username:$("#userN").val(),password:$("#key").val()};     
         data=new FormData();
-        data.append("company",JSON.stringify(offerer));
+        data.append("offerer",JSON.stringify(offerer));
         data.append("login",JSON.stringify(login));
         $.ajax({type: "POST", 
         url:"UpdateInfOfferer", 
@@ -141,10 +141,12 @@ function autoplay() {
         processData: false,
         contentType: false,  
         success: 
-          function(){
+          function(obj){
               console.log("success");
+              window.alert("Informacion de oferente "+obj.nameOfferer+" actualizada");
+              location.href = "visPubOff?idOf="+obj.idOfferer;
           },
-        error: function(){
+        error: function(status){
                console.log("error"+offerer.nameOfferer);
           }  
            });   
@@ -183,8 +185,8 @@ function autoplay() {
     }
     
     function updateComp(){
-        company = {nameCompany:$("#nombreEmpresa").val(),email:$("#website").val(),phone:$("#telefono").val(),description:$("#descripcion").val(),address:$("#direccion").val()};     
-        login = {username:$("#username").val(),password:$("#password").val()};     
+        company = {idCompany:$("#idCmp").data("value"),nameCompany:$("#nombreEmpresa").val(),email:$("#website").val(),phone:$("#telefono").val(),description:$("#descripcion").val(),address:$("#direccion").val()};     
+        login = {idLogin:$("#idLog").data("value"),username:$("#userN").val(),password:$("#key").val()};     
         data=new FormData();
         data.append("company",JSON.stringify(company));
         data.append("login",JSON.stringify(login));
@@ -195,10 +197,12 @@ function autoplay() {
         processData: false,
         contentType: false,      
         success: 
-          function(){
+          function(obj){
               console.log("success");
+               window.alert("Informacion de la compañia "+obj.nameCompany+" actualizada");
+              location.href = "visPubCom?idCom="+obj.idCompany;
           },
-        error: function(){
+        error: function(status){
                console.log("error"+company.nameCompany);
           }                    
       });    

@@ -2,6 +2,7 @@ package Empleate.domain;
 // Generated 12/03/2018 12:06:18 AM by Hibernate Tools 4.3.1
 
 
+import com.google.gson.annotations.Expose;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -12,15 +13,15 @@ import java.util.logging.Logger;
 public class Offerer  implements java.io.Serializable {
 
 
-     private int idOfferer;
-     private String nameOfferer;
-     private String lastname;
-     private String nationality;
-     private String email;
-     private String phone;
+@Expose private int idOfferer;
+@Expose private String nameOfferer;
+@Expose private String lastname;
+@Expose private String nationality;
+@Expose private String email;
+@Expose private String phone;
      private double location_X;
      private double location_Y;
-     private String residence;
+@Expose private String residence;
      private int login;
      private Set<Offercategory> offercategories = new HashSet<Offercategory>(0);
      private Set<Login> logins = new HashSet<Login>(0);

@@ -1,6 +1,9 @@
 package Empleate.domain;
 // Generated 12/03/2018 12:06:18 AM by Hibernate Tools 4.3.1
 
+import com.google.gson.annotations.Expose;
+
+
 
 
 /**
@@ -9,11 +12,11 @@ package Empleate.domain;
 public class Login  implements java.io.Serializable {
 
 
-     private int idLogin;
-     private String username;
-     private String password;
-     private String type_log;
-     private int enable;
+@Expose private int idLogin;
+@Expose private String username;
+@Expose private String password;
+        private String type_log;
+@Expose private int enable;
 
     public Login() {
         idLogin=-1;

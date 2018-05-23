@@ -5,10 +5,8 @@
  */
 package Empleate.dao;
 
-import Empleate.domain.Company;
 import Empleate.domain.Offerer;
 import Empleate.utils.HibernateUtil;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -120,5 +118,21 @@ public class offererDAO extends HibernateUtil implements IBaseDAO <Offerer,Integ
         getSesion().close();
         }
         return o;
+    }
+    
+     public void doUpdate(Offerer o){
+        try{
+            operationStart();
+            String sql = "update offerer set name_offerer = '"+o.getNameOfferer()+"'"+", lastname = '"+o.getLastname()+"'"+", nationality = '"+o.getNationality()+"'"+
+                    ", email ='"+o.getEmail()+"'"+", phone = '"+o.getPhone()+"'"+", residence = '"+o.getResidence()+"'" + " where idOfferer = "+o.getIdOfferer()+";";
+           getSesion().createSQLQuery(sql);          
+            getTransac().commit();
+        }catch(HibernateException he){
+        handleException(he);
+            throw he;
+        }
+         finally{
+        getSesion().close();
+        }
     }
 }

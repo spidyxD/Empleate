@@ -160,5 +160,20 @@ public class loginDAO extends HibernateUtil implements IBaseDAO <Login,Integer> 
         }
          return log;
     }
-    
+    public void doUpdate(Login user) {
+         String sql = "update login set username ='"+user.getUsername()+"'"+", password ='"+user.getPassword()+"'"+" where idLogin= "+user.getIdLogin()+";";
+         try{
+            operationStart();
+            getSesion().createSQLQuery(sql);
+            getTransac().commit();
+        }
+        catch(HibernateException he){
+            handleException(he);
+            throw he;
+        }
+        finally{
+        getSesion().close();
+        }
+         
+    }
 }

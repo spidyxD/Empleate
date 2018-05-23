@@ -13,6 +13,8 @@
         
         
             <h4>Actualizar informacion de oferente </h4>
+            <h5 hidden id="idOff" data-value="<%=idOf.getIdOfferer() %>"></h5>
+            <h6 hidden id="idLog" data-value="<%=login.getIdLogin() %>"></h6>
             <div class="row">
                 <form action="javascript:updateOff();" method="post" class="col s12">
                     <div class="row">
@@ -51,12 +53,28 @@
                     <div class="row">
 
                         <div class="input-field col s6">
-                            <input id="username" type="text" name="username" class="validate" style="color:white!important" value="<%=login.getUsername() %>" >
+                            <input id="userN" type="text" name="username" class="validate" style="color:white!important" value="<%=login.getUsername() %>" >
                             <label for="username">Username</label>
                         </div>
                         <div class="input-field col s6">
-                            <input id="password" type="password" name="password" class="validate" style="color:white!important" value="<%=login.getPassword() %>">
+                            <input id="key" type="password" name="password" class="validate" style="color:white!important" value="<%=login.getPassword() %>">
                             <label for="password">Password</label>
+                            <p>
+                            <label>
+                            <input type="checkbox" onclick="showPass()">
+                            <span>Show Password</span>
+                            </label>
+                            </p>
+                            <script>
+                            function showPass() {
+                                var x = document.getElementById("key");
+                                if (x.type === "password") {
+                                    x.type = "text";
+                                } else {
+                                    x.type = "password";
+                                }
+                            }
+                            </script>
                         </div>
                     </div>
                     <div class="input-field col s12">
@@ -76,7 +94,7 @@
     left: 0;
     top: 5%!important;
     width: 80%!important;
-    height: 90%!important;
+    height: 95%!important;
     background-color:#53167dcc;
     overflow: auto; /* Enable scroll if needed */
     color: white;

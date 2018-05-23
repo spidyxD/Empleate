@@ -31,7 +31,7 @@ public class LoginModel {
     }
     public void updateLogin(Login l) throws Exception{
         try{
-        logD.merge(l);
+        logD.doUpdate(l);
         }catch(Exception e){}
     }
     public void deleteLogin(Login l) throws Exception{

@@ -5,12 +5,19 @@
  */
 package Empleate.controller;
 
+import Empleate.domain.Company;
+import Empleate.domain.Login;
+import Empleate.domain.Offerer;
+import Empleate.logica.CompanyModel;
+import Empleate.logica.LoginModel;
+import Empleate.logica.OffererModel;
 import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +28,9 @@ import javax.servlet.http.HttpSession;
  *
  * @author Addiel
  */
+
 @WebServlet(name = "updateInf", urlPatterns = {"/UpdateInfOfferer","/UpdateInfCompany"})
+@MultipartConfig
 public class updateInf extends HttpServlet {
 
     /**
@@ -36,7 +45,7 @@ public class updateInf extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
           switch (request.getServletPath()) {
-            case "UpdateInfOfferer":
+            case "/UpdateInfOfferer":
                 this.doUpdateOfferer(request, response);
                 break;
             case "/UpdateInfCompany":
@@ -92,15 +101,23 @@ public class updateInf extends HttpServlet {
             BufferedReader readerLog = new BufferedReader(new InputStreamReader(request.getPart("login").getInputStream()));
             PrintWriter out = response.getWriter();
             Gson gson = new Gson();
-         
-         
-         
+            Offerer o = gson.fromJson(readerOff, Offerer.class);
+            
+            System.out.println(o.getNameOfferer());
+            Login l = gson.fromJson(readerLog, Login.class);
+             System.out.println(l.getUsername());
+            OffererModel.instance().updateOfferer(o);
+            LoginModel.instance().updateLogin(l);
+            response.setContentType("application/json; charset=UTF-8");
+            out.write(gson.toJson(o));
+            response.setStatus(200); //update successfull
+            
          } 
              catch (Exception e) {
             String error = e.getMessage();
             request.setAttribute("error", error);
             
-            response.setStatus(400); //si hay un error en el envio de la ubicacion
+            response.setStatus(401); //si hay un error en el update
             request.getRequestDispatcher("registCompany.jsp").forward(request, response);
         }
     }
@@ -108,11 +125,18 @@ public class updateInf extends HttpServlet {
     private void doUpdateCompany(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             HttpSession s = request.getSession(true);
-            BufferedReader readerOff = new BufferedReader(new InputStreamReader(request.getPart("company").getInputStream()));
+            BufferedReader readerCmp = new BufferedReader(new InputStreamReader(request.getPart("company").getInputStream()));
             BufferedReader readerLog = new BufferedReader(new InputStreamReader(request.getPart("login").getInputStream()));
             PrintWriter out = response.getWriter();
             Gson gson = new Gson();
-        
+            Company c = gson.fromJson(readerCmp, Company.class);
+            Login l = gson.fromJson(readerLog, Login.class);
+            CompanyModel.instance().updateCompany(c);
+            LoginModel.instance().updateLogin(l);
+            response.setContentType("application/json; charset=UTF-8");
+            out.write(gson.toJson(c));
+            response.setStatus(200); //update successfull
+            
         } 
         catch (Exception e) {
             String error = e.getMessage();

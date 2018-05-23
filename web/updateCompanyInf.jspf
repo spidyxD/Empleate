@@ -8,6 +8,9 @@
 <div id="updateCompanyInf" class="modal">
     <div class="modal-content">
     <h4>Actualizar informacion de la empresa</h4>
+    
+    <h5 hidden id="idCmp" data-value="<%=comp.getIdCompany() %>"></h5>
+    <h6 hidden id="idLog" data-value="<%=login.getIdLogin() %>"></h6>
             <div class="row">
                 <form action="javascript:updateComp();" method="post" class="col s12">
                     <div class="row">
@@ -42,12 +45,28 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s6">
-                            <input name="username" id="username" type="text" class="validate" style="color:white!important" value="<%=login.getUsername() %>">
+                            <input name="username" id="userN" type="text" class="validate" style="color:white!important" value="<%=login.getUsername() %>">
                             <label for="username">Username</label>
                         </div>
                         <div class="input-field col s6">
-                            <input name="password" id="password" type="password" class="validate" style="color:white!important" value="<%=login.getPassword() %>">
+                            <input name="password" id="key" type="password" class="validate" style="color:white!important" value="<%=login.getPassword() %>">
                             <label for="password">Password</label>
+                             <p>
+                            <label>
+                            <input type="checkbox" onclick="showPass()">
+                            <span>Show Password</span>
+                            </label>
+                            </p>
+                            <script>
+                            function showPass() {
+                                var x = document.getElementById("key");
+                                if (x.type === "password") {
+                                    x.type = "text";
+                                } else {
+                                    x.type = "password";
+                                }
+                            }
+                            </script>
                         </div>
                     </div>
                     <div class="input-field col s12">
