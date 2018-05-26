@@ -54,6 +54,7 @@
                         <div class="input-field col s3">
                             <input id="direccion" type="text" name="residencia" class="validate" <%if (lleno) {%>value="<%=param.get(4)%>" <%}%>>
                             <label for="direccion">Residencia</label>
+                            <h1 hidden name="locate"></h1>
                         </div>
                         <div class="input-field col s3">
                             <a class="waves-effect waves-light btn modal-trigger" href="#createLocate">Ubicacion </a>
@@ -73,7 +74,7 @@
                             <label for="username">Username</label>
                         </div>
                         <div class="input-field col s6">
-                            <input id="password" type="password" name="password" class="validate">
+                            <input name="password" id="key" type="password" name="password" class="validate">
                             <label for="password">Password</label>
                             <p>
                             <label>

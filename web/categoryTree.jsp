@@ -34,7 +34,9 @@
             });      
         </script>
     <style>
-
+        h1,h2,h3{
+            font-size: 12px!important;
+        }
         /* Always set the map height explicitly to define the size of the div
          * element that contains the map. */
 
@@ -112,41 +114,110 @@
         <%@ include file="header.jspf" %>
         <jsp:useBean id="cat" scope="request" type="List<Category>" class="java.util.ArrayList"/>
         <jsp:useBean id="resumen" scope="session" type="List<Category>" class="java.util.ArrayList"/>
-        <jsp:useBean id="root" scope="request" type="List<Category>" class="java.util.ArrayList"/>
-        <jsp:useBean id="resumenCompleto" scope="session" type="HashMap<Category, String>" />
         <%Login login = (Login)session.getAttribute("login");%>
+         <%Category auxR = new Category();%>
+        <%Category aux = new Category();%>
+        <%Category aux2 = new Category();%>
         <div class="row">
         <div class="col s6">
-        <div class="cuerpoConsulta container" id="categoryList">
-            <ul class="collapsible" data-collapsible = "expandable" id="categories">
+           <div class="cuerpoConsulta container" id="categoryList">
+         <ul class="collapsible" data-collapsible = "accordion" id="categories">
+                <%int countFirst=0;%>
+                <%int countSecond=0;%> 
+                 <%for (int i=0; i < cat.size(); i++){%>            
+                 <%countFirst = cat.get(i).getIdCategory();%>
+                 <%String idF= "porcentaje_"+countFirst;%>
+                 <%if(cat.get(i).getIsRoot()==1){%>
+                 <%auxR=cat.get(i);%>
                 <li>
-                 <%for (int i=0; i < cat.size(); i++){%>
-                  
-                 <%if(cat.get(i).getIsDad()==1){%>
-                 
                  <div class="collapsible-header">        
-                  <i class="material-icons">add</i><%=cat.get(i).getNameCategory()%></div>
-                <%}%>
-                
-                    <%for (int j=cat.size()-1; j >0; j--){%>
-                        <%if(cat.get(i).getIsDad()==0 && cat.get(i).getCategory().getIdCategory()==cat.get(j).getIdCategory()){%>
-                
-                <div class="collapsible-body">        
-                <i class="material-icons">fiber_manual_record</i><%=cat.get(i).getNameCategory()%></div>
-
+                  <i class="material-icons">add</i><%=auxR.getNameCategory()%></div>
+                <%}%>             
+                    <%for (int j=cat.size()-1; j >=0; j--){%>
+                        <%if(cat.get(i).getIsRoot()==0 && cat.get(i).getCategory().getIdCategory()==cat.get(j).getIdCategory()){%>
+                        <%if(cat.get(i).getIsDad()==1){%>
+                        <%aux = cat.get(i);%>
+                        <div class="collapsible-body">
+			<div class="row">
+			<div class="col s12 m12">
+			<ul class="collapsible" data-collapsible="popup">
+                            <li>
+                                <div class="collapsible-header">
+                                    <a><i class="material-icons">add</i><h1 data-value="<%=aux.getIdCategory()%>"><%=aux.getNameCategory()%></h1></a>
+                             <%aux2 = cat.get(i);%>
+                                </div>
+                             <%if(!CategoryModel.instance().giveChilds(aux2.getIdCategory()).isEmpty()){%>
+                                <div class="collapsible-body"> 
+                                    <%for(Category c:CategoryModel.instance().giveChilds(aux2.getIdCategory())){%>
+                                    <i class="material-icons">fiber_manual_record</i><span><a><h2 data-value="<%=c.getIdCategory() %>"><%=c.getNameCategory() %></h2></a>
+                                       
+                                               <select id="<%=idF%>" value="${item.value}">
+                                                 <option value="" disabled selected>seleccione su nivel</option>
+                                                 <option value="10">10%</option>
+                                                 <option value="25">25%</option>
+                                                 <option value="50">50%</option>
+                                                 <option value="75">75%</option>
+                                                 <option value="85">85%</option>
+                                                 <option value="90">90%</option>
+                                                 <option value="100">100%</option>
+                                               </select>
+                                               <label>porcentaje</label></span>  
+                                                  <%}%>
+				</div>
+                                  <%}%>               
+                            </li>
+                        </ul>                  
+                        </div>
+                        </div>
+                        </div>
+                       <% }else{%>
+                             
+                              <%List<Category>help= CategoryModel.instance().giveChilds(auxR.getIdCategory());%>
+                            <%for(Category c: help){%> 
+                            <%if(c.getIsDad() == 0 && c.getIsRoot() == 0){%>
+                            <%countSecond = c.getIdCategory();%>
+                            <%String idS= "porcentaje_"+countSecond;%> 
+                            <div class="collapsible-body">        
+                                <i class="material-icons">fiber_manual_record</i><span><a><h3 data-value="<%=aux.getIdCategory()%>"><%=c.getNameCategory() %></h3></a>
+                               
+                                <select id="<%=idS%>" value="${item.value}">
+                                  <option value="" disabled selected>seleccione su nivel</option>
+                                  <option value="10">10%</option>
+                                  <option value="25">25%</option>
+                                  <option value="50">50%</option>
+                                  <option value="75">75%</option>
+                                  <option value="85">85%</option>
+                                  <option value="90">90%</option>
+                                  <option value="100">100%</option>
+                                </select>
+                                <label>porcentaje</label></span>       
+                            </div>
+                            </li> 
+                                <%}%>
+                               <%}%> 
+                            
+                            
+                            
+                            
+                                <%}%>
                             <%}%>
                        <%}%>
+                     
                   <%}%>
-                 </li>                           
+                                           
             </ul>
-                   </div>  
-             </div>              
+            </div>  
+         </div>              
   
          <script>
             $(document).ready(function(){
             $('.collapsible').collapsible();
+            
           });
-
+          function buildReview(idCat){
+              
+              
+          }
         </script>          
         <div class="col s6">
         <div class="container map">
@@ -154,7 +225,7 @@
    
          <div id="peta" style="height:300px; width:500px; margin-bottom:10px; border:solid #999 2px; margin: 20px;"></div>
          <a class="btn-floating btn-large waves-effect waves-light red" onclick="alerta()"><i class="material-icons">add</i></a>  
-        <script type="text/javascript">
+        <script>
          function load_peta() 
          {
           var map = new google.maps.Map(document.getElementById('peta'), {
@@ -195,7 +266,7 @@
             };
 
             infoWindow.setPosition(pos);
-            infoWindow.setContent('Location found.');
+            infoWindow.setContent('you are here!');
             map.setCenter(pos);
           }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
@@ -312,8 +383,7 @@
    
     }
      </script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXHkW8XZy3R2tQa_326VbuFp29wDJ93Qw&libraries=places&callback=load_peta"
-     type="text/javascript"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXHkW8XZy3R2tQa_326VbuFp29wDJ93Qw&libraries=places&callback=load_peta"></script>
      </div>  
                
         </div>    

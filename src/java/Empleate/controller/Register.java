@@ -101,7 +101,7 @@ public class Register extends HttpServlet {
     }
 
     private void doRegisterCompany(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<String> param = new ArrayList<String>();
+       List<String> param = new ArrayList<String>();
         try {
             HttpSession s = request.getSession(true);
 
@@ -123,7 +123,7 @@ public class Register extends HttpServlet {
             param.add(descript);
             String user = request.getParameter("username");
             param.add(user);
-            String key = request.getParameter("key");
+            String key = request.getParameter("password");
              
             double locateX = Double.parseDouble(request.getParameter("localeX"));
             
@@ -162,13 +162,13 @@ public class Register extends HttpServlet {
 
             request.setAttribute("login", l);
             request.setAttribute("company", c);
-            response.setStatus(200); //si la long y la lat estableciada llega correctamente
+          
             request.getRequestDispatcher("Home").forward(request, response);
         } catch (Exception e) {
             String error = e.getMessage();
             request.setAttribute("error", error);
             request.setAttribute("param", param);
-            response.setStatus(400); //si hay un error en el envio de la ubicacion
+            
             request.getRequestDispatcher("registCompany.jsp").forward(request, response);
         }
     }
@@ -198,8 +198,12 @@ public class Register extends HttpServlet {
             param.add(email);            
             String user = request.getParameter("username");
             param.add(user);
-            String key = request.getParameter("key");           
-
+            String key = request.getParameter("password");           
+            
+            double locateX = Double.parseDouble(request.getParameter("localeX"));
+            
+            double locateY = Double.parseDouble(request.getParameter("localeY"));
+            
             l.setIdLogin(0);
             l.setUsername(user);
             l.setPassword(key);
@@ -218,6 +222,8 @@ public class Register extends HttpServlet {
             o.setPhone(phone);
             o.setResidence(address);
             o.setIdOfferer(0);
+            o.setLocation_X(locateX);
+            o.setLocation_Y(locateY);
             Set<Login> logins = new HashSet<Login>();
             logins.add(new Login());
             o.setLogin(lm.findLoginByData(user, key).getIdLogin());

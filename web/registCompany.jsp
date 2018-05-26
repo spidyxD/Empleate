@@ -44,7 +44,7 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <input name="direccion" id="direccion" type="text"   readonly>
+                            <input name="direccion" id="direccion" type="text">
                             <label for="direccion">Direccion </label>
                         </div>
                     </div>         

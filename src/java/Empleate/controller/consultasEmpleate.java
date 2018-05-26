@@ -73,10 +73,26 @@ public class consultasEmpleate extends HttpServlet {
     
     private void iniciar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
+            cat= new ArrayList();
+            //cat= CategoryModel.instance().findAllCategories();
             roots = CategoryModel.instance().giveRootParents();
-            cat = CategoryModel.instance().findAllCategories();
-            int ej = cat.get(1).getIsDad();
-            System.out.println(ej);
+            List<Category> aux = CategoryModel.instance().findAllCategories();
+            for(int i=0;i<aux.size();i++){
+                if(aux.get(i).getIsRoot() == 1){
+                    cat.add(aux.get(i));
+                     if(!CategoryModel.instance().giveChilds(aux.get(i).getIdCategory()).isEmpty()){
+                            for(int j=0;j<CategoryModel.instance().giveChilds(aux.get(i).getIdCategory()).size();j++){    
+                            cat.add(CategoryModel.instance().giveChilds(aux.get(i).getIdCategory()).get(j));
+                            if(!CategoryModel.instance().giveChilds(CategoryModel.instance().giveChilds(aux.get(i).getIdCategory()).get(j).getIdCategory()).isEmpty()){
+                                for(int g=0;g<CategoryModel.instance().giveChilds(CategoryModel.instance().giveChilds(aux.get(i).getIdCategory()).get(j).getIdCategory()).size();g++){
+                                cat.add(CategoryModel.instance().giveChilds(CategoryModel.instance().giveChilds(aux.get(i).getIdCategory()).get(j).getIdCategory()).get(g));
+                                }
+                                }
+                     }
+                     }       
+                }
+            }
+            
             HttpSession s = request.getSession(true);
             String op = request.getParameter("limpiar");
             if (Objects.equals(op, new String("1"))) {//limpiar busqueda
@@ -103,17 +119,15 @@ public class consultasEmpleate extends HttpServlet {
              BufferedReader reader = request.getReader();
              PrintWriter out = response.getWriter();
              Gson gson = new Gson();
-             Dad d = gson.fromJson(reader, Dad.class);
-             String ex1 = d.getDady();
+             //Dad d = gson.fromJson(reader, Dad.class);
+             String ex1 = request.getParameter("papa");
             // System.out.println(ex1);     
           
             cat = CategoryModel.instance().giveChilds(Integer.parseInt(ex1));
-            String cl = cat.get(1).getNameCategory(); 
-            System.out.println(cl);
             Category cth = CategoryModel.instance().findCategoryById(Integer.parseInt(ex1));
             if (CategoryModel.instance().giveChilds(Integer.parseInt(ex1)).isEmpty()) {
-                Porcentaje p = gson.fromJson(reader, Porcentaje.class);
-                String ex2 = p.getPercent(); 
+                //Porcentaje p = gson.fromJson(reader, Porcentaje.class);
+                String ex2 = request.getParameter("percent"); 
                 //System.out.println(ex2);
                 resumen.add(cth);// solo add hojas
                 resumenCompleto.put(cth,ex2);

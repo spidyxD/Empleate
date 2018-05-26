@@ -24,6 +24,20 @@ p,h1{
     position: static!important;
     overflow: visible!important;
 }
+#floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+
 /* Optional: Makes the sample page fill the window. */
 html, body {
     height: 100%;
@@ -49,7 +63,7 @@ html, body {
 }
 
 #pac-input {
-    background-color: #ffff!important;
+    background-color: #fff!important;
     font-family: Roboto!important;
     font-size: 15px!important;
     font-weight: 200!important;
@@ -67,6 +81,17 @@ html, body {
 
 .pac-container {
     font-family: Roboto!important;
+    background-color: #fff;
+    position: absolute !important;
+    z-index: 5;
+    border-radius: 2px;
+    border-top: 1px solid #d9d9d9;
+    font-family: Arial,sans-serif;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 #type-selector {
