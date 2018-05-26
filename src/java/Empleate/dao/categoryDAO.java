@@ -123,8 +123,7 @@ public class categoryDAO extends HibernateUtil implements IBaseDAO <Category, In
       List<Category> cl = new ArrayList();
       String sql = "select  idCategory,\n" +
         " name_Category,\n" +
-        " parentCategory \n" +
-        " isDad \n" +      
+        " parentCategory \n" +    
         " from category\n" +
         "where category.parentCategory="+"'"+idParent+"'";
         try{

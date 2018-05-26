@@ -49,9 +49,9 @@ public class consultasEmpleate extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    public List<Category> resumen = new ArrayList<>();
-    List<Category> hijosFijos = new ArrayList<>();
-    List<Category> roots = new ArrayList<>();//Para imprimir los roots
+    public List<Category> resumen = new ArrayList<Category>();
+    List<Category> hijosFijos = new ArrayList<Category>();
+    List<Category> roots = new ArrayList<Category>();//Para imprimir los roots
     List<Category> cat = new ArrayList<>();//Mostrar las categorias en un momento dado
     String pr = "";
     HashMap<Category, String> resumenCompleto = new HashMap();//nuevo resumen
@@ -78,70 +78,26 @@ public class consultasEmpleate extends HttpServlet {
             case "/iniciar"://al inicio de la busqueda
                 this.iniciar(request, response);
                 break;
-            case "/colap"://al inicio de la busqueda
-                this.doColap(request, response);
-                break;
-        }
-    }
-
-    private void doColap(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            //Reader personaReader = new BufferedReader(new InputStreamReader(request.getPart("persona").getInputStream()));
-            Gson gson = new Gson();
-            //Persona persona = gson.fromJson(personaReader, Persona.class);
-            PrintWriter out = response.getWriter();
-            ArrayList<Category> ls  = CategoryModel.instance().findAllCategories();
-            ArrayList<categorySimple>catSim = new ArrayList<>();
-            for (Category c : ls) {
-                if(c.getCategory() != null){
-                catSim.add(new categorySimple(c.getIdCategory(),
-                        c.getNameCategory(),c.getCategory().getIdCategory()));
-                }else{
-                    catSim.add(new categorySimple(c.getIdCategory(),
-                        c.getNameCategory(),0));//cero para indicar que no tiene papa
-                }
-            }
-            response.setContentType("application/json; charset=UTF-8");
-            out.write(gson.toJson(catSim));
-            response.setStatus(200); // ok with content
-        } catch (Exception e) {
-            response.setStatus(401); //Bad request
         }
     }
 
     private void iniciar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             roots = CategoryModel.instance().giveRootParents();
-            cat = CategoryModel.instance().findAllCategories();
+            cat = roots;
             HttpSession s = request.getSession(true);
-            /*String op = request.getParameter("limpiar");
+            String op = request.getParameter("limpiar");
             if (Objects.equals(op, new String("1"))) {//limpiar busqueda
                 resumen.clear();
                 resumenCompleto.clear();
-            }*/
-            ArrayList<categorySimple> catSim = new ArrayList<>();
-            for (Category c : cat) {
-                if(c.getCategory() != null){
-                catSim.add(new categorySimple(c.getIdCategory(),
-                        c.getNameCategory(),c.getCategory().getIdCategory()));
-                }else{
-                    catSim.add(new categorySimple(c.getIdCategory(),
-                        c.getNameCategory(),0));//cero para indicar que no tiene papa
-                }
             }
-            String myJson = new Gson().toJson(catSim);
-    
             s.setAttribute("resumen", resumen);
             s.setAttribute("resumenCompleto", resumenCompleto);
             request.setAttribute("cat", cat);
-            request.setAttribute("root", roots);
-            request.setAttribute("catSim", catSim);
-            request.setAttribute("myJson",myJson);
             request.getRequestDispatcher("categoryTree.jsp").
                     forward(request, response);
         } catch (Exception e) {
-            String error = e.getMessage();
-            System.out.println(e.getMessage());
+            String error = e.getMessage(); 
             request.setAttribute("error", error);
             request.getRequestDispatcher("Error.jsp").forward(request, response);
         }
@@ -150,38 +106,28 @@ public class consultasEmpleate extends HttpServlet {
     private void doDesplegar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             HttpSession s = request.getSession(true);
-            cat = new ArrayList<>();
-            BufferedReader reader = request.getReader();
-            PrintWriter out = response.getWriter();
-            Gson gson = new Gson();
-            Dad d = gson.fromJson(reader, Dad.class);
-            String ex1 = d.getDady();
-            // System.out.println(ex1);
-
-            cat = CategoryModel.instance().giveChilds(Integer.parseInt(ex1));
-            String cl = cat.get(1).getNameCategory();
-            System.out.println(cl);
-            Category cth = CategoryModel.instance().findCategoryById(Integer.parseInt(ex1));
-            if (CategoryModel.instance().giveChilds(Integer.parseInt(ex1)).isEmpty()) {
-                Porcentaje p = gson.fromJson(reader, Porcentaje.class);
-                String ex2 = p.getPercent();
-                //System.out.println(ex2);
+            cat = new ArrayList<Category>();
+            String aux = request.getParameter("papa");
+            pr = request.getParameter("porcentaje");
+            cat = CategoryModel.instance().giveChilds(Integer.parseInt(aux));
+            Category cth = CategoryModel.instance().findCategoryById(Integer.parseInt(aux));
+            if (CategoryModel.instance().giveChilds(Integer.parseInt(aux)).isEmpty()) {
                 resumen.add(cth);// solo add hojas
-                resumenCompleto.put(cth, ex2);
-                response.setContentType("application/json; charset=UTF-8");
-                out.write(gson.toJson(cat));
-                response.setStatus(200);
+                resumenCompleto.put(cth, "90");//cambiar el string por el parametro del usuario
             }
-            response.setContentType("application/json; charset=UTF-8");
-            out.write(gson.toJson(resumen));
-            response.setStatus(200);
+            request.setAttribute("cat", cat);
+            s.setAttribute("resumen", resumen);
+            s.setAttribute("resumenCompleto", resumenCompleto);
+            request.setAttribute("por", pr);
+            request.getRequestDispatcher("categoryTree.jsp").
+                    forward(request, response);
         } catch (Exception e) {
             String error = e.getMessage();
+            request.setAttribute("error", error);
+            request.getRequestDispatcher("Error.jsp").forward(request, response);
             resumen.clear();
-            resumenCompleto.clear();
-            response.setStatus(401);
-        }
-
+            resumenCompleto.clear();  
+}
     }
 
     private void doSearchPublicJobsByCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
