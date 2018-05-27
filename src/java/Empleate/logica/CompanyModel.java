@@ -60,4 +60,11 @@ public class CompanyModel {
         }catch(Exception e){}
         return null;
     }
+    
+    public List<Company> findActive()throws Exception{
+        try{
+        return compDAO.listActive();
+        }catch(Exception e){}
+        return null;
+    }
 }

@@ -15,6 +15,7 @@ import org.hibernate.HibernateException;
  *
  * @author Addiel
  */
+
 public class companyDAO extends HibernateUtil implements IBaseDAO <Company, Integer> {
 
     @Override
@@ -131,5 +132,24 @@ public class companyDAO extends HibernateUtil implements IBaseDAO <Company, Inte
         getSesion().close();
         }
         return c;
+    }
+    
+      public List<Company> listActive() {
+        List<Company> listCom = new ArrayList<>();
+        try {
+            operationStart();
+            String sql = "select idCompany,name_company, description, "
+                    + "address,email,phone"
+                    + " from company where "
+                    + "company.active = "+1+";";
+            listCom = getSesion().createSQLQuery(sql).addEntity(Company.class).list();
+            getTransac().commit();
+        } catch (HibernateException he) {
+            handleException(he);
+            throw he;
+        } finally {
+            getSesion().close();
+        }
+        return listCom;
     }
 }

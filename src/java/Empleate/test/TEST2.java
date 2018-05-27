@@ -5,16 +5,6 @@
  */
 package Empleate.test;
 
-import Empleate.domain.Category;
-import Empleate.domain.Company;
-import Empleate.domain.Job;
-import Empleate.domain.Login;
-import Empleate.logica.CategoryModel;
-import Empleate.logica.CompanyModel;
-import Empleate.logica.JobModel;
-import Empleate.logica.LoginModel;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -22,10 +12,10 @@ import java.util.List;
  */
 public class TEST2 {
     public static void main(String[] arg) throws Exception{
-       ArrayList<Category> roots = (ArrayList<Category>) CategoryModel.instance().giveRootParents();
-       ArrayList<Category> cat = CategoryModel.instance().findAllCategories();
-       System.out.println(roots.size() + "-" + cat.size());
-       System.out.println(cat.get(6).getCategory().getNameCategory());
+      // ArrayList<Company> ls = (ArrayList<Company>) CompanyModel.instance().findActive();
+       // for (int i = 0; i < ls.size(); i++) {
+          //  System.out.println(ls.get(i).getNameCompany());
+        //}
     }
     
 }

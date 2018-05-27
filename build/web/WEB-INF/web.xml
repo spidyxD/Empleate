@@ -54,7 +54,7 @@
         <servlet-name>consultasEmpleate</servlet-name>
         <url-pattern>/iniciar</url-pattern>
     </servlet-mapping>
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>consultasEmpleate</servlet-name>
         <url-pattern>/desplegar</url-pattern>
     </servlet-mapping>
@@ -76,7 +76,7 @@
         <url-pattern>/consultasEmpleateAllJobsByCategory</url-pattern>
     </servlet-mapping>
      
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>consultasEmpleate</servlet-name>
         <url-pattern>/consultarOffrers</url-pattern>
     </servlet-mapping>
@@ -88,7 +88,7 @@
         <servlet-name>Vistas</servlet-name>
         <url-pattern>/Vistas</url-pattern>
     </servlet-mapping>
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>Vistas</servlet-name>
         <url-pattern>/listarOferentes</url-pattern>
     </servlet-mapping>
@@ -103,7 +103,15 @@
     <servlet-mapping>
         <servlet-name>Vistas</servlet-name>
         <url-pattern>/localizar</url-pattern>
-    </servlet-mapping>   
+    </servlet-mapping>  
+    <servlet-mapping>
+        <servlet-name>Vistas</servlet-name>
+        <url-pattern>/visMan</url-pattern>
+    </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>Vistas</servlet-name>
+        <url-pattern>/ListarEmpr</url-pattern>
+    </servlet-mapping>     
     <session-config>
         <session-timeout>
             30

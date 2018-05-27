@@ -32,6 +32,9 @@
         <property name="login" type="int">
             <column name="login"/>
         </property> 
+        <property name="active" type="int">
+            <column name="active"/>
+        </property> 
         <set name="jobs" table="job" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="comp" not-null="true" />
