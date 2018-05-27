@@ -3,9 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Andrés%20Gutiérrez/Documents/GitHub/Empleate/src/java/Empleate/dao/companyDAO.java</file>
-            <file>file:/C:/Users/Andrés%20Gutiérrez/Documents/GitHub/Empleate/src/java/Empleate/test/TEST2.java</file>
-            <file>file:/C:/Users/Andrés%20Gutiérrez/Documents/GitHub/Empleate/src/java/hibernate.cfg.xml</file>
+            <file>file:/C:/Users/Andrés%20Gutiérrez/Documents/GitHub/Empleate/web/css/myStyle.css</file>
+            <file>file:/C:/Users/Andrés%20Gutiérrez/Documents/GitHub/Empleate/web/listarOfferers.jsp</file>
+            <file>file:/C:/Users/Andrés%20Gutiérrez/Documents/GitHub/Empleate/src/java/Empleate/domain/Company.java</file>
+            <file>file:/C:/Users/Andrés%20Gutiérrez/Documents/GitHub/Empleate/src/java/Empleate/domain/Job.java</file>
+            <file>file:/C:/Users/Andrés%20Gutiérrez/Documents/GitHub/Empleate/web/Home.jsp</file>
         </group>
     </open-files>
 </project-private>

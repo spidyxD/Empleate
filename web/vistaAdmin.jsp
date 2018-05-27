@@ -47,8 +47,8 @@
                                 <li><a href="javascript: empNOActivas()">Empreas no aprobadas</a></li>
                             </ul>  
                             <table id="miTabla">
-                                <thead>
-                                    <tr>
+                                <thead id="theader">
+                                    <tr id="trow">
                                         <th>Nombre</th>
                                         <th>Descricion</th>
                                         <th>Ubicacion</th>
@@ -65,9 +65,6 @@
                 </div>
             </div>
         </div>
-        <%if (login != null) {%>
-        <p><%= login.getUsername()%></p>
-        <%}%>
         <%@include file="footer.jspf"%>
         <!--JavaScript at end of body for optimized loading-->
         <script type="text/javascript" src="js/jquery.js"></script> <!--necesario para los carruseles-->
@@ -82,6 +79,7 @@
         $("#miTabla").hide();
     }
     function empActivas() {
+        $("#listado").empty();
         opcion = {respuesta: 1};
         data = new FormData();
         data.append("opcion", JSON.stringify(opcion));
@@ -103,14 +101,19 @@
     }
 
     function empNOActivas() {
+        $("#listado").empty();
+        opcion = {respuesta: 0};
+        data = new FormData();
+        data.append("opcion", JSON.stringify(opcion));
         $.ajax({type: "POST",
             url: "ListarEmpr",
-            data: "0",
+            data: data,
+            processData: false,
+            contentType: false,
             dataType: "json",
             success:
                     function (obj) {
-                        console.log(obj);
-                        window.alert(obj);
+                        llenarNOActivos(obj);
                     },
             error: function (status) {
                 window.alert("Error");
@@ -124,14 +127,33 @@
         $("#miTabla").show();
         for (var i = 0; i < obj.length; i++) {
             var tr = $("<tr />");
-            tr.html("<td><a href=\"visPubCom?idCom="+ obj[i].idCompany +"\">"+ obj[i].nameCompany + "</a></td>"+ 
-                    "<td>" + obj[i].description + "</td>"+
-                    "<td>" + obj[i].address + "</td>"+
-                    "<td>" + obj[i].email + "</td>"+
+            tr.html("<td><a href=\"visPubCom?idCom=" + obj[i].idCompany + "\">" + obj[i].nameCompany + "</a></td>" +
+                    "<td>" + obj[i].description + "</td>" +
+                    "<td>" + obj[i].address + "</td>" +
+                    "<td>" + obj[i].email + "</td>" +
                     "<td>" + obj[i].phone + "</td>");
             $("#listado").append(tr);
         }
-    }//<li><a href="javascript: empActivas()">Empreas aprobadas</a></li>
+    }
+    
+    
+    function llenarNOActivos(obj) {
+        $("#miTabla").show();
+        var th = $("#trow");
+        var thead = $("#theader");
+        th.prepend("<th>Activar</th>")
+        thead.append(th);
+        for (var i = 0; i < obj.length; i++) {
+            var tr = $("<tr />");
+            tr.html("<td><p><label><input type=\"checkbox\" /><span></span></label></p></td>"+
+                    "<td><a href=\"visPubCom?idCom=" + obj[i].idCompany + "\">" + obj[i].nameCompany + "</a></td>" +
+                    "<td>" + obj[i].description + "</td>" +
+                    "<td>" + obj[i].address + "</td>" +
+                    "<td>" + obj[i].email + "</td>" +
+                    "<td>" + obj[i].phone + "</td>");
+            $("#listado").append(tr);
+        }
+    }
 
     document.addEventListener('DOMContentLoaded', function () {
         var elems = document.querySelectorAll('.dropdown-trigger');

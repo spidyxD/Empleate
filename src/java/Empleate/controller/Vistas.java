@@ -175,16 +175,15 @@ public class Vistas extends HttpServlet {
             Reader opcionReader = new BufferedReader(new InputStreamReader(request.getPart("opcion").getInputStream()));
             Gson gson2 = new Gson();
             Opcion op = gson2.fromJson(opcionReader, Opcion.class);
-            System.out.println("vamos funcioneee" + op.getRespuesta());
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
             PrintWriter out = response.getWriter();
             ArrayList<Company> ls = new ArrayList<>();
             java.lang.reflect.Type listType = new TypeToken<ArrayList<Company>>() {
             }.getType();
-            if (true) { //listar empresas activas
-                ls = (ArrayList<Company>) CompanyModel.instance().findAllCompanies();
+            if (op.getRespuesta() == 1) { //listar empresas activas
+                ls = (ArrayList<Company>) CompanyModel.instance().findActive();
             } else {
-                ls = (ArrayList<Company>) CompanyModel.instance().findAllCompanies();
+                ls = (ArrayList<Company>) CompanyModel.instance().findNOActive();
             }
             response.setContentType("application/json; charset=UTF-8");
             out.write(gson.toJson(ls, listType));

@@ -11,6 +11,7 @@
         <%@ include file="includesHead.jspf" %>
     </head>
     <body>
+        <% String[] images = {"images/1.jpg","images/2.jpg","images/3.jpg","images/4.jpg","images/5.jpg"};%>
         <%@ include file="headerHome.jspf" %>
         <div class="cuerpo">
             <section class="section">
@@ -21,12 +22,13 @@
                         </div>
                         <%int cont =0;%>
                         <%for (Job j : top) {%>
-                        <div class="carousel-item white-text" href="#one!">                            
+                        <div class="carousel-item white-text" id="myCarousel" style="background-image:url(<%=images[top.indexOf(j)]%>);">                            
                             <div class="aches">
-                            <h4><%=j.getNameJob()%></h4>
-                            <h3><%=j.getDescriptionJob()%></h3>
-                            <h2><%=j.getSalary()%>&nbsp colones</h2>
-                            </div>
+                                <!-- <img id="imgCarousel" src="<%=images[4]%>">-->
+                                <h4><a href="visPubCom?idCom=<%=j.getCompany().getIdCompany()%>"><h4><%=j.getNameJob()%><h4></a></h4>
+                                <h3><%=j.getDescriptionJob()%></a></h3>
+                                <h2><%=j.getSalary()%>&nbsp colones</h2>
+                            </div>                            
                         </div>
                         <%}%>
                     </div>
@@ -49,7 +51,6 @@
 <style>
     
 .carousel-item{
-   background-image: url("images/4.jpg");
    background-color: #cccccc; 
    display: flex;
    align-items: center;
@@ -59,3 +60,4 @@
 }
 
 </style>
+

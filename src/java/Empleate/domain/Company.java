@@ -48,16 +48,19 @@ public class Company implements java.io.Serializable {
         this.idCompany = idCompany;
     }
 
-    public Company(int idCompany, String nameCompany, String email, String phone, String description, String address) {
+    public Company(int idCompany, String nameCompany, String email, String phone, 
+            String description, String address,int active) {
         this.idCompany = idCompany;
         this.nameCompany = nameCompany;
         this.email = email;
         this.phone = phone;
         this.description = description;
-        this.address = address;
+        this.address = address;        
+        this.active = active;
     }
 
-    public Company(int idCompany, String nameCompany, String email, String phone, String description, double location_X, double location_Y, String address, int login, Set<Job> jobs, Set<Login> logins) {
+    public Company(int idCompany, String nameCompany, String email, String phone, String description,
+            double location_X, double location_Y, String address, int login, Set<Job> jobs, Set<Login> logins, int active) {
         this.idCompany = idCompany;
         this.nameCompany = nameCompany;
         this.email = email;
@@ -69,9 +72,11 @@ public class Company implements java.io.Serializable {
         this.jobs = jobs;
         this.logins = logins;
         this.login = login;
+        this.active = active;
     }
 
-    public Company(int idCompany, String nameCompany, String email, String phone, String description, double location_X, double location_Y, String address, int login) {
+    public Company(int idCompany, String nameCompany, String email, String phone, 
+            String description, double location_X, double location_Y, String address, int login,int active) {
         this.idCompany = idCompany;
         this.nameCompany = nameCompany;
         this.email = email;
@@ -81,6 +86,15 @@ public class Company implements java.io.Serializable {
         this.location_Y = location_Y;
         this.address = address;
         this.login = login;
+        this.active = active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
+
+    public int getActive() {
+        return active;
     }
 
     public int getIdCompany() {

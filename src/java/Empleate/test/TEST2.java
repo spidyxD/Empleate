@@ -5,6 +5,10 @@
  */
 package Empleate.test;
 
+import Empleate.domain.Company;
+import Empleate.logica.CompanyModel;
+import java.util.ArrayList;
+
 
 /**
  *
@@ -12,10 +16,10 @@ package Empleate.test;
  */
 public class TEST2 {
     public static void main(String[] arg) throws Exception{
-      // ArrayList<Company> ls = (ArrayList<Company>) CompanyModel.instance().findActive();
-       // for (int i = 0; i < ls.size(); i++) {
-          //  System.out.println(ls.get(i).getNameCompany());
-        //}
+       ArrayList<Company> ls = (ArrayList<Company>) CompanyModel.instance().findNOActive();
+       for (int i = 0; i < ls.size(); i++) {
+            System.out.println(ls.get(i).getNameCompany());
+        }
     }
     
 }
