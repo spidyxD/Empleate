@@ -21,8 +21,6 @@
     <body>
         <%@include file="header.jspf"%>
         <jsp:useBean id="error" scope="request" class="java.lang.String"/>
-        <jsp:useBean id="param" scope="request" type="List<String>" class="java.util.ArrayList"/>
-        <%boolean lleno = param.size() > 0;%>
         <div class="cuerpo container"><!-- nom,apel,nation,phone,email,recidence**login** -->
             <h4>Formulario para registro de Oferentes</h4>
             
@@ -45,7 +43,7 @@
                     <div class="row">
 
                         <div class="input-field col s6">
-                            <input id="telefono" type="number" name="telefono" class="validate" value="">
+                            <input id="telefono" type="text" name="telefono" class="validate" value="">
                             <label for="telefono">Telefono</label>
                         </div>
 

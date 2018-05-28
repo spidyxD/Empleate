@@ -24,7 +24,7 @@ public class Company  implements java.io.Serializable {
      private Set<Login> logins = new HashSet<Login>(0);
 
     public Company() {
-        idCompany=-1;
+       
         nameCompany="";
         email="";
         phone="";

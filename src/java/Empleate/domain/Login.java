@@ -21,7 +21,7 @@ public class Login  implements java.io.Serializable {
 @Expose private int enable;
 
     public Login() {
-        idLogin=-1;
+      
         username="";
         password="";
         type_log="";

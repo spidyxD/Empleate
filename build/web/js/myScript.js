@@ -220,7 +220,7 @@ function autoplay() {
             data.append("login", JSON.stringify(login));
             data.append("pdf", $("#pdf")[0].files[0]);
             $.ajax({
-                url: "RegistOffer",
+                url: "RegistroOffer",
                 type: "POST",
                 dataType: "json",
                 data: data,
@@ -232,7 +232,7 @@ function autoplay() {
                      location.href ="Home";
                 } ,
                 error: function(status){
-                     console.log("Error");
+                     console.log("Error " + obj.nameOfferer);
                 }         
             });
                 
@@ -299,7 +299,7 @@ function autoplay() {
         data.append("company",JSON.stringify(company));
         data.append("login",JSON.stringify(login));
          $.ajax({type: "POST", 
-        url:"RegistCompany", 
+        url: "RegistroCompany", 
         data: data,
         dataType:"json",
         processData: false,

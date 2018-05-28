@@ -140,4 +140,22 @@ public class offererDAO extends HibernateUtil implements IBaseDAO <Offerer,Integ
         getSesion().close();
         }
     }
+     
+      public boolean findByIdLogin(Integer id) {
+        List<Offerer> offerer = new ArrayList();
+         try{
+            operationStart();
+            String sql = "select *from offerer where login ="+id+";";
+            offerer = getSesion().createSQLQuery(sql).addEntity(Offerer.class).list();
+            getTransac().commit();
+        }
+        catch(HibernateException he){
+            handleException(he);
+            throw he;
+        }
+        finally{
+        getSesion().close();
+        }
+         return !offerer.isEmpty();
+    }
 }

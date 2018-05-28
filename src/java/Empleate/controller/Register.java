@@ -6,7 +6,6 @@
 package Empleate.controller;
 
 import Empleate.domain.Company;
-import Empleate.domain.Job;
 import Empleate.domain.Login;
 import Empleate.domain.Offerer;
 import Empleate.logica.CompanyModel;
@@ -16,20 +15,14 @@ import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -43,7 +36,7 @@ import javax.servlet.http.Part;
  *
  * @author Addiel
  */
-@WebServlet(name = "Register", urlPatterns = {"/Register", "/RegistCompany", "/RegistOffer","/uploadPDF"})
+@WebServlet(name = "Register", urlPatterns = {"/Register", "/RegistroCompany", "/RegistroOffer","/uploadPDF"})
 @MultipartConfig
 public class Register extends HttpServlet {
     public boolean isDigitPositive(String number){
@@ -66,10 +59,10 @@ public class Register extends HttpServlet {
             case "Register":
                 this.goToRegister(request, response);
                 break;
-            case "/RegistCompany":
+            case "/RegistroCompany":
                 this.doRegisterCompany(request, response);
                 break;
-            case "/RegistOffer":
+            case "/RegistroOffer":
                 this.doRegisterOfferer(request, response);
                 break;
             case "/uploadPDF":
@@ -130,28 +123,41 @@ public class Register extends HttpServlet {
             
             Company c = gson.fromJson(readerCompany, Company.class);           
             System.out.println(c.getNameCompany());
-            
+           
+             CompanyModel.instance().addCompany(c);
+           
+             
             Login l = gson.fromJson(readerLog, Login.class);
             System.out.println(l.getUsername());
             
             l.setIdLogin(0);
             l.setType_log("company");
             l.setEnable(0);
+             if (LoginModel.instance().findLoginByUserName(l.getUsername()) != null) {      
+                out.write(gson.toJson("nombre de usurario ya existente"));
+                response.setStatus(400); // error with content
+            }
+            
             LoginModel.instance().addLogin(l);
             l = LoginModel.instance().findLoginByData(l.getUsername(), l.getPassword());
             
-            c.setLogin(l.getIdLogin());
-           CompanyModel.instance().addCompany(c);
+            c.setLogin(LoginModel.instance().findLoginByData(l.getUsername(), l.getPassword()).getIdLogin());
+            CompanyModel.instance().addCompany(c);
+            if(CompanyModel.instance().findByLogin(l.getIdLogin())){
+                response.setContentType("application/json; charset=UTF-8");
+                out.write(gson.toJson(c));
+                response.setStatus(200); //add successfull
+            }else{
+                 LoginModel.instance().deleteLogin(l);
+                 response.setStatus(401); //add successfull
+            }
             
-            response.setContentType("application/json; charset=UTF-8");
-            out.write(gson.toJson(c));
-            response.setStatus(200); //add successfull
           
            
         } catch (Exception e) {
             String error = e.getMessage();
             request.setAttribute("error", error);
-             response.setStatus(401); //update successfull
+             response.setStatus(401); //add successfull
         }
     }
 
@@ -170,23 +176,26 @@ public class Register extends HttpServlet {
             
             Offerer offerer = gson.fromJson(offererReader, Offerer.class);
             System.out.println(offerer.getNameOfferer());
-            
+            if(OffererModel.instance().findByLogin(login.getIdLogin())){
+                response.setContentType("application/json; charset=UTF-8");
+                out.write(gson.toJson(offerer));
+                response.setStatus(200); //add successfull
+            }else{
+                 LoginModel.instance().deleteLogin(login);
+                 response.setStatus(401); //add successfull
+            } 
+                       
             login.setIdLogin(0);
-            login.setEnable(0);       
+            login.setEnable(1);       
             login.setType_log("offerer");
             if (LoginModel.instance().findLoginByUserName(login.getUsername()) != null) {      
                 out.write(gson.toJson("nombre de usurario ya existente"));
                 response.setStatus(400); // error with content
             }
             LoginModel.instance().addLogin(login);
-            offerer.setLogin(LoginModel.instance().findLoginByData(login.getUsername(), login.getPassword()).getIdLogin());
-            login.setIdLogin(LoginModel.instance().findLoginByData(login.getUsername(), login.getPassword()).getIdLogin());
-            if(!isDigitPositive(offerer.getPhone())){
-             OffererModel.instance().addOfferer(offerer);
-            }
-            else{
-               response.setStatus(400); // error with content
-            }
+            offerer.setLogin(LoginModel.instance().findLoginByData(login.getUsername(), login.getPassword()).getIdLogin());           
+            OffererModel.instance().addOfferer(offerer);
+
             
             
             Part filePart = request.getPart("pdf"); // Obtiene el archivo

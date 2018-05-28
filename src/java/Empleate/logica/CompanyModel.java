@@ -60,4 +60,7 @@ public class CompanyModel {
         }catch(Exception e){}
         return null;
     }
+     public boolean findByLogin(int idL){
+        return compDAO.findByIdLogin(idL);
+    }
 }

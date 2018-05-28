@@ -6,6 +6,7 @@
 package Empleate.dao;
 
 import Empleate.domain.Company;
+import Empleate.domain.Offerer;
 import Empleate.utils.HibernateUtil;
 import java.util.ArrayList;
 import java.util.List;
@@ -150,5 +151,21 @@ public class companyDAO extends HibernateUtil implements IBaseDAO <Company, Inte
         getSesion().close();
         }
     }
-    
+    public boolean findByIdLogin(Integer id) {
+        List<Company> company = new ArrayList();
+         try{
+            operationStart();
+            String sql = "select *from company where login ="+id+";";
+            company = getSesion().createSQLQuery(sql).addEntity(Company.class).list();
+            getTransac().commit();
+        }
+        catch(HibernateException he){
+            handleException(he);
+            throw he;
+        }
+        finally{
+        getSesion().close();
+        }
+        return !company.isEmpty();
+    }
 }

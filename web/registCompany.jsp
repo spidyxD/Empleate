@@ -11,21 +11,22 @@
 <html>
     <head>
         <meta charset="utf-8">
-         <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
         <title>Empleate</title>
         <%@include file="includesHead.jspf"%>
         <%@include file="createLocate.jspf"%>
-        <%Login login = (Login)session.getAttribute("login");%>
+        <script type="text/javascript" src="js/jquery.js"></script> <!--necesario para los carruseles-->
+        <script type="text/javascript" src="js/materialize.min.js"></script><!--js de materialize-->
+        <script type="text/javascript" src="js/myScript.js"></script><!--codigo js para inicializar js-->
        <link rel="stylesheet" type="text/css" href="css/registCompany.css">
     </head>
     <body>
         <%@include file="header.jspf"%>
         <jsp:useBean id="error" scope="request" class="java.lang.String"/>
-        <jsp:useBean id="param" scope="request" type="List<String>" class="java.util.ArrayList"/>
+      
         <div class="cuerpo container"><!-- nom,apel,nation,phone,email,recidence**login** -->
             <h4>Formulario para registro de Empresas</h4>
             <div class="row">
-                <form enctype="multipart/form-data" action="RegistCompany" action="javascript:addComp();" id="formularioComp" method="post" class="col s12">
+                <form action="javascript:addComp();" id="formularioComp" method="post" class="col s12">
                     <div class="row">
                         <div class="input-field col s4">
                             <input name="nombreEmpresa" id="nombreEmpresa" type="text" class="validate"> 
@@ -107,12 +108,10 @@
             <%}%>
         </div>
         <h3 id="t"></h3>
-        <h id="login"> <%=login.getUsername()%></h>
+       
         <%@include file="footer.jspf"%>
         <!--JavaScript at end of body for optimized loading-->
-        <script type="text/javascript" src="js/jquery.js"></script> <!--necesario para los carruseles-->
-        <script type="text/javascript" src="js/materialize.min.js"></script><!--js de materialize-->
-        <script type="text/javascript" src="js/myScript.js"></script><!--codigo js para inicializar js-->
+       
     </body>
 </html>
 
