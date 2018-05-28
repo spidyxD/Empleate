@@ -22,22 +22,21 @@
         <%@include file="header.jspf"%>
         <jsp:useBean id="error" scope="request" class="java.lang.String"/>
         <jsp:useBean id="param" scope="request" type="List<String>" class="java.util.ArrayList"/>
-        <%boolean lleno = param.size()>0;%>
         <div class="cuerpo container"><!-- nom,apel,nation,phone,email,recidence**login** -->
             <h4>Formulario para registro de Empresas</h4>
             <div class="row">
-                <form action="RegistCompany" method="post" class="col s12">
+                <form enctype="multipart/form-data" action="RegistCompany" action="javascript:addComp();" id="formularioComp" method="post" class="col s12">
                     <div class="row">
                         <div class="input-field col s4">
-                            <input name="nombreEmpresa" id="nombreEmpresa" type="text" class="validate" <%if(lleno){ %>value="<%=param.get(0)%>" <%}%>> 
+                            <input name="nombreEmpresa" id="nombreEmpresa" type="text" class="validate"> 
                             <label for="nombreEmpresa">Nombre de la empresa</label>
                         </div>
                         <div class="input-field col s4">
-                            <input name="telefono" id="telefono" type="text" class="validate" <%if(lleno){ %>value="<%=param.get(1)%>" <%}%>>
+                            <input name="telefono" id="telefono" type="text" class="validate">
                             <label for="telefono">Telefono</label>
                         </div>
                         <div class="input-field col s4">
-                            <input name="website" id="website" type="url" class="validate" <%if(lleno){ %>value="<%=param.get(2)%>" <%}%>>
+                            <input name="website" id="website" type="url" class="validate">
                             <label for="website">website</label>
                         </div>
 
@@ -64,14 +63,14 @@
                            
                     <div class="row">
                         <div class="input-field col s12">
-                            <input name="descripcion" id="descripcion" type="text" class="validate" <%if(lleno){ %>value="<%=param.get(4)%>" <%}%>>
+                            <input name="descripcion" id="descripcion" type="text" class="validate" >
                             <label for="descripcion">Descripcion de la empresa</label>
                         </div>
 
                     </div>
                     <div class="row">
                         <div class="input-field col s6">
-                            <input name="username" id="username" type="text" class="validate" <%if(lleno){ %>value="<%=param.get(5)%>" <%}%>>
+                            <input name="username" id="userNC" type="text" class="validate" >
                             <label for="username">Username</label>
                         </div>
                         <div class="input-field col s6">
@@ -117,6 +116,11 @@
     </body>
 </html>
 
-
+<script>
+     function loadedC(event){	
+        $("#formularioComp").on("submit",validateComp);
+     }
+   $(loadedC);   
+</script>
 
 

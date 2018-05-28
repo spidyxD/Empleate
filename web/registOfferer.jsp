@@ -13,6 +13,9 @@
         <title>Empleate</title>
         <%@include file="includesHead.jspf"%>
         <%@include file="createLocate.jspf"%>
+        <script type="text/javascript" src="js/jquery.js"></script> <!--necesario para los carruseles-->
+        <script type="text/javascript" src="js/materialize.min.js"></script><!--js de materialize-->
+        <script type="text/javascript" src="js/myScript.js"></script><!--codigo js para inicializar js-->
         <link rel="stylesheet" type="text/css" href="css/registOfferer.css">
     </head>
     <body>
@@ -22,37 +25,38 @@
         <%boolean lleno = param.size() > 0;%>
         <div class="cuerpo container"><!-- nom,apel,nation,phone,email,recidence**login** -->
             <h4>Formulario para registro de Oferentes</h4>
+            
             <div class="row">
-                <form action="RegistOffer" method="post" class="col s12">
+                <form enctype="multipart/form-data" id="formularioOff" action="javascript:uploadOfferer_CV();" method="post" class="col s12">
                     <div class="row">
                         <div class="input-field col s4">
-                            <input id="nombre" type="text" name="nombre" class="validate" <%if (lleno) {%>value="<%=param.get(0)%>" <%}%>>
+                            <input id="nombre" type="text" name="nombre" class="validate" value="">
                             <label for="nombre">Nombre</label>
                         </div>
                         <div class="input-field col s4">
-                            <input id="apellido" type="text" name="apellido" class="validate" <%if (lleno) {%>value="<%=param.get(1)%>" <%}%>>
+                            <input id="apellido" type="text" name="apellido" class="validate" value="">
                             <label for="apellido">Apellido</label>
                         </div>
                         <div class="input-field col s4">
-                            <input id="nacionalidad" type="text" name="nacionalidad" class="validate" <%if (lleno) {%>value="<%=param.get(2)%>" <%}%>>
+                            <input id="nacionalidad" type="text" name="nacionalidad" class="validate" value="">
                             <label for="nacionalidad">Nacionalidad</label>
                         </div>
                     </div>
                     <div class="row">
 
                         <div class="input-field col s6">
-                            <input id="telefono" type="tel" name="telefono" class="validate" <%if (lleno) {%>value="<%=param.get(3)%>" <%}%>>
+                            <input id="telefono" type="number" name="telefono" class="validate" value="">
                             <label for="telefono">Telefono</label>
                         </div>
 
                         <div class="input-field col s6">
-                            <input id="email" type="email" name="email" class="validate" <%if (lleno) {%>value="<%=param.get(5)%>" <%}%>>
+                            <input id="email" type="email" name="email" class="validate" value="">
                             <label for="email">Email</label>
                         </div>
                     </div>
                     <div class="row">        
                         <div class="input-field col s3">
-                            <input id="direccion" type="text" name="residencia" class="validate" <%if (lleno) {%>value="<%=param.get(4)%>" <%}%>>
+                            <input id="direccion" type="text" name="residencia" class="validate" value="">
                             <label for="direccion">Residencia</label>
                             <h1 hidden name="locate"></h1>
                         </div>
@@ -60,21 +64,21 @@
                             <a class="waves-effect waves-light btn modal-trigger" href="#createLocate">Ubicacion </a>
                         </div>
                         <div class="input-field col s3">
-                            <input name="localeX" id="localeX" type="value" class="validate" readonly hidden>                           
+                            <input name="localeX" id="localeX" type="value" class="validate" readonly hidden value="">                           
                         </div>
                         <div class="input-field col s3">    
-                            <input name="localeY" id="localeY" type="value" class="validate" readonly hidden>
+                            <input name="localeY" id="localeY" type="value" class="validate" readonly hidden value="">
 
                         </div>    
                     </div>        
                     <div class="row">
 
                         <div class="input-field col s6">
-                            <input id="username" type="text" name="username" class="validate" <%if (lleno) {%>value="<%=param.get(6)%>" <%}%>>
+                            <input  name="username" id="userN" type="text" class="validate" value="">
                             <label for="username">Username</label>
                         </div>
                         <div class="input-field col s6">
-                            <input name="password" id="key" type="password" name="password" class="validate">
+                            <input name="password" id="key" type="password" name="password" class="validate"  value="">
                             <label for="password">Password</label>
                             <p>
                             <label>
@@ -95,9 +99,18 @@
                         </div>
                             
                     </div>
-                    <div class="input-field col s12">
+                    <div class="input-field col s6">
                         <input class="btn"  type="submit" value="Ingresar" >
                     </div>
+                     <div class="input-field col s6">
+                         
+                        <fieldset>
+                          <legend>Agregar Curriculum</legend>
+                          <input class="btn" type="file" name="pdf" id="pdf">
+                        </fieldset>        
+                          
+                    </div>  
+                      <div id="mensaje"></div>
                 </form>
             </div>
         </div>
@@ -108,11 +121,14 @@
         </div>
         <%@include file="footer.jspf"%>
         <!--JavaScript at end of body for optimized loading-->
-        <script type="text/javascript" src="js/jquery.js"></script> <!--necesario para los carruseles-->
-        <script type="text/javascript" src="js/materialize.min.js"></script><!--js de materialize-->
-        <script type="text/javascript" src="js/myScript.js"></script><!--codigo js para inicializar js-->
+        
     </body>
 </html>
-
+<script>   
+   function loaded(event){	
+        $("#formularioOff").on("submit",validate);
+     }
+   $(loaded);        
+</script>
 
 

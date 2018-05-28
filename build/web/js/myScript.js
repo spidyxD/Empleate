@@ -207,3 +207,155 @@ function autoplay() {
           }                    
       });    
     }
+    
+    
+    // FUNCIONES NECESARIAS PARA registro de oferentes y SUBIR ARCHIVOS PDF 
+        
+        function uploadOfferer_CV() {
+           offerer = {nameOfferer:$("#nombre").val(),lastname:$("#apellido").val(),nationality:$("#nacionalidad").val(),email:$("#email").val(),phone:$("#telefono").val()
+              ,location_X:$("#localeX").val(),location_Y:$("#localeY").val(),residence:$("#direccion").val()};
+             login = {username:$("#userN").val(),password:$("#key").val()};    
+            data=new FormData();
+            data.append("offerer", JSON.stringify(offerer));
+            data.append("login", JSON.stringify(login));
+            data.append("pdf", $("#pdf")[0].files[0]);
+            $.ajax({
+                url: "RegistOffer",
+                type: "POST",
+                dataType: "json",
+                data: data,
+                processData: false,
+                contentType: false,  
+                success: function(obj){
+                     console.log("success"+offerer.nameOfferer);
+                     window.alert("Te damos la bienvenida a Empleate "+obj.nameOfferer+" !");
+                     location.href ="Home";
+                } ,
+                error: function(status){
+                     console.log("Error");
+                }         
+            });
+                
+        }
+        function validate(event){
+        var nombre=$("#nombre");
+        var apellido=$("#apellido"); 
+        var nacionalidad=$("#nacionalidad");
+        var telefono = $("#telefono");
+        var email = $("#email");
+        var address = $("#direccion");
+        var user = $("#userN");
+        var key = $("#key");
+            var error=false;
+            $("#formularioOff input").removeClass("invalid");
+            if (nombre.val().length===0){
+                    nombre.addClass("invalid");
+                    error=true;
+            }
+
+            if (apellido.val().length===0){
+                    apellido.addClass("invalid");
+                    error=true;
+            }
+
+             if (nacionalidad.val().length===0){
+                    nacionalidad.addClass("invalid");
+                    error=true;
+            }
+             if (telefono.val().length===0){
+                    telefono.addClass("invalid");
+                    error=true;
+            }
+             if (email.val().length===0){
+                    email.addClass("invalid");
+                    error=true;
+            }
+             if (address.val().length===0){
+                    address.addClass("invalid");
+                    error=true;
+            }
+             if (user.val().length===0){
+                    user.addClass("invalid");
+                    error=true;
+            }
+             if (key.val().length===0){
+                    key.addClass("invalid");
+                    error=true;
+            }
+            if (error){event.preventDefault();
+                window.alert("Datos vacios, por favor ingrese datos validos");
+            }
+      }
+      
+      function loaded(event){	
+        $("#formularioOff").on("submit",validate);
+     }
+     // funciones necesarias para el registro de una compañia
+     
+      function addComp(){
+        company = {nameCompany:$("#nombreEmpresa").val(),email:$("#website").val(),phone:$("#telefono").val(),description:$("#descripcion").val(),address:$("#direccion").val(),location_X:$("#localeX").val(),location_Y:$("#localeY").val()};     
+        login = {username:$("#userNC").val(),password:$("#key").val()};     
+        data=new FormData();
+        data.append("company",JSON.stringify(company));
+        data.append("login",JSON.stringify(login));
+         $.ajax({type: "POST", 
+        url:"RegistCompany", 
+        data: data,
+        dataType:"json",
+        processData: false,
+        contentType: false,      
+        success: 
+          function(obj){
+              console.log("success");
+               window.alert("Le damos la bienvenida a la empresa "+obj.nameCompany+" a la comunidad de Empleate!");
+              location.href = "Home";
+          },
+        error: function(status){
+               console.log("error"+company.nameCompany);
+          }                    
+      });    
+    }
+    
+    function validateComp(event){
+        var nombre=$("#nombreEmpresa");
+        var descrip=$("#descripcion"); 
+        var telefono = $("#telefono");
+        var email = $("#website");
+        var address = $("#direccion");
+        var user = $("#userNC");
+        var key = $("#key");
+            var error=false;
+            $("#formularioComp input").removeClass("invalid");
+            if (nombre.val().length===0){
+                    nombre.addClass("invalid");
+                    error=true;
+            }
+
+             if (descrip.val().length===0){
+                    descrip.addClass("invalid");
+                    error=true;
+            }
+             if (telefono.val().length===0){
+                    telefono.addClass("invalid");
+                    error=true;
+            }
+             if (email.val().length===0){
+                    email.addClass("invalid");
+                    error=true;
+            }
+             if (address.val().length===0){
+                    address.addClass("invalid");
+                    error=true;
+            }
+             if (user.val().length===0){
+                    user.addClass("invalid");
+                    error=true;
+            }
+             if (key.val().length===0){
+                    key.addClass("invalid");
+                    error=true;
+            }
+            if (error){event.preventDefault();
+                window.alert("Datos vacios, por favor ingrese datos validos");
+            }
+      }

@@ -115,10 +115,8 @@ public class updateInf extends HttpServlet {
          } 
              catch (Exception e) {
             String error = e.getMessage();
-            request.setAttribute("error", error);
-            
+            request.setAttribute("error", error);  
             response.setStatus(401); //si hay un error en el update
-            request.getRequestDispatcher("registCompany.jsp").forward(request, response);
         }
     }
 
