@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Empleate.controller;
+
 import Empleate.domain.Category;
 import Empleate.domain.Dad;
 import Empleate.domain.Porcentaje;
@@ -46,8 +47,9 @@ public class consultasEmpleate extends HttpServlet {
     List<Category> cat = new ArrayList<>();//Mostrar las categorias en un momento dado
     String pr = "";
     HashMap<Category, String> resumenCompleto = new HashMap();//nuevo resumen
-    double x,y = 0;
+    double x, y = 0;
     List jobs = new ArrayList();
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         switch (request.getServletPath()) {
@@ -60,7 +62,7 @@ public class consultasEmpleate extends HttpServlet {
                 this.doSearchGeneralJobsByCategory(request, response);
                 break;
             case "/consultarOffrers":
-                this.doSearchOfferers(request,response);
+                this.doSearchOfferers(request, response);
                 break;
             case "/desplegar"://sirve para desplegar las categorias deseadas(como si fuera el publico)
                 this.doDesplegar(request, response);
@@ -70,34 +72,34 @@ public class consultasEmpleate extends HttpServlet {
                 break;
         }
     }
-    
+
     private void iniciar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            cat= new ArrayList();
+            cat = new ArrayList();
             //cat= CategoryModel.instance().findAllCategories();
             roots = CategoryModel.instance().giveRootParents();
             List<Category> aux = CategoryModel.instance().findAllCategories();
-            for(int i=0;i<aux.size();i++){
-                if(aux.get(i).getIsRoot() == 1){
+            for (int i = 0; i < aux.size(); i++) {
+                if (aux.get(i).getIsRoot() == 1) {
                     cat.add(aux.get(i));
-                     if(!CategoryModel.instance().giveChilds(aux.get(i).getIdCategory()).isEmpty()){
-                            for(int j=0;j<CategoryModel.instance().giveChilds(aux.get(i).getIdCategory()).size();j++){    
+                    if (!CategoryModel.instance().giveChilds(aux.get(i).getIdCategory()).isEmpty()) {
+                        for (int j = 0; j < CategoryModel.instance().giveChilds(aux.get(i).getIdCategory()).size(); j++) {
                             cat.add(CategoryModel.instance().giveChilds(aux.get(i).getIdCategory()).get(j));
-                            if(!CategoryModel.instance().giveChilds(CategoryModel.instance().giveChilds(aux.get(i).getIdCategory()).get(j).getIdCategory()).isEmpty()){
-                                for(int g=0;g<CategoryModel.instance().giveChilds(CategoryModel.instance().giveChilds(aux.get(i).getIdCategory()).get(j).getIdCategory()).size();g++){
-                                cat.add(CategoryModel.instance().giveChilds(CategoryModel.instance().giveChilds(aux.get(i).getIdCategory()).get(j).getIdCategory()).get(g));
+                            if (!CategoryModel.instance().giveChilds(CategoryModel.instance().giveChilds(aux.get(i).getIdCategory()).get(j).getIdCategory()).isEmpty()) {
+                                for (int g = 0; g < CategoryModel.instance().giveChilds(CategoryModel.instance().giveChilds(aux.get(i).getIdCategory()).get(j).getIdCategory()).size(); g++) {
+                                    cat.add(CategoryModel.instance().giveChilds(CategoryModel.instance().giveChilds(aux.get(i).getIdCategory()).get(j).getIdCategory()).get(g));
                                 }
-                                }
-                     }
-                     }       
+                            }
+                        }
+                    }
                 }
             }
-            
+
             HttpSession s = request.getSession(true);
             String op = request.getParameter("limpiar");
             if (Objects.equals(op, new String("1"))) {//limpiar busqueda
                 resumen.clear();
-                resumenCompleto.clear();                
+                resumenCompleto.clear();
             }
             s.setAttribute("resumen", resumen);
             s.setAttribute("resumenCompleto", resumenCompleto);
@@ -112,54 +114,54 @@ public class consultasEmpleate extends HttpServlet {
             request.getRequestDispatcher("Error.jsp").forward(request, response);
         }
     }
-    
+
     private void doDesplegar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             HttpSession s = request.getSession(true);
             cat = new ArrayList<>();
-             BufferedReader reader = request.getReader();
-             PrintWriter out = response.getWriter();
-             Gson gson = new Gson();
-             //Dad d = gson.fromJson(reader, Dad.class);
-             String ex1 = request.getParameter("papa");
+            BufferedReader reader = request.getReader();
+            PrintWriter out = response.getWriter();
+            Gson gson = new Gson();
+            //Dad d = gson.fromJson(reader, Dad.class);
+            String ex1 = request.getParameter("papa");
             // System.out.println(ex1);     
-          
+
             cat = CategoryModel.instance().giveChilds(Integer.parseInt(ex1));
             Category cth = CategoryModel.instance().findCategoryById(Integer.parseInt(ex1));
             if (CategoryModel.instance().giveChilds(Integer.parseInt(ex1)).isEmpty()) {
                 //Porcentaje p = gson.fromJson(reader, Porcentaje.class);
-                String ex2 = request.getParameter("percent"); 
+                String ex2 = request.getParameter("percent");
                 //System.out.println(ex2);
                 resumen.add(cth);// solo add hojas
-                resumenCompleto.put(cth,ex2);
+                resumenCompleto.put(cth, ex2);
                 response.setContentType("application/json; charset=UTF-8");
-                out.write(gson.toJson(cat));  
+                out.write(gson.toJson(cat));
                 response.setStatus(200);
             }
             response.setContentType("application/json; charset=UTF-8");
-            out.write(gson.toJson(resumen));   
+            out.write(gson.toJson(resumen));
             response.setStatus(200);
         } catch (Exception e) {
-            String error = e.getMessage();           
+            String error = e.getMessage();
             resumen.clear();
             resumenCompleto.clear();
             response.setStatus(401);
         }
-    
 
     }
 
     private void doSearchPublicJobsByCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-       try {
+        try {
             HttpSession s = request.getSession(true);
             jobs.clear();
-             x = Double.parseDouble(request.getParameter("localeX"));
-             y =Double.parseDouble(request.getParameter("localeY"));
-             //System.out.println(x+y);
-             
-            jobs = JobModel.instance().getAllJobsByCategoryPublic((HashMap<Category, String>) s.getAttribute("resumenCompleto"),x,y);
-            if(!jobs.isEmpty()){
-            s.setAttribute("jobsByCategory", jobs);}
+            x = Double.parseDouble(request.getParameter("localeX"));
+            y = Double.parseDouble(request.getParameter("localeY"));
+            //System.out.println(x+y);
+
+            jobs = JobModel.instance().getAllJobsByCategoryPublic((HashMap<Category, String>) s.getAttribute("resumenCompleto"), x, y);
+            if (!jobs.isEmpty()) {
+                s.setAttribute("jobsByCategory", jobs);
+            }
             request.getRequestDispatcher("ResultadosBusquedas.jsp").
                     forward(request, response);
             jobs.clear();
@@ -168,7 +170,7 @@ public class consultasEmpleate extends HttpServlet {
             request.setAttribute("error", error);
             request.getRequestDispatcher("Error.jsp").forward(request, response);
 
-        }   
+        }
     }
 
     /**
@@ -177,12 +179,13 @@ public class consultasEmpleate extends HttpServlet {
     private void doSearchGeneralJobsByCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             HttpSession s = request.getSession(true);
-            jobs.clear();   
+            jobs.clear();
             x = Double.parseDouble(request.getParameter("localeX"));
-            y =Double.parseDouble(request.getParameter("localeY"));
-            jobs = JobModel.instance().getAllJobsByCategory((HashMap<Category, String>) s.getAttribute("resumenCompleto"),x,y);
-              if(!jobs.isEmpty()){
-            request.setAttribute("jobsByCategory", jobs);}
+            y = Double.parseDouble(request.getParameter("localeY"));
+            jobs = JobModel.instance().getAllJobsByCategory((HashMap<Category, String>) s.getAttribute("resumenCompleto"), x, y);
+            if (!jobs.isEmpty()) {
+                request.setAttribute("jobsByCategory", jobs);
+            }
             request.getRequestDispatcher("ResultadosBusquedas.jsp").
                     forward(request, response);
             jobs.clear();
@@ -193,8 +196,6 @@ public class consultasEmpleate extends HttpServlet {
 
         }
     }
-
-  
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
