@@ -101,6 +101,7 @@ public class categoryDAO extends HibernateUtil implements IBaseDAO <Category, In
         }
     return listCategories;
     }
+    
     public List<Category> giveParentRoots(){
       List<Category> cl = new ArrayList();
       String sql = "select *from category where parentCategory IS NULL ;";

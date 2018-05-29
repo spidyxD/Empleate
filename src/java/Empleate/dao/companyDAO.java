@@ -159,4 +159,39 @@ public class companyDAO extends HibernateUtil implements IBaseDAO<Company, Integ
         }
         return listCom;
     }
+    
+        public void doUpdate(Company c) {
+        try{
+            operationStart();
+            String sql = "update company set name_company = '"+c.getNameCompany()+"'"+
+                    ", email ='"+c.getEmail()+"'"+", phone = '"+c.getPhone()+"'"+", description = '"+c.getDescription()+"'"+", address = '"+c.getAddress()+"'" + " where idCompany = "+c.getIdCompany()+";";
+          getSesion().createSQLQuery(sql).executeUpdate();
+           //Offerer of = off.get(0);          
+            getTransac().commit();
+            getSesion().flush();
+        }catch(HibernateException he){
+        handleException(he);
+            throw he;
+        }
+         finally{
+        getSesion().close();
+        }
+    }
+    public boolean findByIdLogin(Integer id) {
+        List<Company> company = new ArrayList();
+         try{
+            operationStart();
+            String sql = "select *from company where login ="+id+";";
+            company = getSesion().createSQLQuery(sql).addEntity(Company.class).list();
+            getTransac().commit();
+        }
+        catch(HibernateException he){
+            handleException(he);
+            throw he;
+        }
+        finally{
+        getSesion().close();
+        }
+        return !company.isEmpty();
+    }
 }

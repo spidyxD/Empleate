@@ -1,0 +1,112 @@
+<%-- any content can be specified here e.g.: --%>
+<%@page import="Empleate.domain.Login"%>
+<%@page import="Empleate.domain.Company"%>
+<%@ page pageEncoding="UTF-8" %>
+ <jsp:useBean id="comp" scope="request" type="Company" />
+ <jsp:useBean id="login" scope="session" type="Login" />
+ <script type="text/javascript" src="js/myScript.js"></script>
+<div id="updateCompanyInf" class="modal">
+    <div class="modal-content">
+    <h4>Actualizar informacion de la empresa</h4>
+    
+    <h5 hidden id="idCmp" data-value="<%=comp.getIdCompany() %>"></h5>
+    <h6 hidden id="idLog" data-value="<%=login.getIdLogin() %>"></h6>
+            <div class="row">
+                <form action="javascript:updateComp();" method="post" class="col s12">
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <input name="nombreEmpresa" id="nombreEmpresa" type="text" class="validate" style="color:white!important" value="<%=comp.getNameCompany() %>"> 
+                            <label for="nombreEmpresa">Nombre de la empresa</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <input name="telefono" id="telefono" type="text" class="validate" style="color:white!important" value="<%=comp.getPhone() %>">
+                            <label for="telefono">Telefono</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <input name="website" id="website" type="url" class="validate" style="color:white!important" value="<%=comp.getEmail() %>" >
+                            <label for="website">website</label>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input name="direccion" id="direccion" type="text" style="color:white!important" value="<%=comp.getAddress() %>">
+                            <label for="direccion">Direccion </label>
+                        </div>
+                    </div>         
+                   
+                           
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input name="descripcion" id="descripcion" type="text" class="validate" style="color:white!important" value="<%=comp.getDescription() %>">
+                            <label for="descripcion">Descripcion de la empresa</label>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input name="username" id="userN" type="text" class="validate" style="color:white!important" value="<%=login.getUsername() %>">
+                            <label for="username">Username</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input name="password" id="key" type="password" class="validate" style="color:white!important" value="<%=login.getPassword() %>">
+                            <label for="password">Password</label>
+                             <p>
+                            <label>
+                            <input type="checkbox" onclick="showPass()">
+                            <span>Show Password</span>
+                            </label>
+                            </p>
+                            <script>
+                            function showPass() {
+                                var x = document.getElementById("key");
+                                if (x.type === "password") {
+                                    x.type = "text";
+                                } else {
+                                    x.type = "password";
+                                }
+                            }
+                            </script>
+                        </div>
+                    </div>
+                    <div class="input-field col s12">
+                        <input class="btn"  type="submit" value="Actualizar">
+                    </div>
+                </form>
+    </div>
+    </div>
+</div>
+<style>
+     .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 2%!important;
+    width: 80%!important;
+    height: 100%!important;
+    background-color:#53167dcc;
+    overflow: auto; /* Enable scroll if needed */
+    color: white!important;
+    }
+
+    .input-field label{
+      color:black;
+    }
+   
+    .btn{
+        text-align:center;
+    }
+    
+</style>
+<script>
+    function comp(){
+        var company = {nameCompany:$("#nombreEmpresa").val(),email:$("#website").val(),phone:$("#telefono").val(),description:$("#descripcion").val(),address:$("#direccion").val()}
+        return company;
+    }
+    function log(){
+        var login = {username:$("#username").val(),password:$("#password").val()}
+        return login;
+    }
+    
+</script>    

@@ -14,6 +14,12 @@
         <property name="nameCategory" type="string">
             <column name="name_Category" length="45" />
         </property>
+        <property name="isRoot" type="int">
+            <column name="isRoot" />
+        </property>
+        <property name="isDad" type="int">
+            <column name="isDad" />
+        </property>
         <set name="categories" table="category" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="categ" />

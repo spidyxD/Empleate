@@ -26,6 +26,10 @@
         <servlet-name>Vistas</servlet-name>
         <servlet-class>Empleate.controller.Vistas</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>updateInf</servlet-name>
+        <servlet-class>Empleate.controller.updateInf</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Register</servlet-name>
         <url-pattern>/RegistCompany</url-pattern>
@@ -33,6 +37,10 @@
     <servlet-mapping>
         <servlet-name>Register</servlet-name>
         <url-pattern>/RegistOffer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Register</servlet-name>
+        <url-pattern>/uploadPDF</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>login</servlet-name>
@@ -108,10 +116,22 @@
         <servlet-name>Vistas</servlet-name>
         <url-pattern>/visMan</url-pattern>
     </servlet-mapping>
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>Vistas</servlet-name>
         <url-pattern>/ListarEmpr</url-pattern>
-    </servlet-mapping>     
+    </servlet-mapping> 
+    <servlet-mapping>
+        <servlet-name>updateInf</servlet-name>
+        <url-pattern>/updateInf</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updateInf</servlet-name>
+        <url-pattern>/UpdateInfOfferer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updateInf</servlet-name>
+        <url-pattern>/UpdateInfCompany</url-pattern>
+    </servlet-mapping>    
     <session-config>
         <session-timeout>
             30

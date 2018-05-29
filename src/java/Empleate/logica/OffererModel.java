@@ -49,6 +49,9 @@ public class OffererModel {
         return offDAO.findByIdLogin(String.valueOf(idLogin));
     }
     
+    public boolean findByLogin(int idL){
+        return offDAO.findByIdLogin(idL);
+    }
     
 }//fin clase
 

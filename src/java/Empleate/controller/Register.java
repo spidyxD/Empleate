@@ -6,7 +6,6 @@
 package Empleate.controller;
 
 import Empleate.domain.Company;
-import Empleate.domain.Job;
 import Empleate.domain.Login;
 import Empleate.domain.Offerer;
 import Empleate.logica.CompanyModel;
@@ -14,25 +13,37 @@ import Empleate.logica.LoginModel;
 import Empleate.logica.OffererModel;
 import com.google.gson.Gson;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author Addiel
  */
-@WebServlet(name = "Register", urlPatterns = {"/Register", "/RegistCompany", "/RegistOffer"})
+@WebServlet(name = "Register", urlPatterns = {"/Register", "/RegistroCompany", "/RegistroOffer","/uploadPDF"})
+@MultipartConfig
 public class Register extends HttpServlet {
-
+    public boolean isDigitPositive(String number){
+         if(Integer.valueOf(number)>0)
+             return true;
+         return false;
+    }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -48,12 +59,14 @@ public class Register extends HttpServlet {
             case "Register":
                 this.goToRegister(request, response);
                 break;
-            case "/RegistCompany":
+            case "/RegistroCompany":
                 this.doRegisterCompany(request, response);
                 break;
-            case "/RegistOffer":
+            case "/RegistroOffer":
                 this.doRegisterOfferer(request, response);
                 break;
+            case "/uploadPDF":
+                this.doUploadPdf(request,response);
         }
     }
 
@@ -101,139 +114,108 @@ public class Register extends HttpServlet {
     }
 
     private void doRegisterCompany(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<String> param = new ArrayList<String>();
         try {
             HttpSession s = request.getSession(true);
-
-            Company c = new Company();
-            Login l = new Login();
-
-            CompanyModel cm = new CompanyModel();
-            LoginModel lm = new LoginModel();
-
-            String name = request.getParameter("nombreEmpresa");
-            param.add(name);
-            String phone = request.getParameter("telefono");
-            param.add(phone);
-            String email = request.getParameter("website");
-            param.add(email);
-            String addres = request.getParameter("direccion");
-            param.add(addres);
-            String descript = request.getParameter("descripcion");
-            param.add(descript);
-            String user = request.getParameter("username");
-            param.add(user);
-            String key = request.getParameter("password");
-             
-            double locateX = Double.parseDouble(request.getParameter("localeX"));
+            BufferedReader readerCompany = new BufferedReader(new InputStreamReader(request.getPart("company").getInputStream()));
+            BufferedReader readerLog = new BufferedReader(new InputStreamReader(request.getPart("login").getInputStream()));
+            PrintWriter out = response.getWriter();
+            Gson gson = new Gson();
             
-            double locateY = Double.parseDouble(request.getParameter("localeY"));
+            Company c = gson.fromJson(readerCompany, Company.class);           
+            System.out.println(c.getNameCompany());
+
+            Login l = gson.fromJson(readerLog, Login.class);
+            System.out.println(l.getUsername());
             
             l.setIdLogin(0);
-            l.setUsername(user);
-            l.setPassword(key);
-            l.setEnable(1);
             l.setType_log("company");
-            if (lm.findLoginByUserName(user) != null) {
-                throw new Exception("Nombre de usuario repetido");
+            l.setEnable(0);
+             if (LoginModel.instance().findLoginByUserName(l.getUsername()) != null) {      
+                response.setStatus(400); // error with content
             }
-            lm.addLogin(l);
-
-            Thread.sleep(1000);
-
-            c.setNameCompany(name);
-            c.setEmail(email);
-            c.setDescription(descript);
-            c.setPhone(phone);
-            c.setAddress(addres);
-            c.setLocation_X(locateX);
-            c.setLocation_Y(locateY);
-            c.setIdCompany(0);
-            Set<Login> logins = new HashSet<Login>();
-            logins.add(new Login());
-            c.setLogins(logins);
-            Set<Job> jobs = new HashSet<Job>();
-            jobs.add(new Job());
-            c.setJobs(jobs);
-            c.setLogin(lm.findLoginByData(user, key).getIdLogin());
-            l.setIdLogin(lm.findLoginByData(user, key).getIdLogin());
-
-            cm.addCompany(c);
-
-            request.setAttribute("login", l);
-            request.setAttribute("company", c);
-            response.setStatus(200); //si la long y la lat estableciada llega correctamente
-            request.getRequestDispatcher("Home").forward(request, response);
+            
+            LoginModel.instance().addLogin(l);
+            l = LoginModel.instance().findLoginByData(l.getUsername(), l.getPassword());
+            
+            c.setLogin(LoginModel.instance().findLoginByData(l.getUsername(), l.getPassword()).getIdLogin());
+            CompanyModel.instance().addCompany(c);
+            if(CompanyModel.instance().findByLogin(LoginModel.instance().findLoginByData(l.getUsername(), l.getPassword()).getIdLogin())){
+                response.setContentType("application/json; charset=UTF-8");
+                out.write(gson.toJson(c));
+                response.setStatus(200); //add successfull
+            }else{
+                 LoginModel.instance().deleteLogin(l);
+                 response.setStatus(401); //add successfull
+            }
+            
+          
+           
         } catch (Exception e) {
             String error = e.getMessage();
             request.setAttribute("error", error);
-            request.setAttribute("param", param);
-            response.setStatus(400); //si hay un error en el envio de la ubicacion
-            request.getRequestDispatcher("registCompany.jsp").forward(request, response);
+             response.setStatus(401); //add successfull
         }
     }
 
     private void doRegisterOfferer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<String> param = new ArrayList<String>();
+        
         try {
             HttpSession s = request.getSession(true);
-
-            Offerer o = new Offerer();
-            Login l = new Login();
-
-            OffererModel om = new OffererModel();
-            LoginModel lm = new LoginModel();
-
-            String name = request.getParameter("nombre");
-            param.add(name);
-            String ape = request.getParameter("apellido");
-            param.add(ape);
-            String naciona = request.getParameter("nacionalidad");
-            param.add(naciona);
-            String phone = request.getParameter("telefono");
-            param.add(phone);
-            String address = request.getParameter("residencia");
-            param.add(address);
-            String email = request.getParameter("email");
-            param.add(email);            
-            String user = request.getParameter("username");
-            param.add(user);
-            String key = request.getParameter("password");           
-
-            l.setIdLogin(0);
-            l.setUsername(user);
-            l.setPassword(key);
-            l.setEnable(1);
-            l.setType_log("offerer");
-            if (lm.findLoginByUserName(user) != null) {
-                throw new Exception("Nombre de usuario repetido");
+            boolean trouble = false;        
+            Reader offererReader = new BufferedReader(new InputStreamReader(request.getPart("offerer").getInputStream()));
+            Gson gson = new Gson();
+            PrintWriter out = response.getWriter();            
+            Reader loginReader = new BufferedReader(new InputStreamReader(request.getPart("login").getInputStream()));
+            
+            Login login = gson.fromJson(loginReader, Login.class);
+            System.out.println(login.getUsername());  
+            
+            Offerer offerer = gson.fromJson(offererReader, Offerer.class);
+            System.out.println(offerer.getNameOfferer());
+            
+            login.setIdLogin(0);
+            login.setEnable(1);       
+            login.setType_log("offerer");
+            if (LoginModel.instance().findLoginByUserName(login.getUsername()) != null) {      
+                response.setStatus(400); // error with content
             }
-            lm.addLogin(l);
+            LoginModel.instance().addLogin(login);
+            login.setIdLogin(LoginModel.instance().findLoginByData(login.getUsername(), login.getPassword()).getIdLogin());
+            
+           
+            offerer.setLogin(LoginModel.instance().findLoginByData(login.getUsername(), login.getPassword()).getIdLogin());
+            OffererModel.instance().addOfferer(offerer);
+            
+            if(OffererModel.instance().findByLogin(LoginModel.instance().findLoginByData(login.getUsername(), login.getPassword()).getIdLogin())){              
+                out.write(gson.toJson(offerer));
+                Part filePart = request.getPart("pdf"); // Obtiene el archivo
+                String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
+                String path=getServletContext().getRealPath("/")+"docs/";
+                File uploads = new File(path); //Carpeta donde se guardan los archivos
+                uploads.mkdirs(); //Crea los directorios necesarios
+                File file = File.createTempFile("cod"+login.getIdLogin()+"-", "-"+fileName, uploads); //Evita que hayan dos archivos con el mismo nombre
 
-            Thread.sleep(1000);
-
-            o.setNameOfferer(name);
-            o.setEmail(email);
-            o.setLastname(ape);
-            o.setPhone(phone);
-            o.setResidence(address);
-            o.setIdOfferer(0);
-            Set<Login> logins = new HashSet<Login>();
-            logins.add(new Login());
-            o.setLogin(lm.findLoginByData(user, key).getIdLogin());
-            l.setIdLogin(lm.findLoginByData(user, key).getIdLogin());
-
-            om.addOfferer(o);
-
-            request.setAttribute("login", l);
-            request.setAttribute("offerer", o);
-            request.getRequestDispatcher("Home").forward(request, response);
+                try (InputStream input = filePart.getInputStream()){
+                    Files.copy(input, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                } 
+                response.setContentType("application/json; charset=UTF-8"); 
+                response.setStatus(200); // ok with content
+                
+            }else{
+                 LoginModel.instance().deleteLogin(login);
+                 response.setStatus(401); //add error
+            } 
+ 
+          
 
         } catch (Exception e) {
             String error = e.getMessage();
             request.setAttribute("error", error);
-            request.setAttribute("param", param);
-            request.getRequestDispatcher("registOfferer.jsp").forward(request, response);
+            response.setStatus(401); // error with content
         }
+    }
+
+    private void doUploadPdf(HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException, IOException, ServletException {
+       
     }
 }

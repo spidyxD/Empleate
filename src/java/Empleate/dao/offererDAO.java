@@ -121,4 +121,40 @@ public class offererDAO extends HibernateUtil implements IBaseDAO <Offerer,Integ
         }
         return o;
     }
+     public void doUpdate(Offerer o){
+         List<Offerer> off = new ArrayList();
+        try{
+            operationStart();
+            String sql = "update offerer set name_offerer = '"+o.getNameOfferer()+"'"+", lastname = '"+o.getLastname()+"'"+", nationality = '"+o.getNationality()+"'"+
+                    ", email ='"+o.getEmail()+"'"+", phone = '"+o.getPhone()+"'"+", residence = '"+o.getResidence()+"'" + " where idOfferer = "+o.getIdOfferer()+";";
+          getSesion().createSQLQuery(sql).executeUpdate();
+           //Offerer of = off.get(0);          
+            getTransac().commit();
+            getSesion().flush();
+        }catch(HibernateException he){
+        handleException(he);
+            throw he;
+        }
+         finally{
+        getSesion().close();
+        }
+    }
+     
+      public boolean findByIdLogin(Integer id) {
+        List<Offerer> offerer = new ArrayList();
+         try{
+            operationStart();
+            String sql = "select *from offerer where login ="+id+";";
+            offerer = getSesion().createSQLQuery(sql).addEntity(Offerer.class).list();
+            getTransac().commit();
+        }
+        catch(HibernateException he){
+            handleException(he);
+            throw he;
+        }
+        finally{
+        getSesion().close();
+        }
+         return !offerer.isEmpty();
+    }
 }
