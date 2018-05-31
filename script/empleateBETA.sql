@@ -27,15 +27,14 @@ CREATE TABLE Login (
 CREATE TABLE Manager (
   idManager INT NOT NULL AUTO_INCREMENT,
   email VARCHAR(45),
-  login INT NOT NULL,
+  login INT NOT NULL UNIQUE,
   PRIMARY KEY (idManager),
   CONSTRAINT fkManager FOREIGN KEY (login) REFERENCES Login(idLogin));
-
+  
 
 -- -----------------------------------------------------
 -- Table Company
 -- -----------------------------------------------------
-
 
 CREATE TABLE Company (
   idCompany INT NOT NULL  AUTO_INCREMENT,
@@ -46,7 +45,8 @@ CREATE TABLE Company (
   location_X double,
   location_Y double,
   address VARCHAR(45) NULL,
-  login INT NOT NULL,
+  login INT NOT NULL UNIQUE,
+  active INT,
   PRIMARY KEY (idCompany),
   CONSTRAINT fkCompany FOREIGN KEY (login) REFERENCES Login(idLogin));
 
@@ -56,6 +56,7 @@ CREATE TABLE Company (
 -- -----------------------------------------------------
 
 
+
 CREATE TABLE Offerer( 
   idOfferer INT NOT NULL AUTO_INCREMENT,
   name_offerer VARCHAR(45) NULL,
@@ -63,8 +64,10 @@ CREATE TABLE Offerer(
   nationality VARCHAR(45) NULL,
   email VARCHAR(45) NULL,
   phone VARCHAR(45) NULL,
+  location_X double,
+  location_Y double,
   residence VARCHAR(45) NULL,
-  login INT NOT NULL,
+  login INT NOT NULL UNIQUE,
   PRIMARY KEY (idOfferer),
    CONSTRAINT fkOfferer FOREIGN KEY (login) REFERENCES Login(idLogin));
 
@@ -99,11 +102,12 @@ CREATE TABLE Category (
   idCategory INT NOT NULL AUTO_INCREMENT,
   name_Category VARCHAR(45) NULL,
   parentCategory INT NULL,
+  isRoot INT NOT NULL,
+  isDad INT NOT NULL,
   PRIMARY KEY (idCategory),
   CONSTRAINT fk_Category_Category1
     FOREIGN KEY (parentCategory)
     REFERENCES Category (idCategory));
-
 
 -- -----------------------------------------------------
 -- Table jobCategory
@@ -154,12 +158,12 @@ insert into Login(username,password,type_log,enable) values ('andres_G','user001
 insert into Login(username,password,type_log,enable) values ('spidyxD','user002','offerer',1);
  
  insert into Manager (email,login) values ('BDA@system.com',1);
- 
- insert into Company (name_company,email,phone,description,location_X,location_Y,address,login) values('ICODER','ICODER.COM','123456','KKKJJJJ',100.96,93.58,'',2);
- insert into Company (name_company,email,phone,description,location_X,location_Y,address,login) values('ICAFE','ICAFE.COM','2651556','CVDVEDVF',58.15,74.26,'',3);
- insert into Company (name_company,email,phone,description,location_X,location_Y,address,login) values('INTEL','INTEL.COM','1274513456','CDVGFD',89.25,24.36,'',4);
- insert into Company (name_company,email,phone,description,location_X,location_Y,address,login) values('HP','HP.COM','51165151','ERFVVD',561.58,15.36,'',5);
- insert into Company (name_company,email,phone,description,location_X,location_Y,address,login) values ('SAMSUNG','samsung.com','123456','Instituto del Cafe',835.36,58.12,'',6) ;
+  
+ insert into Company (name_company,email,phone,description,location_X,location_Y,address,login) values('ICODER','ICODER.COM','123456','Deportes',100.96,93.58,'',2);
+ insert into Company (name_company,email,phone,description,location_X,location_Y,address,login) values('ICAFE','ICAFE.COM','2651556','Invs. Cafe',58.15,74.26,'',3);
+ insert into Company (name_company,email,phone,description,location_X,location_Y,address,login) values('INTEL','INTEL.COM','1274513456','Microproce',89.25,24.36,'',4);
+ insert into Company (name_company,email,phone,description,location_X,location_Y,address,login) values('HP','HP.COM','51165151','Servicios Infor',561.58,15.36,'',5);
+ insert into Company (name_company,email,phone,description,location_X,location_Y,address,login) values ('SAMSUNG','samsung.com','123456','Tecnologia',835.36,58.12,'',6) ;
  insert into Company (name_company,email,phone,description,location_X,location_Y,address,login) values ('Municipalidad','muni@gmail.com','789456','MunicipalidadHeredia',45.36,12.45,'',7) ;
  
 update Company set address ='SABANA' where idCompany = 6;
@@ -168,6 +172,13 @@ update Company set address ='LAGUNILLA' where idCompany = 3;
 update Company set address ='SANTA CECILIA' where idCompany = 4;
 update Company set address ='HEREDIA' where idCompany = 2;
 update Company set address ='BARVA' where idCompany = 1;
+
+update Company set active = 1 where idCompany = 6;
+update Company set active = 1 where idCompany = 5;
+update Company set active = 1 where idCompany = 3;
+update Company set active = 1 where idCompany = 4;
+update Company set active = 0 where idCompany = 2;
+update Company set active = 0 where idCompany = 1;
 
 update Company set location_X = 9.9340834 where idCompany = 1; -- ICODER
 update Company set location_Y = -84.1006278 where idCompany = 1;
@@ -187,8 +198,6 @@ update Company set location_Y = -84.1560109 where idCompany = 5;
 update Company set location_X = 9.9989587 where idCompany = 6; -- MUNICIPALIDAD
 update Company set location_Y = -84.1166156 where idCompany = 6;
 
-
- 
 insert into Job (name_Job, description_Job,salary, type_Job, comp, status_Job) values('Designer','Designing is life',350000,'private',1, 1); 
 insert into Job (name_Job, description_Job,salary, type_Job, comp, status_Job) values('Programmer','Junior Java',250000,'public',1,1);
 insert into Job (name_Job, description_Job,salary, type_Job, comp, status_Job) values('DBA','Do not touch my data base',450000,'private',2, 1); 
@@ -197,27 +206,29 @@ insert into Job (name_Job, description_Job,salary, type_Job, comp, status_Job) v
 insert into Job (name_Job, description_Job,salary, type_Job, comp, status_Job) values('Manager','loquesea Java',3750000,'public',3,1);
 
 
-insert into Offerer (name_offerer, lastname, nationality, phone, email, residence,login) values ('Andres','Gutierrez','CR','61688613','a@gmail.com','Heredia',8);
-insert into Offerer (name_offerer, lastname, nationality, phone, email, residence,login) values ('Roger','Amador','CR','83656107','r@gmail.com','Desamparados',9);
+insert into Offerer (name_offerer, lastname, nationality, phone, email,location_X,location_Y, residence,login) values ('Andres','Gutierrez','CR','61688613','a@gmail.com',100.96,93.58,'Heredia',8);
+insert into Offerer (name_offerer, lastname, nationality, phone, email,location_X,location_Y, residence,login) values ('Roger','Amador','CR','83656107','r@gmail.com',100.96,93.58,'Desamparados',9);
 
 
 
-insert into Category (name_Category) values('PROGRAMACION');    -- 1                   
-insert into Category (name_Category) values('Diseño WEB');    -- 2                      
-insert into Category (name_Category) values('REDES');        -- 3                      
-insert into Category (name_Category) values('Manager');     -- 4                        
-insert into Category (name_Category) values('Support Manintenence');   -- 5             
-insert into Category (parentCategory,name_Category) values(1,'JAVA');    -- 6           
-insert into Category (parentCategory,name_Category) values(1,'C++');	-- 7            
-insert into Category (parentCategory,name_Category) values(2,'CSS');      -- 8          
-insert into Category (parentCategory,name_Category) values(3,'CISCO');    -- 9          
-insert into Category (parentCategory,name_Category) values(6,'JSON');      -- 10         
-insert into Category (parentCategory,name_Category) values(8,'BOOTSTRAP');       -- 11    
-insert into Category (parentCategory,name_Category) values(8,'MATERIALIZE');    -- 12    
-insert into Category (parentCategory,name_Category) values(4,'DBA');       -- 13            
-insert into Category (parentCategory,name_Category) values(5,'support tecnician');	-- 14
-insert into Category (parentCategory,name_Category) values(4,'administer');       -- 15	
-insert into Category (parentCategory,name_Category) values(1,'AJAX');  -- 16 
+
+insert into Category (name_Category,isRoot,isDad) values('PROGRAMACION',1,1);    -- 1                   
+insert into Category (name_Category,isRoot,isDad) values('Diseño WEB',1,1);    -- 2                      
+insert into Category (name_Category,isRoot,isDad) values('REDES',1,1);        -- 3                      
+insert into Category (name_Category,isRoot,isDad) values('Manager',1,1);     -- 4                        
+insert into Category (name_Category,isRoot,isDad) values('Support Manintenence',1,1);   -- 5             
+insert into Category (parentCategory,name_Category,isRoot,isDad) values(1,'JAVA',0,1);    -- 6           
+insert into Category (parentCategory,name_Category,isRoot,isDad) values(1,'C++',0,0);  -- 7            
+insert into Category (parentCategory,name_Category,isRoot,isDad) values(2,'CSS',0,1);      -- 8          
+insert into Category (parentCategory,name_Category,isRoot,isDad) values(3,'CISCO',0,0);    -- 9          
+insert into Category (parentCategory,name_Category,isRoot,isDad) values(6,'JSON',0,0);      -- 10         
+insert into Category (parentCategory,name_Category,isRoot,isDad) values(8,'BOOTSTRAP',0,0);       -- 11    
+insert into Category (parentCategory,name_Category,isRoot,isDad) values(8,'MATERIALIZE',0,0);    -- 12    
+insert into Category (parentCategory,name_Category,isRoot,isDad) values(4,'DBA',0,0);       -- 13            
+insert into Category (parentCategory,name_Category,isRoot,isDad) values(5,'support tecnician',0,0);  -- 14
+insert into Category (parentCategory,name_Category,isRoot,isDad) values(4,'administer',0,0);       -- 15 
+insert into Category (parentCategory,name_Category,isRoot,isDad) values(1,'AJAX',0,0); -- 16 
+
 
 
 
@@ -238,5 +249,6 @@ insert into offerCategory (offer, cat, percentage)values(2,7,90);
 insert into offerCategory (offer, cat, percentage)values(2,6,90);
 insert into offerCategory (offer, cat, percentage)values(2,16,90);
 insert into offerCategory (offer, cat, percentage)values(2,10,90);
+
 
 
