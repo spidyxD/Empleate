@@ -63,7 +63,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>consultasEmpleate</servlet-name>
-        <url-pattern>/desplegar</url-pattern>
+        <url-pattern>/loadHistory</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Register</servlet-name>

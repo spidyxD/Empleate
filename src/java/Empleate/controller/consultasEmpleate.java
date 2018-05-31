@@ -5,14 +5,9 @@
  */
 package Empleate.controller;
 import Empleate.domain.Category;
-import Empleate.domain.Dad;
-import Empleate.domain.Porcentaje;
 import Empleate.logica.CategoryModel;
 import Empleate.logica.JobModel;
-import com.google.gson.Gson;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +23,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Addiel
  */
-@WebServlet(name = "consultasEmpleate", urlPatterns = {"consultasEmpleateJobsByCategory", "/iniciar", "consultasEmpleateAllJobsByCategory", "/consultarOffrers", "/desplegar"})
+@WebServlet(name = "consultasEmpleate", urlPatterns = {"consultasEmpleateJobsByCategory", "/iniciar", "consultasEmpleateAllJobsByCategory", "/consultarOffrers", "/loadHistory"})
 public class consultasEmpleate extends HttpServlet {
 
     /**
@@ -62,8 +57,8 @@ public class consultasEmpleate extends HttpServlet {
             case "/consultarOffrers":
                 this.doSearchOfferers(request,response);
                 break;
-            case "/desplegar"://sirve para desplegar las categorias deseadas(como si fuera el publico)
-                this.doDesplegar(request, response);
+            case "/loadHistory"://sirve para desplegar las categorias deseadas(como si fuera el publico)
+                this.saveHistory(request, response);
                 break;
             case "/iniciar"://al inicio de la busqueda
                 this.iniciar(request, response);
@@ -102,7 +97,6 @@ public class consultasEmpleate extends HttpServlet {
             s.setAttribute("resumen", resumen);
             s.setAttribute("resumenCompleto", resumenCompleto);
             request.setAttribute("cat", cat);
-            request.setAttribute("root", roots);
             request.getRequestDispatcher("categoryTree.jsp").
                     forward(request, response);
         } catch (Exception e) {
@@ -111,41 +105,8 @@ public class consultasEmpleate extends HttpServlet {
             request.getRequestDispatcher("Error.jsp").forward(request, response);
         }
     }
-    
-    private void doDesplegar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            HttpSession s = request.getSession(true);
-            cat = new ArrayList<>();
-             BufferedReader reader = request.getReader();
-             PrintWriter out = response.getWriter();
-             Gson gson = new Gson();
-             //Dad d = gson.fromJson(reader, Dad.class);
-             String ex1 = request.getParameter("papa");
-            // System.out.println(ex1);     
-          
-            cat = CategoryModel.instance().giveChilds(Integer.parseInt(ex1));
-            Category cth = CategoryModel.instance().findCategoryById(Integer.parseInt(ex1));
-            if (CategoryModel.instance().giveChilds(Integer.parseInt(ex1)).isEmpty()) {
-                //Porcentaje p = gson.fromJson(reader, Porcentaje.class);
-                String ex2 = request.getParameter("percent"); 
-                //System.out.println(ex2);
-                resumen.add(cth);// solo add hojas
-                resumenCompleto.put(cth,ex2);
-                response.setContentType("application/json; charset=UTF-8");
-                out.write(gson.toJson(cat));  
-                response.setStatus(200);
-            }
-            response.setContentType("application/json; charset=UTF-8");
-            out.write(gson.toJson(resumen));   
-            response.setStatus(200);
-        } catch (Exception e) {
-            String error = e.getMessage();           
-            resumen.clear();
-            resumenCompleto.clear();
-            response.setStatus(401);
-        }
-    
-
+     private void saveHistory(HttpServletRequest request, HttpServletResponse response) {
+        
     }
 
     private void doSearchPublicJobsByCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -238,4 +199,5 @@ public class consultasEmpleate extends HttpServlet {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+   
 }
