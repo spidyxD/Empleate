@@ -128,5 +128,3 @@
      }
    $(loaded);        
 </script>
-
-

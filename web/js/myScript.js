@@ -359,3 +359,10 @@ function autoplay() {
                 window.alert("Datos vacios, por favor ingrese datos validos");
             }
       }
+      
+      // FUNCIONES NECESARIAS PARA LA BUSQUEDAS POR CATEGORIAS, UBICACION Y PORCENTAJE!
+      function addElementToSearch(){
+          
+          
+      }
+      

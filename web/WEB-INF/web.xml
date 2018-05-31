@@ -32,11 +32,11 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>Register</servlet-name>
-        <url-pattern>/RegistCompany</url-pattern>
+        <url-pattern>/RegistroCompany</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Register</servlet-name>
-        <url-pattern>/RegistOffer</url-pattern>
+        <url-pattern>/RegistroOffer</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Register</servlet-name>
