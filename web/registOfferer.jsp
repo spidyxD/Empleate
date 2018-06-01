@@ -112,7 +112,7 @@
                 </form>
             </div>
         </div>
-        <div class="error">
+        <div class="error" id="error">
             <%if (error != null) {%>
             <p><%=error%></p>
             <%}%>
