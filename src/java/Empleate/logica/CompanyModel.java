@@ -96,4 +96,11 @@ public class CompanyModel {
     public boolean findByLogin(int idL) {
         return compDAO.findByIdLogin(idL);
     }
+    
+    
+    //Para verificar 
+    
+    public void validar(Company c){
+    
+    }
 }
