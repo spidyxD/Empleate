@@ -157,4 +157,58 @@ public class offererDAO extends HibernateUtil implements IBaseDAO <Offerer,Integ
         }
          return !offerer.isEmpty();
     }
+        public List<Offerer> listActive() {
+        List<Offerer> listOff = new ArrayList<>();
+        String sql = "select idOfferer,name_offerer,lastname,"
+                + "nationality,email,phone,residence,location_X,location_Y,residence,login,active"
+                + " from offerer where "
+                 + "active =  " + 1 + ";";
+        try {
+            operationStart();
+            listOff = getSesion().createSQLQuery(sql).addEntity(Offerer.class).list();
+            getTransac().commit();
+        } catch (HibernateException he) {
+            handleException(he);
+            throw he;
+        } finally {
+            getSesion().close();
+        }
+        return listOff;
+    }
+
+    public List<Offerer> listNOActive() {
+        List<Offerer> listOff = new ArrayList<>();
+        String sql = "select idOfferer,name_offerer,lastname,"
+                + "nationality,email,phone,residence,location_X,location_Y,residence,login,active"
+                + " from offerer where "
+                + "active =  " + 0 + ";";
+        try {
+            operationStart();
+            listOff = getSesion().createSQLQuery(sql).addEntity(Offerer.class).list();
+            getTransac().commit();
+        } catch (HibernateException he) {
+            handleException(he);
+            throw he;
+        } finally {
+            getSesion().close();
+        }
+        return listOff;
+    }
+     public void doUpdateState(String email) {
+        try{
+            operationStart();
+            String sql = "update offerer set active = 1"+
+                    " where email = "+"'"+email+"'"+";";
+          getSesion().createSQLQuery(sql).executeUpdate();
+           //Offerer of = off.get(0);          
+            getTransac().commit();
+            getSesion().flush();
+        }catch(HibernateException he){
+        handleException(he);
+            throw he;
+        }
+         finally{
+        getSesion().close();
+        }
+    }
 }

@@ -96,4 +96,7 @@ public class CompanyModel {
     public boolean findByLogin(int idL) {
         return compDAO.findByIdLogin(idL);
     }
+     public void updateOfferer(String email){
+        compDAO.doUpdateState(email);
+    }
 }

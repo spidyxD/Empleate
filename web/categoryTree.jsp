@@ -177,7 +177,7 @@
                              
                               <%List<Category>help= CategoryModel.instance().giveChilds(auxR.getIdCategory());%>
                             <%for(Category c: help){%> 
-                            <%if(c.getIsDad() == 0 && c.getIsRoot() == 0){%>
+                            <%if(c.getIsDad() == 0){%>
                             <%countSecond = c.getIdCategory();%>
                             <%String idS= "porcentaje_"+countSecond;%> 
                             <div class="collapsible-body">        
@@ -198,7 +198,7 @@
                             </li> 
                                 <%}%>
                                <%}%> 
-                            
+                                
                             
                             
                             

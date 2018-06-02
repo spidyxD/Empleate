@@ -67,3 +67,180 @@ function iniciarTodo() {
 }
 
 //window.onload = iniciarTodo;
+function ocultarTabla() {
+        $("#miTabla").hide();
+        $("#miTabla2").hide();
+    }
+    function empActivas() {
+        $("#listado").empty();
+        opcion = {respuesta: 1};
+        data = new FormData();
+        data.append("opcion", JSON.stringify(opcion));
+        $.ajax({type: "POST",
+            url: "ListarEmpr",
+            data: data,
+            processData: false,
+            contentType: false,
+            dataType: "json",
+            success:
+                    function (obj) {
+                        llenarActivos(obj);
+                    },
+            error: function (status) {
+                window.alert("Error");
+                console.log(status);
+            }
+        });
+    }
+
+    function empNOActivas() {
+        $("#listado").empty();
+        opcion = {respuesta: 0};
+        data = new FormData();
+        data.append("opcion", JSON.stringify(opcion));
+        $.ajax({type: "POST",
+            url: "ListarEmpr",
+            data: data,
+            processData: false,
+            contentType: false,
+            dataType: "json",
+            success:
+                    function (obj) {
+                        llenarNOActivos(obj);
+                    },
+            error: function (status) {
+                window.alert("Error");
+                console.log(status);
+            }
+        });
+    }
+
+
+    
+    function showTableComp(){
+        $("miTabla").show();     
+    }
+   
+    
+    //para los activar cuentas de oferente
+    function offActivas() {
+        $("#listado2").empty();
+        opcion = {respuesta: 1};
+        data = new FormData();
+        data.append("opcion", JSON.stringify(opcion));
+        $.ajax({type: "POST",
+            url: "listarOferentes",
+            data: data,
+            processData: false,
+            contentType: false,
+            dataType: "json",
+            success:
+                    function (obj) {
+                        llenarActivosOFF(obj);
+                    },
+            error: function (status) {
+                window.alert("Error");
+                console.log(status);
+            }
+        });
+    }
+
+    function offNOActivas() {
+        $("#listado2").empty();
+        opcion = {respuesta: 0};
+        data = new FormData();
+        data.append("opcion", JSON.stringify(opcion));
+        $.ajax({type: "POST",
+            url: "listarOferentes",
+            data: data,
+            processData: false,
+            contentType: false,
+            dataType: "json",
+            success:
+                    function (obj) {
+                        llenarNOActivosOFF(obj);
+                    },
+            error: function (status) {
+                window.alert("Error");
+                console.log(status);
+            }
+        });
+    }
+    
+    //PARA ACTUALIZAR EL ESTADO DE ACTIVACION DE LAS CUENTAS
+    function activeComp(){
+         var result = [];
+            var i = 0;
+            // para cada checkbox "chequeado"
+            $("input[type=checkbox]:checked").each(function(){
+              // buscamos el td más cercano en el DOM hacia "arriba"
+              // luego encontramos los td adyacentes a este
+              $(this).closest('td').next().next().next().next().each(function(){
+                // obtenemos el texto del td 
+                result[i] = $(this).text();
+                ++i;
+              });
+            });
+        opcion = {respuesta: 1};
+        data=new FormData();
+        data.append("emails",JSON.stringify(result));
+        data.append("opcion", JSON.stringify(opcion));
+        $.ajax({type: "POST", 
+        url:"activarAC", 
+        data: data,
+        dataType:"json",
+        processData: false,
+        contentType: false,  
+        success: 
+          function(obj){
+              console.log("success");
+              window.alert(obj.toString());
+              location.href = "visMan?idMan="+1;
+          },
+        error: function(status){
+                window.alert("Error");
+                console.log(status);
+          }  
+           });   
+         
+    }
+    
+     function activeOff(){
+          var result = [];
+            var i = 0;
+            // para cada checkbox "chequeado"
+            $("input[type=checkbox]:checked").each(function(){
+              // buscamos el td más cercano en el DOM hacia "arriba"
+              // luego encontramos los td adyacentes a este
+               $(this).closest('td').next().next().next().each(function(){
+                // obtenemos el texto del td 
+                result[i] = $(this).text();
+                ++i;
+              });
+            });
+      opcion = {respuesta: 0};
+        data=new FormData();
+        data.append("emails",JSON.stringify(result));
+        data.append("opcion", JSON.stringify(opcion));
+         $.ajax({type: "POST", 
+        url:"activarAC", 
+        data: data,
+        dataType:"json",
+        processData: false,
+        contentType: false,      
+        success: 
+          function(obj){
+              console.log("success");
+               window.alert(obj.toString());
+              location.href = "visMan?idMan="+1;
+          },
+        error: function(status){
+                window.alert("Error");
+                console.log(status);
+          }                    
+      });           
+           
+
+    }
+    
+  

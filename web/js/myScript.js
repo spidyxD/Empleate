@@ -72,7 +72,8 @@ function autoplay() {
           },
         error:
             function(status){
-               console.log("error"+dad.dady);
+                window.alert("Error");
+                console.log(status);
           }                    
       });    
     }
@@ -147,7 +148,8 @@ function autoplay() {
               location.href = "visPubOff?idOf="+obj.idOfferer;
           },
         error: function(status){
-               console.log("error"+offerer.nameOfferer);
+                window.alert("Error");
+                console.log(status);
           }  
            });   
     }
@@ -203,7 +205,8 @@ function autoplay() {
               location.href = "visPubCom?idCom="+obj.idCompany;
           },
         error: function(status){
-               console.log("error"+company.nameCompany);
+                window.alert("Error");
+                console.log(status);
           }                    
       });    
     }
@@ -232,7 +235,8 @@ function autoplay() {
                      location.href ="Home";
                 } ,
                 error: function(status){
-                     console.log("Error " + obj.nameOfferer);
+                     window.alert("Error");
+                    console.log(status);
                 }         
             });
                 
@@ -311,7 +315,8 @@ function autoplay() {
               location.href = "Home";
           },
         error: function(status){
-               console.log("error"+company.nameCompany);
+                window.alert("Error");
+                 console.log(status);
           }                    
       });    
     }

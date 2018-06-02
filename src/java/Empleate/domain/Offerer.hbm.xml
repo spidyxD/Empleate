@@ -35,6 +35,9 @@
         <property name="login" type="int">
             <column name="login"/>
         </property>
+         <property name="active" type="int">
+            <column name="active"/>
+        </property>
         <set name="offercategories" table="offercategory" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="offer" not-null="true" />

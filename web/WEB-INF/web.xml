@@ -121,6 +121,10 @@
         <url-pattern>/ListarEmpr</url-pattern>
     </servlet-mapping> 
     <servlet-mapping>
+        <servlet-name>Vistas</servlet-name>
+        <url-pattern>/activarAC</url-pattern>
+    </servlet-mapping> 
+    <servlet-mapping>
         <servlet-name>updateInf</servlet-name>
         <url-pattern>/updateInf</url-pattern>
     </servlet-mapping>

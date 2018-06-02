@@ -6,7 +6,9 @@
 package Empleate.test;
 
 import Empleate.domain.Company;
+import Empleate.domain.Offerer;
 import Empleate.logica.CompanyModel;
+import Empleate.logica.OffererModel;
 import java.util.ArrayList;
 
 
@@ -16,9 +18,9 @@ import java.util.ArrayList;
  */
 public class TEST2 {
     public static void main(String[] arg) throws Exception{
-       ArrayList<Company> ls = (ArrayList<Company>) CompanyModel.instance().findNOActive();
+       ArrayList<Offerer> ls = (ArrayList<Offerer>) OffererModel.instance().findActive();
        for (int i = 0; i < ls.size(); i++) {
-            System.out.println(ls.get(i).getNameCompany());
+            System.out.println(ls.get(i).getNameOfferer());
         }
     }
     

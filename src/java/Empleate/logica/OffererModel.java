@@ -6,8 +6,8 @@
 package Empleate.logica;
 import Empleate.dao.offererDAO;
 import Empleate.domain.Offerer;
-import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.List;
 /**
  *
  * @author Addiel
@@ -52,6 +52,24 @@ public class OffererModel {
     public boolean findByLogin(int idL){
         return offDAO.findByIdLogin(idL);
     }
+      public List<Offerer> findActive() throws Exception {
+        try {
+            return offDAO.listActive();
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    public List<Offerer> findNOActive() throws Exception {
+        try {
+            return offDAO.listNOActive();
+        } catch (Exception e) {
+        }
+        return null;
+    }
     
+    public void updateOfferer(String email){
+        offDAO.doUpdateState(email);
+    }
 }//fin clase
 

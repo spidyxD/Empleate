@@ -138,6 +138,7 @@ public class Register extends HttpServlet {
             l = LoginModel.instance().findLoginByData(l.getUsername(), l.getPassword());
             
             c.setLogin(LoginModel.instance().findLoginByData(l.getUsername(), l.getPassword()).getIdLogin());
+            c.setActive(0);
             CompanyModel.instance().addCompany(c);
             if(CompanyModel.instance().findByLogin(LoginModel.instance().findLoginByData(l.getUsername(), l.getPassword()).getIdLogin())){
                 response.setContentType("application/json; charset=UTF-8");
@@ -184,6 +185,7 @@ public class Register extends HttpServlet {
             
            
             offerer.setLogin(LoginModel.instance().findLoginByData(login.getUsername(), login.getPassword()).getIdLogin());
+            offerer.setActive(0);
             OffererModel.instance().addOfferer(offerer);
             
             if(OffererModel.instance().findByLogin(LoginModel.instance().findLoginByData(login.getUsername(), login.getPassword()).getIdLogin())){              

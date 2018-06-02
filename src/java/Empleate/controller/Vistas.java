@@ -22,12 +22,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.util.ArrayList;
@@ -44,7 +40,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Andrés Gutiérrez
  */
-@WebServlet(name = "Vistas", urlPatterns = {"/listarOferentes", "/visPubOff", "/visPubCom", "/vistMan", "/localizar"})
+@WebServlet(name = "Vistas", urlPatterns = {"/listarOferentes", "/visPubOff", "/visPubCom", "/vistMan", "/localizar","/activarAC"})
 @MultipartConfig
 public class Vistas extends HttpServlet {
 
@@ -82,21 +78,36 @@ public class Vistas extends HttpServlet {
                 case "/ListarEmpr":
                     this.doListarEmpresa(request, response);
                     break;
+                case "/activarAC": 
+                  this.doActiveAcount(request, response);
+                    break;
             }
         }
     }
 
     public void doListarOferentes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+       
         try {
-            List<Offerer> oferentesLs = OffererModel.instance().findAll();
-            List<Company> companyLs = CompanyModel.instance().findAllCompanies();
-            request.setAttribute("oferentesLS", oferentesLs);
-            request.setAttribute("companyLs", companyLs);
-            request.getRequestDispatcher("listarOfferers.jsp").forward(request, response);
+            Reader opcionReader = new BufferedReader(new InputStreamReader(request.getPart("opcion").getInputStream()));
+            Gson gson2 = new Gson();
+            Opcion op = gson2.fromJson(opcionReader, Opcion.class);
+            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create(); //?? cual es la diferencia con el otro
+            PrintWriter out = response.getWriter();
+            ArrayList<Offerer> ls = new ArrayList<>();
+            java.lang.reflect.Type listType = new TypeToken<ArrayList<Offerer>>() {
+            }.getType();
+            if (op.getRespuesta() == 1) { //listar empresas activas
+                ls = (ArrayList<Offerer>) OffererModel.instance().findActive();
+            } else {
+                ls = (ArrayList<Offerer>) OffererModel.instance().findNOActive();
+            }
+           String g = ls.get(0).getNameOfferer();
+            System.out.println(g);
+            response.setContentType("application/json; charset=UTF-8");
+            out.write(gson.toJson(ls, listType));
+            response.setStatus(200); // ok with content
         } catch (Exception e) {
-            String error = e.getMessage();
-            request.setAttribute("error", error);
-            request.getRequestDispatcher("Error.jsp").forward(request, response);
+            response.setStatus(401); //Bad request
         }
     }
 
@@ -231,5 +242,37 @@ public class Vistas extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private void doActiveAcount(HttpServletRequest request, HttpServletResponse response) {
+         try {
+            Reader opcionReader = new BufferedReader(new InputStreamReader(request.getPart("opcion").getInputStream()));
+            Reader emailsReader = new BufferedReader(new InputStreamReader(request.getPart("emails").getInputStream()));
+            Gson gson = new Gson();
+            Opcion op = gson.fromJson(opcionReader, Opcion.class);          
+            
+            PrintWriter out = response.getWriter();
+            List<String> emails = gson.fromJson(emailsReader, List.class);
+            String e = emails.get(0);
+            System.out.println(e);
+            
+            int loquesea = op.getRespuesta();
+             System.out.println(loquesea);
+            if (op.getRespuesta() == 0) { //listar empresas activas
+                emails.forEach((s) -> {
+                    OffererModel.instance().updateOfferer(s);
+                });
+            } else {
+                 emails.forEach((s) -> {
+               CompanyModel.instance().updateOfferer(s);
+                });
+            }
+           
+            response.setContentType("application/json; charset=UTF-8");
+            out.write(gson.toJson("Cuentas activadas", String.class));
+            response.setStatus(200); // ok with content
+        } catch (Exception e) {
+            response.setStatus(401); //Bad request
+        }
+    }
 
 }
