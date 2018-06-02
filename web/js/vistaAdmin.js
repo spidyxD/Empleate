@@ -109,7 +109,7 @@ function ocultarTabla() {
                         llenarNOActivos(obj);
                     },
             error: function (status) {
-                window.alert("Error");
+                window.alert("No se han encontrado empresar sin activar o ha ocurrido un error");
                 console.log(status);
             }
         });
@@ -139,7 +139,7 @@ function ocultarTabla() {
                         llenarActivosOFF(obj);
                     },
             error: function (status) {
-                window.alert("Error");
+                window.alert("error");
                 console.log(status);
             }
         });
@@ -161,7 +161,7 @@ function ocultarTabla() {
                         llenarNOActivosOFF(obj);
                     },
             error: function (status) {
-                window.alert("Error");
+                window.alert("No se han encontrado oferentes sin activar o ha ocurrido un error");
                 console.log(status);
             }
         });
