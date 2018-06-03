@@ -110,6 +110,7 @@
         .select-wrapper{
             width: 50%!important;
         }
+        
     </style>
     </head>
     <body>
@@ -150,10 +151,8 @@
                              <%aux2 = cat.get(i);%>
                                 </div>
                              <%if(!CategoryModel.instance().giveChilds(aux2.getIdCategory()).isEmpty()){%>
-                                <div class="collapsible-body"> 
-                                   
+                                <div class="collapsible-body">                                   
                                     <%for(Category c:CategoryModel.instance().giveChilds(aux2.getIdCategory())){%>
-                                    <input type="checkbox" id='checkC'/>
                                     <a onclick="buildReview()" id="isSon" data-value="<%=c.getIdCategory() %>"><i class="material-icons">fiber_manual_record</i><%=c.getNameCategory() %></a>                                                                  
                                                <select id="<%=idF%>" value="${item.value}">
                                                  <option value="" disabled selected>seleccione su nivel</option>
@@ -181,7 +180,6 @@
                             <%countSecond = c.getIdCategory();%>
                             <%String idS= "porcentaje_"+countSecond;%> 
                             <div class="collapsible-body">
-                                <input type="checkbox" id='checkC'/>
                                 <a onclick="buildReview()" id="isSon" data-value="<%=aux.getIdCategory()%>"><i class="material-icons">fiber_manual_record</i><%=c.getNameCategory() %></a>                            
                                 <select id="<%=idS%>" value="${item.value}">
                                   <option value="" disabled selected>seleccione su nivel</option>
@@ -192,7 +190,7 @@
                                   <option value="85">85%</option>
                                   <option value="90">90%</option>
                                   <option value="100">100%</option>
-                                </select><p><label><input type=\"checkbox\" id='checkC'/><span></span></label></p>
+                                </select>
                                      
                             </div>
                                <%}%>   
