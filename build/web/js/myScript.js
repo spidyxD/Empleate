@@ -218,9 +218,10 @@ function autoplay() {
     // FUNCIONES NECESARIAS PARA registro de oferentes y SUBIR ARCHIVOS PDF 
         
         function uploadOfferer_CV() {
+            if($("#pdf").val().length<1){window.alert("NO CV ADJUNTO");return;}
            offerer = {nameOfferer:$("#nombre").val(),lastname:$("#apellido").val(),nationality:$("#nacionalidad").val(),email:$("#email").val(),phone:$("#telefono").val()
               ,location_X:$("#localeX").val(),location_Y:$("#localeY").val(),residence:$("#direccion").val()};
-             login = {username:$("#userN").val(),password:$("#keyO").val()};    
+             login = {username:$("#userNa").val(),password:$("#keyO").val()};    
             data=new FormData();
             data.append("offerer", JSON.stringify(offerer));
             data.append("login", JSON.stringify(login));
@@ -237,9 +238,8 @@ function autoplay() {
                      window.alert("Te damos la bienvenida a Empleate "+obj.nameOfferer+" !");
                      location.href ="Home";
                 } ,
-                error: function(status){
-                     window.alert("Error");
-                    console.log(status);
+                error: function(jqXHR, textStatus, errorThrown){
+                    window.alert(errorThrown);
                 }         
             });
                 
@@ -251,8 +251,8 @@ function autoplay() {
         var telefono = $("#telefono");
         var email = $("#email");
         var address = $("#direccion");
-        var user = $("#userN");
-        var key = $("#key");
+        var user = $("#userNa");
+        var key = $("#keyO");
             var error=false;
             $("#formularioOff input").removeClass("invalid");
             if (nombre.val().length===0){
@@ -283,11 +283,11 @@ function autoplay() {
             }
              if (user.val().length===0){
                     user.addClass("invalid");
-                    error=true;
+                    error=true;console.log("1");
             }
              if (key.val().length===0){
                     key.addClass("invalid");
-                    error=true;
+                    error=true;console.log("2");
             }
             if (error){event.preventDefault();
                 window.alert("Datos vacios, por favor ingrese datos validos");
@@ -317,10 +317,9 @@ function autoplay() {
                window.alert("Le damos la bienvenida a la empresa "+obj.nameCompany+" a la comunidad de Empleate!");
               location.href = "Home";
           },
-        error: function(status){
-                window.alert("Error");
-                 console.log(status);
-          }                    
+        error: function (jqXHR, textStatus, errorThrown) {
+            window.alert(errorThrown);
+        }           
       });    
     }
     

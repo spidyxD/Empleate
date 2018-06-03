@@ -72,7 +72,7 @@
                     <div class="row">
 
                         <div class="input-field col s6">
-                            <input  name="username" id="userN" type="text" class="validate" value="">
+                            <input  name="username" id="userNa" type="text" class="validate" value="">
                             <label for="username">Username</label>
                         </div>
                         <div class="input-field col s6">
