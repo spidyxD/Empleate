@@ -40,7 +40,7 @@ public class CompanyModel {
 
     public void updateCompany(Company c) throws Exception {
         try {
-            compDAO.merge(c);
+            compDAO.doUpdate(c);
         } catch (Exception e) {
         }
 
@@ -95,5 +95,8 @@ public class CompanyModel {
 
     public boolean findByLogin(int idL) {
         return compDAO.findByIdLogin(idL);
+    }
+     public void updateOfferer(String email){
+        compDAO.doUpdateState(email);
     }
 }

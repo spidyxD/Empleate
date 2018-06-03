@@ -9,6 +9,7 @@
         <meta charset="utf-8">
         <title>Empleate</title>
         <%@ include file="includesHead.jspf" %>
+        <script type="text/javascript" src="js/myScript.js"></script><!--codigo js para inicializar js-->
     </head>
     <body>
         <% String[] images = {"images/1.jpg","images/2.jpg","images/3.jpg","images/4.jpg","images/5.jpg"};%>

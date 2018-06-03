@@ -194,4 +194,21 @@ public class companyDAO extends HibernateUtil implements IBaseDAO<Company, Integ
         }
         return !company.isEmpty();
     }
+      public void doUpdateState(String email) {
+        try{
+            operationStart();
+            String sql = "update company set active = 1"+
+                    " where email = "+"'"+email+"'"+";";
+          getSesion().createSQLQuery(sql).executeUpdate();
+           //Offerer of = off.get(0);          
+            getTransac().commit();
+            getSesion().flush();
+        }catch(HibernateException he){
+        handleException(he);
+            throw he;
+        }
+         finally{
+        getSesion().close();
+        }
+    }
 }

@@ -152,7 +152,7 @@
                              <%if(!CategoryModel.instance().giveChilds(aux2.getIdCategory()).isEmpty()){%>
                                 <div class="collapsible-body"> 
                                     <%for(Category c:CategoryModel.instance().giveChilds(aux2.getIdCategory())){%>
-                                    <a onclick="addElementToSearch();"><i class="material-icons">fiber_manual_record</i><h2 data-value="<%=c.getIdCategory() %>"><%=c.getNameCategory() %></h2></a>
+                                    <a onclick="buildReview()" id="isSon"><i class="material-icons">fiber_manual_record</i><h2 id="info" data-value="<%=c.getIdCategory() %>"><%=c.getNameCategory() %></h2></a>
                                        
                                                <select id="<%=idF%>" value="${item.value}">
                                                  <option value="" disabled selected>seleccione su nivel</option>
@@ -173,15 +173,14 @@
                         </div>
                         </div>
                         </div>
-                       <% }else{%>
-                             
+                       <% }else{%>               
                               <%List<Category>help= CategoryModel.instance().giveChilds(auxR.getIdCategory());%>
-                            <%for(Category c: help){%> 
-                            <%if(c.getIsDad() == 0 && c.getIsRoot() == 0){%>
+                            <%for(Category c: help){%>                            
+                            <%if(c.getIsDad() == 0){%>
                             <%countSecond = c.getIdCategory();%>
                             <%String idS= "porcentaje_"+countSecond;%> 
                             <div class="collapsible-body">        
-                                <a onclick="addElementToSearch();"><i class="material-icons">fiber_manual_record</i><h3 data-value="<%=aux.getIdCategory()%>"><%=c.getNameCategory() %></h3></a>
+                                <a onclick="buildReview()" id="isSon"><i class="material-icons">fiber_manual_record</i><h2 id="info" data-value="<%=aux.getIdCategory()%>"><%=c.getNameCategory() %></h2></a>
                                
                                 <select id="<%=idS%>" value="${item.value}">
                                   <option value="" disabled selected>seleccione su nivel</option>
@@ -195,13 +194,10 @@
                                 </select>
                                 <label>porcentaje</label>      
                             </div>
-                            </li> 
-                                <%}%>
+                               <%}%>   
+                               
                                <%}%> 
-                            
-                            
-                            
-                            
+                            </li> 
                                 <%}%>
                             <%}%>
                        <%}%>
@@ -214,13 +210,9 @@
   
          <script>
             $(document).ready(function(){
-            $('.collapsible').collapsible();
-            
-          });
-          function buildReview(idCat){
-              
-              
-          }
+            $('.collapsible').collapsible();            
+            });  
+             
         </script>          
         <div class="col s6">
         <div class="container map">
@@ -412,9 +404,10 @@
                 <p><%=j.getNameCategory()%></p>
              <%}%>
             </div>
+           
             
             
-                <h id="log"> <%=login.getUsername()%></h>
+           <h id="log"> <%=login.getUsername()%></h>
    
 <%@ include file="footer.jspf" %>
 

@@ -5,7 +5,9 @@
  */
 package Empleate.dao;
 
+import Empleate.domain.Company;
 import Empleate.domain.Offercategory;
+import Empleate.domain.Offerer;
 import Empleate.utils.HibernateUtil;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -102,5 +104,6 @@ public class offerCategoryDAO extends HibernateUtil implements IBaseDAO <Offerca
         }
     return listOC;
     }
+   
     
 }

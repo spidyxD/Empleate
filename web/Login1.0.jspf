@@ -5,13 +5,13 @@
 <!-- Modal Structure -->
 <div id="Log" class="modal">
     <div class="modal-content">
-        <form action="Login" method="post" class="col s12">
+        <form action="javascript:validateLogin();" method="post" class="col s12">
             <div class="row">
                 <div class= "col s12"><h4>Bienvenido a Empleate</h4></div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input name ="username" id="username" type="text" class="validate">
+                    <input name ="username" id="userN" type="text" class="validate">
                     <label for="username">username</label>
                 </div>
             </div>  
@@ -20,7 +20,7 @@
                     <span class="btn-show-pass">
                     <i class="zmdi zmdi-eye"></i>
                     </span>
-                    <input name="password" id="password" type="password" class="validate">
+                    <input name="password" id="key" type="password" class="validate">
                     <label for="password" color="white">Password</label>
                 </div>
             </div>

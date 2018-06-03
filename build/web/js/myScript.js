@@ -1,4 +1,7 @@
 
+
+
+
 $(document).ready(function(){
     $('.parallax').parallax();
 });
@@ -72,7 +75,8 @@ function autoplay() {
           },
         error:
             function(status){
-               console.log("error"+dad.dady);
+                window.alert("Error");
+                console.log(status);
           }                    
       });    
     }
@@ -130,7 +134,7 @@ function autoplay() {
     }
      function updateOff(){
         offerer = {idOfferer:$("#idOff").data("value"),nameOfferer:$("#nombre").val(),lastname:$("#apellido").val(),nationality:$("#nacionalidad").val(),email:$("#email").val(),phone:$("#telefono").val(),residence:$("#direccion").val()};     
-        login = {idLogin:$("#idLog").data("value"),username:$("#userN").val(),password:$("#key").val()};     
+        login = {idLogin:$("#idLog").data("value"),username:$("#userName").val(),password:$("#keyP").val()};     
         data=new FormData();
         data.append("offerer",JSON.stringify(offerer));
         data.append("login",JSON.stringify(login));
@@ -147,7 +151,8 @@ function autoplay() {
               location.href = "visPubOff?idOf="+obj.idOfferer;
           },
         error: function(status){
-               console.log("error"+offerer.nameOfferer);
+                window.alert("Error");
+                console.log(status);
           }  
            });   
     }
@@ -186,7 +191,7 @@ function autoplay() {
     
     function updateComp(){
         company = {idCompany:$("#idCmp").data("value"),nameCompany:$("#nombreEmpresa").val(),email:$("#website").val(),phone:$("#telefono").val(),description:$("#descripcion").val(),address:$("#direccion").val()};     
-        login = {idLogin:$("#idLog").data("value"),username:$("#userN").val(),password:$("#key").val()};     
+        login = {idLogin:$("#idLog").data("value"),username:$("#userNC").val(),password:$("#keyP").val()};     
         data=new FormData();
         data.append("company",JSON.stringify(company));
         data.append("login",JSON.stringify(login));
@@ -203,7 +208,8 @@ function autoplay() {
               location.href = "visPubCom?idCom="+obj.idCompany;
           },
         error: function(status){
-               console.log("error"+company.nameCompany);
+                window.alert("Error");
+                console.log(status);
           }                    
       });    
     }
@@ -212,9 +218,10 @@ function autoplay() {
     // FUNCIONES NECESARIAS PARA registro de oferentes y SUBIR ARCHIVOS PDF 
         
         function uploadOfferer_CV() {
+            if($("#pdf").val().length<1){window.alert("NO CV ADJUNTO");return;}
            offerer = {nameOfferer:$("#nombre").val(),lastname:$("#apellido").val(),nationality:$("#nacionalidad").val(),email:$("#email").val(),phone:$("#telefono").val()
               ,location_X:$("#localeX").val(),location_Y:$("#localeY").val(),residence:$("#direccion").val()};
-             login = {username:$("#userN").val(),password:$("#key").val()};    
+             login = {username:$("#userNa").val(),password:$("#keyp").val()};    
             data=new FormData();
             data.append("offerer", JSON.stringify(offerer));
             data.append("login", JSON.stringify(login));
@@ -231,9 +238,9 @@ function autoplay() {
                      window.alert("Te damos la bienvenida a Empleate "+obj.nameOfferer+" !");
                      location.href ="Home";
                 } ,
-                error: function(status){
-                     console.log("Error " + obj.nameOfferer);
-                }         
+                error: function(jqXHR, textStatus, errorThrown){
+                          window.alert(errorThrown);
+                        }    
             });
                 
         }
@@ -244,8 +251,8 @@ function autoplay() {
         var telefono = $("#telefono");
         var email = $("#email");
         var address = $("#direccion");
-        var user = $("#userN");
-        var key = $("#key");
+        var user = $("#userNa");
+        var key = $("#keyp");
             var error=false;
             $("#formularioOff input").removeClass("invalid");
             if (nombre.val().length===0){
@@ -276,11 +283,11 @@ function autoplay() {
             }
              if (user.val().length===0){
                     user.addClass("invalid");
-                    error=true;
+                    error=true;console.log("1")
             }
              if (key.val().length===0){
                     key.addClass("invalid");
-                    error=true;
+                    error=true;console.log("2")
             }
             if (error){event.preventDefault();
                 window.alert("Datos vacios, por favor ingrese datos validos");
@@ -294,7 +301,7 @@ function autoplay() {
      
       function addComp(){
         company = {nameCompany:$("#nombreEmpresa").val(),email:$("#website").val(),phone:$("#telefono").val(),description:$("#descripcion").val(),address:$("#direccion").val(),location_X:$("#localeX").val(),location_Y:$("#localeY").val()};     
-        login = {username:$("#userNC").val(),password:$("#key").val()};     
+        login = {username:$("#userNc").val(),password:$("#keyc").val()};     
         data=new FormData();
         data.append("company",JSON.stringify(company));
         data.append("login",JSON.stringify(login));
@@ -310,8 +317,8 @@ function autoplay() {
                window.alert("Le damos la bienvenida a la empresa "+obj.nameCompany+" a la comunidad de Empleate!");
               location.href = "Home";
           },
-        error: function(status){
-               console.log("error"+company.nameCompany);
+        error: function(jqXHR, textStatus, errorThrown){
+            window.alert(errorThrown);
           }                    
       });    
     }
@@ -322,8 +329,8 @@ function autoplay() {
         var telefono = $("#telefono");
         var email = $("#website");
         var address = $("#direccion");
-        var user = $("#userNC");
-        var key = $("#key");
+        var user = $("#userNc");
+        var key = $("#keyc");
             var error=false;
             $("#formularioComp input").removeClass("invalid");
             if (nombre.val().length===0){
@@ -359,10 +366,38 @@ function autoplay() {
                 window.alert("Datos vacios, por favor ingrese datos validos");
             }
       }
-      
+      //PARA VALIDAR EL LOGIN
+    function validateLogin(){
+        login = {username:$("#userN").val(),password:$("#key").val()};   
+        data=new FormData();
+        data.append("login",JSON.stringify(login));
+        $.ajax({type: "POST", 
+        url:"doLogin", 
+        data: JSON.stringify(login), 
+        dataType:"json",
+        processData: false,
+        contentType: false,     
+        success: 
+          function(obj){
+              location.href = "Home";
+          },
+        error: function(obj){
+              window.alert("El usuario "+ login.username + " no existe, registrese!");
+          }                    
+      });    
+    }
       // FUNCIONES NECESARIAS PARA LA BUSQUEDAS POR CATEGORIAS, UBICACION Y PORCENTAJE!
       function addElementToSearch(){
           
           
       }
-      
+      function buildReview(){
+           var r = [];
+           var i = 0;
+             $("#isSon").click(function(){
+            r.push($(this).children().children("h2").val());
+            i++;
+              console.log(r[i].toString());
+            });
+          
+      }

@@ -72,11 +72,11 @@
                     <div class="row">
 
                         <div class="input-field col s6">
-                            <input  name="username" id="userN" type="text" class="validate" value="">
+                            <input  name="username" id="userNa" type="text" class="validate" value="">
                             <label for="username">Username</label>
                         </div>
                         <div class="input-field col s6">
-                            <input name="password" id="key" type="password" name="password" class="validate"  value="">
+                            <input name="password" id="keyp" type="password" name="password" class="validate"  value="">
                             <label for="password">Password</label>
                             <p>
                             <label>
@@ -86,7 +86,7 @@
                             </p>
                             <script>
                             function showPass() {
-                                var x = document.getElementById("key");
+                                var x = document.getElementById("keyp");
                                 if (x.type === "password") {
                                     x.type = "text";
                                 } else {
@@ -102,7 +102,7 @@
                     </div>
                      <div class="input-field col s6">
                          
-                        <fieldset>
+                        <fieldset id="camposSet">
                           <legend>Agregar Curriculum</legend>
                           <input class="btn" type="file" name="pdf" id="pdf">
                         </fieldset>        
@@ -112,7 +112,7 @@
                 </form>
             </div>
         </div>
-        <div class="error">
+        <div class="error" id="error">
             <%if (error != null) {%>
             <p><%=error%></p>
             <%}%>
