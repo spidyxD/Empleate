@@ -76,7 +76,7 @@
                             <label for="username">Username</label>
                         </div>
                         <div class="input-field col s6">
-                            <input name="password" id="key" type="password" name="password" class="validate"  value="">
+                            <input name="password" id="keyO" type="password" name="password" class="validate"  value="">
                             <label for="password">Password</label>
                             <p>
                             <label>
@@ -86,7 +86,7 @@
                             </p>
                             <script>
                             function showPass() {
-                                var x = document.getElementById("key");
+                                var x = document.getElementById("keyO");
                                 if (x.type === "password") {
                                     x.type = "text";
                                 } else {

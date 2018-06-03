@@ -146,14 +146,15 @@
 			<ul class="collapsible" data-collapsible="popup">
                             <li>
                                 <div class="collapsible-header">
-                                    <a><i class="material-icons">add</i><h1 data-value="<%=aux.getIdCategory()%>"><%=aux.getNameCategory()%></h1></a>
+                                    <a><i class="material-icons">add</i><%=aux.getNameCategory()%></a><h1 data-value="<%=aux.getIdCategory()%>" hidden></h1>
                              <%aux2 = cat.get(i);%>
                                 </div>
                              <%if(!CategoryModel.instance().giveChilds(aux2.getIdCategory()).isEmpty()){%>
                                 <div class="collapsible-body"> 
+                                   
                                     <%for(Category c:CategoryModel.instance().giveChilds(aux2.getIdCategory())){%>
-                                    <a onclick="buildReview()" id="isSon"><i class="material-icons">fiber_manual_record</i><h2 id="info" data-value="<%=c.getIdCategory() %>"><%=c.getNameCategory() %></h2></a>
-                                       
+                                    <input type="checkbox" id='checkC'/>
+                                    <a onclick="buildReview()" id="isSon" data-value="<%=c.getIdCategory() %>"><i class="material-icons">fiber_manual_record</i><%=c.getNameCategory() %></a>                                                                  
                                                <select id="<%=idF%>" value="${item.value}">
                                                  <option value="" disabled selected>seleccione su nivel</option>
                                                  <option value="10">10%</option>
@@ -164,10 +165,10 @@
                                                  <option value="90">90%</option>
                                                  <option value="100">100%</option>
                                                </select>
-                                               <label>porcentaje</label> 
+                                               
                                                   <%}%>
 				</div>
-                                  <%}%>               
+                                  <%}%> 
                             </li>
                         </ul>                  
                         </div>
@@ -179,9 +180,9 @@
                             <%if(c.getIsDad() == 0){%>
                             <%countSecond = c.getIdCategory();%>
                             <%String idS= "porcentaje_"+countSecond;%> 
-                            <div class="collapsible-body">        
-                                <a onclick="buildReview()" id="isSon"><i class="material-icons">fiber_manual_record</i><h2 id="info" data-value="<%=aux.getIdCategory()%>"><%=c.getNameCategory() %></h2></a>
-                               
+                            <div class="collapsible-body">
+                                <input type="checkbox" id='checkC'/>
+                                <a onclick="buildReview()" id="isSon" data-value="<%=aux.getIdCategory()%>"><i class="material-icons">fiber_manual_record</i><%=c.getNameCategory() %></a>                            
                                 <select id="<%=idS%>" value="${item.value}">
                                   <option value="" disabled selected>seleccione su nivel</option>
                                   <option value="10">10%</option>
@@ -191,8 +192,8 @@
                                   <option value="85">85%</option>
                                   <option value="90">90%</option>
                                   <option value="100">100%</option>
-                                </select>
-                                <label>porcentaje</label>      
+                                </select><p><label><input type=\"checkbox\" id='checkC'/><span></span></label></p>
+                                     
                             </div>
                                <%}%>   
                                

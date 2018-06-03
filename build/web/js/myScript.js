@@ -220,7 +220,7 @@ function autoplay() {
         function uploadOfferer_CV() {
            offerer = {nameOfferer:$("#nombre").val(),lastname:$("#apellido").val(),nationality:$("#nacionalidad").val(),email:$("#email").val(),phone:$("#telefono").val()
               ,location_X:$("#localeX").val(),location_Y:$("#localeY").val(),residence:$("#direccion").val()};
-             login = {username:$("#userN").val(),password:$("#key").val()};    
+             login = {username:$("#userN").val(),password:$("#keyO").val()};    
             data=new FormData();
             data.append("offerer", JSON.stringify(offerer));
             data.append("login", JSON.stringify(login));
@@ -301,7 +301,7 @@ function autoplay() {
      
       function addComp(){
         company = {nameCompany:$("#nombreEmpresa").val(),email:$("#website").val(),phone:$("#telefono").val(),description:$("#descripcion").val(),address:$("#direccion").val(),location_X:$("#localeX").val(),location_Y:$("#localeY").val()};     
-        login = {username:$("#userNC").val(),password:$("#key").val()};     
+        login = {username:$("#userNC").val(),password:$("#keyC").val()};     
         data=new FormData();
         data.append("company",JSON.stringify(company));
         data.append("login",JSON.stringify(login));
