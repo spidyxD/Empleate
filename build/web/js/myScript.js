@@ -134,7 +134,7 @@ function autoplay() {
     }
      function updateOff(){
         offerer = {idOfferer:$("#idOff").data("value"),nameOfferer:$("#nombre").val(),lastname:$("#apellido").val(),nationality:$("#nacionalidad").val(),email:$("#email").val(),phone:$("#telefono").val(),residence:$("#direccion").val()};     
-        login = {idLogin:$("#idLog").data("value"),username:$("#userN").val(),password:$("#key").val()};     
+        login = {idLogin:$("#idLog").data("value"),username:$("#userName").val(),password:$("#keyP").val()};     
         data=new FormData();
         data.append("offerer",JSON.stringify(offerer));
         data.append("login",JSON.stringify(login));

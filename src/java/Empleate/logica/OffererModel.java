@@ -30,7 +30,7 @@ public class OffererModel {
     }
     
     public void updateOfferer(Offerer offerer){
-        offDAO.merge(offerer);
+        offDAO.doUpdate(offerer);
     }
     
     public void deleteOfferer(Offerer offerer){

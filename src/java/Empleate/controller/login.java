@@ -117,7 +117,7 @@ public class login extends HttpServlet {
                      s.setAttribute("company", c);
                      s.setAttribute("login", l);
                      out.write(gson.toJson(l));
-                     response.setStatus(200); //update successfull
+                     response.setStatus(200); // successfull
                  break;
                  case "offerer":
                      Offerer o = new Offerer();
@@ -125,7 +125,7 @@ public class login extends HttpServlet {
                      s.setAttribute("offerer", o);
                      s.setAttribute("login", l);
                       out.write(gson.toJson(l));
-                     response.setStatus(200); //update successfull
+                     response.setStatus(200); // successfull
                  break;
                  case "manager":
                      Manager m= new Manager();
@@ -133,10 +133,10 @@ public class login extends HttpServlet {
                      s.setAttribute("manager", m);
                      s.setAttribute("login", l);
                       out.write(gson.toJson(l));
-                     response.setStatus(200); //update successfull
+                     response.setStatus(200); // successfull
                  break;    
                  default: 
-                     response.setStatus(400); //update faild
+                     response.setStatus(400); // faild
                      break;
          }
        
@@ -144,7 +144,7 @@ public class login extends HttpServlet {
        }catch(Exception e){
             String error = "Error de credenciales del usuario: "+ request.getParameter("username") + " idRegister: " +l.getIdLogin() + " type: " + l.getType_log();
             request.setAttribute("error",error);
-            response.setStatus(400); //update faild
+            response.setStatus(400); // faild
             
         }	
     }
