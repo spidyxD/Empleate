@@ -13,8 +13,14 @@ import Empleate.logica.CompanyModel;
 import Empleate.logica.LoginModel;
 import Empleate.logica.ManagerModel;
 import Empleate.logica.OffererModel;
+import com.google.gson.Gson;
+import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +31,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Addiel
  */
-@WebServlet(name = "login", urlPatterns = {"/Login", "/Logout"})
+@WebServlet(name = "login", urlPatterns = {"/doLogin", "/Logout"})
+@MultipartConfig
 public class login extends HttpServlet {
 
     /**
@@ -41,7 +48,7 @@ public class login extends HttpServlet {
                                 HttpServletResponse response)
          throws ServletException, IOException {
     switch(request.getServletPath()){
-        case "/Login":
+        case "/doLogin":
             this.doLogin(request,response);
             break;
         case "/Logout":
@@ -91,39 +98,45 @@ public class login extends HttpServlet {
 
     protected void doLogin(HttpServletRequest request, 
         HttpServletResponse response) throws ServletException, IOException {
-        Login l = new Login();
+       Login l = new Login();
         try{ 
             HttpSession s =  request.getSession(true);
-           
-            l.setUsername(request.getParameter("username"));
-            l.setPassword(request.getParameter("password"));
-            
+            BufferedReader readerLog = request.getReader();
+            PrintWriter out = response.getWriter();
+            Gson gson = new Gson();
+             Login aux = gson.fromJson(readerLog, Login.class);
+             l = aux;
+            String u = l.getUsername();
+            System.out.print(u);
         if(verifyLogin(l,request,response)){
-             l = LoginModel.instance().findLoginByData(request.getParameter("username"), request.getParameter("password"));
+             l = LoginModel.instance().findLoginByData(l.getUsername(), l.getPassword());
              switch(l.getType_log()){
                  case "company":
                      Company c = new Company();
                      c =CompanyModel.instance().findCompanyByIdLogin(String.valueOf(l.getIdLogin()));
                      s.setAttribute("company", c);
                      s.setAttribute("login", l);
-                     request.getRequestDispatcher("Home").forward( request, response);
+                     out.write(gson.toJson(l));
+                     response.setStatus(200); //update successfull
                  break;
                  case "offerer":
                      Offerer o = new Offerer();
                      o = OffererModel.instance().findByIdLogin(l.getIdLogin());
                      s.setAttribute("offerer", o);
                      s.setAttribute("login", l);
-                     request.getRequestDispatcher("Home").forward( request, response);
+                      out.write(gson.toJson(l));
+                     response.setStatus(200); //update successfull
                  break;
                  case "manager":
                      Manager m= new Manager();
                      m = ManagerModel.instance().findByIdLogin(l.getIdLogin());
                      s.setAttribute("manager", m);
                      s.setAttribute("login", l);
-                     request.getRequestDispatcher("Home").forward( request, response);
+                      out.write(gson.toJson(l));
+                     response.setStatus(200); //update successfull
                  break;    
                  default: 
-                     request.getRequestDispatcher("Error.jsp").forward(request, response);
+                     response.setStatus(400); //update faild
                      break;
          }
        
@@ -131,7 +144,7 @@ public class login extends HttpServlet {
        }catch(Exception e){
             String error = "Error de credenciales del usuario: "+ request.getParameter("username") + " idRegister: " +l.getIdLogin() + " type: " + l.getType_log();
             request.setAttribute("error",error);
-            request.getRequestDispatcher("Error.jsp").forward(request, response);
+            response.setStatus(400); //update faild
             
         }	
     }
@@ -142,7 +155,7 @@ public class login extends HttpServlet {
     }    
    public boolean verifyLogin(Login l,HttpServletRequest request, 
         HttpServletResponse response){
-        l = LoginModel.instance().findLoginByData(request.getParameter("username"),request.getParameter("password"));
+        l = LoginModel.instance().findLoginByData(l.getUsername(),l.getPassword());
         return l.getIdLogin() != -1;
    }
 

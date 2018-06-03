@@ -1,4 +1,7 @@
 
+
+
+
 $(document).ready(function(){
     $('.parallax').parallax();
 });
@@ -364,7 +367,26 @@ function autoplay() {
                 window.alert("Datos vacios, por favor ingrese datos validos");
             }
       }
-      
+      //PARA VALIDAR EL LOGIN
+    function validateLogin(){
+        login = {username:$("#userN").val(),password:$("#key").val()};   
+        data=new FormData();
+        data.append("login",JSON.stringify(login));
+        $.ajax({type: "POST", 
+        url:"doLogin", 
+        data: JSON.stringify(login), 
+        dataType:"json",
+        processData: false,
+        contentType: false,     
+        success: 
+          function(obj){
+              location.href = "Home";
+          },
+        error: function(obj){
+              window.alert("El usuario "+ login.username + " no existe, registrese!");
+          }                    
+      });    
+    }
       // FUNCIONES NECESARIAS PARA LA BUSQUEDAS POR CATEGORIAS, UBICACION Y PORCENTAJE!
       function addElementToSearch(){
           
