@@ -21,8 +21,7 @@
                     <% Login l = (Login) session.getAttribute("login");%>
                     <% Company c = (Company) session.getAttribute("company");%>
                     <% Offerer o = (Offerer) session.getAttribute("offerer");%>
-                    <% Manager m = (Manager) session.getAttribute("manager");%>
-                    <li><a class="waves-effect waves-light btn modal-trigger" href="listarOferentes">verVistas</a></li>         
+                    <% Manager m = (Manager) session.getAttribute("manager");%>                          
                     <li><a class="waves-effect waves-light btn modal-trigger" href="iniciar">Buscar</a></li>
                         <% if (l != null && !l.getUsername().isEmpty()) {%>
                         <% if (l.getType_log().equals("company")) {%>
