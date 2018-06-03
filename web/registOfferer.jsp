@@ -102,7 +102,7 @@
                     </div>
                      <div class="input-field col s6">
                          
-                        <fieldset>
+                        <fieldset id="camposSet">
                           <legend>Agregar Curriculum</legend>
                           <input class="btn" type="file" name="pdf" id="pdf">
                         </fieldset>        

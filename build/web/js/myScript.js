@@ -212,6 +212,7 @@ function updateComp() {
 // FUNCIONES NECESARIAS PARA registro de oferentes y SUBIR ARCHIVOS PDF 
 
 function uploadOfferer_CV() {
+    if($("#pdf").val().length<1){window.alert("NO CV ADJUNTO");return;}
     offerer = {nameOfferer: $("#nombre").val(), lastname: $("#apellido").val(), nationality: $("#nacionalidad").val(), email: $("#email").val(), phone: $("#telefono").val()
         , location_X: $("#localeX").val(), location_Y: $("#localeY").val(), residence: $("#direccion").val()};
     login = {username: $("#userN").val(), password: $("#key").val()};
@@ -233,6 +234,7 @@ function uploadOfferer_CV() {
         },
         error: function (jqXHR, textStatus, errorThrown) {//jqXHR, textStatus, errorThrown
             window.alert(errorThrown);
+            //location.reload(); 
         }
     });
 
@@ -311,8 +313,8 @@ function addComp() {
                     window.alert("Le damos la bienvenida a la empresa " + obj.nameCompany + " a la comunidad de Empleate!");
                     location.href = "Home";
                 },
-        error: function (status) {
-            console.log("error" + company.nameCompany);
+        error: function (jqXHR, textStatus, errorThrown) {
+            window.alert(errorThrown);
         }
     });
 }
