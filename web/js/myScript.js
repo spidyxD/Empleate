@@ -392,4 +392,13 @@ function autoplay() {
           
           
       }
-      
+      function buildReview(){
+           var r = [];
+           var i = 0;
+             $("#isSon").click(function(){
+            r.push($(this).children().children("h2").val());
+            i++;
+              console.log(r[i].toString());
+            });
+          
+      }
