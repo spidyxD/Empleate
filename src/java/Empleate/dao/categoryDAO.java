@@ -15,134 +15,122 @@ import org.hibernate.HibernateException;
  *
  * @author Addiel
  */
-public class categoryDAO extends HibernateUtil implements IBaseDAO <Category, Integer> {
+public class categoryDAO extends HibernateUtil implements IBaseDAO<Category, Integer> {
 
     @Override
     public void add(Category o) {
-        try{
+        try {
             operationStart();
             getSesion().save(o);
             getTransac().commit();
-        }
-        catch(HibernateException he){
+        } catch (HibernateException he) {
             handleException(he);
             throw he;
-        }
-        finally{
-        getSesion().close();
+        } finally {
+            getSesion().close();
         }
     }
 
     @Override
     public Category merge(Category o) {
-         try{
+        try {
             operationStart();
-            o = (Category)getSesion().merge(o);
+            o = (Category) getSesion().merge(o);
             getTransac().commit();
-        }
-        catch(HibernateException he){
+        } catch (HibernateException he) {
             handleException(he);
             throw he;
+        } finally {
+            getSesion().close();
         }
-        finally{
-        getSesion().close();
-        }
-         return o;
+        return o;
     }
 
     @Override
     public void delete(Category o) {
-        try{
+        try {
             operationStart();
             getSesion().delete(o);
             getTransac().commit();
-        }
-        catch(HibernateException he){
+        } catch (HibernateException he) {
             handleException(he);
             throw he;
-        }
-        finally{
-        getSesion().close();
+        } finally {
+            getSesion().close();
         }
     }
 
     @Override
     public Category findById(Integer id) {
-         Category category = null;
-         try{
+        Category category = null;
+        try {
             operationStart();
-            category = (Category)getSesion().get(Category.class,id);
+            category = (Category) getSesion().get(Category.class, id);
             getTransac().commit();
-        }
-        catch(HibernateException he){
+        } catch (HibernateException he) {
             handleException(he);
             throw he;
+        } finally {
+            getSesion().close();
         }
-        finally{
-        getSesion().close();
-        }
-         return category;
+        return category;
     }
 
     @Override
     public List<Category> findAll() {
         List<Category> listCategories = new ArrayList();
-         try{
+        try {
             operationStart();
             listCategories = getSesion().createQuery("from Category").list();
             getTransac().commit();
-        }
-        catch(HibernateException he){
+        } catch (HibernateException he) {
             handleException(he);
             throw he;
+        } finally {
+            getSesion().close();
         }
-        finally{
-        getSesion().close();
-        }
-    return listCategories;
+        return listCategories;
     }
-    
-    public List<Category> giveParentRoots(){
-      List<Category> cl = new ArrayList();
-      String sql = "select *from category where parentCategory IS NULL ;";
-        try{
+
+    public List<Category> giveParentRoots() {
+        List<Category> cl = new ArrayList();
+        String sql = "select *from category where parentCategory IS NULL ;";
+        try {
             operationStart();
             cl = getSesion().createSQLQuery(sql).addEntity(Category.class).list();
             getTransac().commit();
-        }
-        catch(HibernateException he){
+        } catch (HibernateException he) {
             handleException(he);
             throw he;
+        } finally {
+            getSesion().close();
         }
-        finally{
-        getSesion().close();
-        }
-      return cl;
-  }
-   public List<Category> giveChildCategory(int idParent){
-      List<Category> cl = new ArrayList();
-      String sql = "select  idCategory,\n" +
-        " name_Category,\n" +
-        " parentCategory, \n" +
-        " isRoot, \n" + 
-        " isDad \n" +       
-        " from category\n" +
-        "where category.parentCategory="+"'"+idParent+"'";
-        try{
+        return cl;
+    }
+
+    public List<Category> giveChildCategory(int idParent) {
+        List<Category> cl = new ArrayList();
+        String sql = "select  idCategory,\n"
+                + " name_Category,\n"
+                + " parentCategory, \n"
+                + " isRoot, \n"
+                + " isDad \n"
+                + " from category\n"
+                + "where category.parentCategory=" + "'" + idParent + "'";
+        try {
             operationStart();
             cl = getSesion().createSQLQuery(sql).addEntity(Category.class).list();
             getTransac().commit();
-        }
-        catch(HibernateException he){
+        } catch (HibernateException he) {
             handleException(he);
             throw he;
+        } finally {
+            getSesion().close();
         }
-        finally{
-        getSesion().close();
-        }
-      return cl;
-  }
-  public List<Category> findAllCategoriesOfferer(int idOfferer) {
+        return cl;
+    }
+
+    public List<Category> findAllCategoriesOfferer(int idOfferer) {
         List<Category> listCat = new ArrayList();
         try {
             operationStart();
@@ -160,7 +148,8 @@ public class categoryDAO extends HibernateUtil implements IBaseDAO <Category, In
         }
         return listCat;
     }
-   public Category giveCategoryComplete(int idCat) {
+
+    public Category giveCategoryComplete(int idCat) {
         Category ct = new Category();
         List<Category> c1 = new ArrayList();
         try {
@@ -176,6 +165,25 @@ public class categoryDAO extends HibernateUtil implements IBaseDAO <Category, In
             getSesion().close();
         }
         return ct;
+    }
+
+    public void insertarCategory(String nom, int padre) {
+        try {
+            String sql;
+            if(padre==0){
+              sql = "insert into Category (name_Category,isRoot,isDad) values('"+nom+"',0,0);";            
+            }else{
+              sql = "insert into category(parentCategory,name_Category,isRoot,isDad) values("+padre+",'"+nom+"',0,0);";
+            }
+            operationStart();           
+            getSesion().createSQLQuery(sql).executeUpdate();
+            getTransac().commit();
+        } catch (HibernateException he) {
+            handleException(he);
+            throw he;
+        } finally {
+            getSesion().close();
+        }
     }
 
 }

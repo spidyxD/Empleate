@@ -40,9 +40,9 @@
                             <ul id='dropdown1' class='dropdown-content'>
                                 <li><a href="#!">Puestos solicitados por mes</a></li>
                             </ul>  
-                            <a class='dropdown-trigger btn' href='#' data-target='dropdown2' id="lc">Listar empresas</a>
-                            
+                            <a class='dropdown-trigger btn' href='#' data-target='dropdown2' id="lc">Listar empresas</a>                            
                             <a class='dropdown-trigger btn' href='#' data-target='dropdown3' id="lo">Listar Oferente</a>
+                            <a class="waves-effect waves-light btn" href="agregarAdmin">Agregar Categorias</a>
                             <!-- Dropdown Structure -->
                             <ul id='dropdown2' class='dropdown-content'>
                                 <li><a href="javascript: empActivas()">Empreas aprobadas</a></li>
