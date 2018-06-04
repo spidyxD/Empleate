@@ -126,6 +126,11 @@
         <script>
             var review = [];
             var count = 0;
+            var ids = [];
+            var c=0;
+            var percents = [];
+            var localeHX = 0;
+            var localeHY =0;
         </script>       
         <div class="row">            
         <div class="col s6">
@@ -156,7 +161,7 @@
                                     <%for(Category c:CategoryModel.instance().giveChilds(aux2.getIdCategory())){%>
                                      <%String idF ="porcentajeF_"+c.getIdCategory();%>  
                                     <%String idFPS= "catFS_"+c.getIdCategory();%>
-                                    <a onclick="buildReview(review,<%=idFPS%>)" id="<%=idFPS%>" data-value="<%=c.getNameCategory() %>"><i class="material-icons">fiber_manual_record</i><%=c.getNameCategory() %></a>                                                                  
+                                    <a onclick="buildReview(review,ids,<%=idFPS%>);buildPercents(percents,<%=idF%>)" id="<%=idFPS%>" data-value="<%=c.getNameCategory() %>" data-codes="<%=c.getIdCategory()%>"><i class="material-icons">fiber_manual_record</i><%=c.getNameCategory() %></a>                                                                  
                                                <select id="<%=idF%>" value="${item.value}">
                                                  <option value="" disabled selected>seleccione su nivel</option>
                                                  <option value="10">10%</option>
@@ -183,7 +188,7 @@
                             <%String idS= "porcentaje_"+c.getIdCategory();%> 
                             <%String idSP= "catS_"+c.getIdCategory();%>
                             <div class="collapsible-body">
-                                <a onclick="buildReview(review,<%=idSP%>)" id="<%=idSP%>" data-value="<%=c.getNameCategory() %>"><i class="material-icons">fiber_manual_record</i><%=c.getNameCategory() %></a>                            
+                                <a onclick="buildReview(review,ids,<%=idSP%>);buildPercents(percents,<%=idS%>)" id="<%=idSP%>" data-value="<%=c.getNameCategory() %>" data-codes="<%=c.getIdCategory()%>"><i class="material-icons">fiber_manual_record</i><%=c.getNameCategory() %></a>                            
                                 <select id="<%=idS%>" value="${item.value}">
                                   <option value="" disabled selected>seleccione su nivel</option>
                                   <option value="10">10%</option>
@@ -371,13 +376,15 @@
         if ( marker ) {
           marker.setPosition(latLng);
           console.log(marker.getPosition().lat()+" "+marker.getPosition().lng());
+         
         } else {
           marker = new google.maps.Marker({
           position: latLng,
           map: map});
           console.log(marker.getPosition().lat()+" "+marker.getPosition().lng());
        }
-   
+        localeHX = marker.getPosition().lat();
+        localeHY = marker.getPosition().lng();
     }
      </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXHkW8XZy3R2tQa_326VbuFp29wDJ93Qw&libraries=places&callback=load_peta"></script>
@@ -393,7 +400,7 @@
              <input name="localeY" id="localeY" type="value" class="validate" readonly hidden>
             </div>
              </div>
-            <h5>Historial de categorias seleccionadas</h5>
+            <h5>Categorias seleccionadas</h5>
             <div class="resumen row" id="history">
                 
                 <ul id="resumen">
@@ -402,12 +409,10 @@
                 
             </div>       
            <div class="row">
-                <a class="col s2 btn mybtn" onclick="clean(review)"> Limpiar consulta </a>
-                <%if(!login.getUsername().isEmpty()){%>
-                <a class="col s2 btn mybtn" href="consultasEmpleateAllJobsByCategory">Consultar</a>
-                <%} else{%>
-                 <a class="col s2 btn mybtn" href="consultasEmpleateJobsByCategory">Consultar</a>
-                <%}%>
+                <a class="col s2 btn mybtn" onclick="clean(review,percents)"> Limpiar consulta </a>
+                <h1 id="isLogin" data-value="<%=login.getUsername()%>"></h1>
+                <script>var isLogin= $("#isLogin").data("value") </script>
+                <a class="col s2 btn mybtn" onclick="addElementToSearch()">Consultar</a>
             </div>
            
            

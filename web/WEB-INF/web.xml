@@ -77,11 +77,11 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>consultasEmpleate</servlet-name>
-        <url-pattern>/consultasEmpleateJobsByCategory</url-pattern>
+        <url-pattern>/consultaPublica</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>consultasEmpleate</servlet-name>
-        <url-pattern>/consultasEmpleateAllJobsByCategory</url-pattern>
+        <url-pattern>/consultaPrivada</url-pattern>
     </servlet-mapping>
      
     <servlet-mapping>

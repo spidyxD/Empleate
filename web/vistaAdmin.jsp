@@ -188,7 +188,7 @@
             $("#listado").append(tr);
         }
     }
-    var select = new Array();
+    var select = [];
   
 </script>
 

@@ -6,17 +6,20 @@
 package Empleate.controller;
 
 import Empleate.domain.Category;
+import Empleate.domain.Location;
 import Empleate.logica.CategoryModel;
 import Empleate.logica.JobModel;
 import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +30,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Addiel
  */
-@WebServlet(name = "consultasEmpleate", urlPatterns = {"consultasEmpleateJobsByCategory", "/iniciar", "consultasEmpleateAllJobsByCategory", "/consultarOffrers", "/desplegar"})
+@WebServlet(name = "consultasEmpleate", urlPatterns = {"/consultaPublica", "/iniciar", "/consultaPrivada", "/consultarOffrers", "/desplegar"})
+@MultipartConfig
 public class consultasEmpleate extends HttpServlet {
 
     /**
@@ -52,11 +56,11 @@ public class consultasEmpleate extends HttpServlet {
             throws ServletException, IOException {
         switch (request.getServletPath()) {
             //Para Jobs
-            case "/consultasEmpleateJobsByCategory"://Publico
+            case "/consultaPublica"://Publico
                 this.doSearchPublicJobsByCategory(request, response);
                 break;
             //Para Categorias
-            case "/consultasEmpleateAllJobsByCategory"://Privado,public (Sesion iniciada)
+            case "/consultaPrivada"://Privado,public (Sesion iniciada)
                 this.doSearchGeneralJobsByCategory(request, response);
                 break;
             case "/consultarOffrers":
@@ -151,23 +155,33 @@ public class consultasEmpleate extends HttpServlet {
     private void doSearchPublicJobsByCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             HttpSession s = request.getSession(true);
-            jobs.clear();
-            x = Double.parseDouble(request.getParameter("localeX"));
-            y = Double.parseDouble(request.getParameter("localeY"));
-            //System.out.println(x+y);
-
-            jobs = JobModel.instance().getAllJobsByCategoryPublic((HashMap<Category, String>) s.getAttribute("resumenCompleto"), x, y);
-            if (!jobs.isEmpty()) {
-                s.setAttribute("jobsByCategory", jobs);
+            BufferedReader readerCats = new BufferedReader(new InputStreamReader(request.getPart("categories").getInputStream()));
+            BufferedReader readerLoc = new BufferedReader(new InputStreamReader(request.getPart("location").getInputStream()));
+            BufferedReader readerPerc = new BufferedReader(new InputStreamReader(request.getPart("percents").getInputStream()));
+            PrintWriter out = response.getWriter();
+            Gson gson = new Gson();
+            List<Double> cats = gson.fromJson(readerCats, List.class);
+            List<String> perc = gson.fromJson(readerPerc, List.class);
+            Location lc = gson.fromJson(readerLoc, Location.class);
+            System.out.println(cats.size());
+            System.out.println(perc.size());
+            double lx = lc.getLocaleHX();
+            System.out.println(lx);
+            jobs = JobModel.instance().findPublicJobByCategory(cats, perc, lc.getLocaleHX(), lc.getLocaleHY());
+            if(!jobs.isEmpty()){
+             response.setContentType("application/json; charset=UTF-8");    
+            out.write(gson.toJson(jobs));
+            response.setStatus(200); //search successfull
             }
-            request.getRequestDispatcher("ResultadosBusquedas.jsp").
-                    forward(request, response);
+            else{
+              response.setStatus(400); //search failed 
+            }
             jobs.clear();
+           
+            
         } catch (Exception e) {
             String error = e.getMessage();
-            request.setAttribute("error", error);
-            request.getRequestDispatcher("Error.jsp").forward(request, response);
-
+             response.setStatus(400,error); //search failed 
         }
     }
 
@@ -177,20 +191,32 @@ public class consultasEmpleate extends HttpServlet {
     private void doSearchGeneralJobsByCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             HttpSession s = request.getSession(true);
-            jobs.clear();
-            x = Double.parseDouble(request.getParameter("localeX"));
-            y = Double.parseDouble(request.getParameter("localeY"));
-            jobs = JobModel.instance().getAllJobsByCategory((HashMap<Category, String>) s.getAttribute("resumenCompleto"), x, y);
-            if (!jobs.isEmpty()) {
-                request.setAttribute("jobsByCategory", jobs);
-            }
+            BufferedReader readerCats = new BufferedReader(new InputStreamReader(request.getPart("categories").getInputStream()));
+            BufferedReader readerLoc = new BufferedReader(new InputStreamReader(request.getPart("location").getInputStream()));
+            BufferedReader readerPerc = new BufferedReader(new InputStreamReader(request.getPart("percents").getInputStream()));
+            PrintWriter out = response.getWriter();
+            Gson gson = new Gson();
+            List<String> cats = gson.fromJson(readerCats, List.class);
+            List<String> perc = gson.fromJson(readerPerc, List.class);
+            Location lc = gson.fromJson(readerLoc, Location.class);
+            System.out.println(cats.size());
+            System.out.println(perc.size());
+            double lx = lc.getLocaleHX();
+            System.out.println(lx);
+            
+           /* jobs = JobModel.instance().getAllJobsByCategory((HashMap<Category, String>) s.getAttribute("resumenCompleto"),x,y);
+              if(!jobs.isEmpty()){
+            request.setAttribute("jobsByCategory", jobs);}
             request.getRequestDispatcher("ResultadosBusquedas.jsp").
                     forward(request, response);
-            jobs.clear();
+            jobs.clear();*/
+            response.setContentType("application/json; charset=UTF-8");
+            out.write(gson.toJson("Busqueda Existosa"));
+            response.setStatus(200); //search successfull
         } catch (Exception e) {
             String error = e.getMessage();
-            request.setAttribute("error", error);
-            request.getRequestDispatcher("Error.jsp").forward(request, response);
+             response.setStatus(200,error); //search failed
+            
 
         }
     }

@@ -151,27 +151,23 @@ public class jobDAO extends HibernateUtil implements IBaseDAO<Job, Integer> {
     
     //busqueda publica
     
-    public List<Job> findPublicByCategory(String cat, String p,double x, double y) {
+    public List<Job> findPublicByCategory(List<Double> cat, List<String> p,double x, double y) {
         List<Job> jobs = new ArrayList();
         try {
             operationStart();
             
-            if (!p.isEmpty() || !p.equals("0")) {
-                int percent = Integer.parseInt(p);
+         
                 String sql = "select job.idJob,job.name_job,job.description_job,salary,type_job,job.comp,job.status_job from "
                         + "company,job,jobCategory,category where company.idCompany=job.comp and job.idJob=jobCategory.j and jobCategory.cat = category.idCategory and " +
-                         "company.location_X <=" + x + "and company.location_Y <= "+ y + "category.name_category=" + "'"+ cat +"'"+" and jobCategory.percentage=" +"'"+ percent + "'"
-                        +" and job.type_Job = 'public'"+";";
+                         "company.location_X <=" + x + " and company.location_Y <= "+ y;
+                        for(int i=0;i<cat.size();i++){
+             sql = sql + " and jobCategory.cat="        
+                        + cat.get(i).intValue() +" and jobCategory.percentage=" + Integer.valueOf(p.get(i));
+                        }
+             sql= sql+" and job.type_Job = 'public'"+";";
                 jobs = getSesion().createSQLQuery(sql).addEntity(Job.class).list();
                 getTransac().commit();
-            } else {
-                String sql = "select job.idJob,job.name_job,job.description_job,salary,type_job,"
-                        + "job.comp,job.status_job from comapny,job,jobCategory,category where company.idCompany=job.comp and job.idJob=jobCategory.j "
-                        + "company.location_X <=" + x + "and company.location_Y <= "+ y + "and jobCategory.cat = category.idCategory and category.name_category=" + "'" + cat + "'"
-                        + " and job.type_Job = 'public'" +";";
-                jobs = getSesion().createSQLQuery(sql).addEntity(Job.class).list();
-                getTransac().commit();
-            }
+           
 
         } catch (HibernateException he) {
             handleException(he);

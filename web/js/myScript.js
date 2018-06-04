@@ -388,22 +388,63 @@ function autoplay() {
     }
       // FUNCIONES NECESARIAS PARA LA BUSQUEDAS POR CATEGORIAS, UBICACION Y PORCENTAJE!
       function addElementToSearch(){
-          
+        location = {localeHX:localeHX,localeHY:localeHY}; 
+        data=new FormData();
+        data.append("categories",JSON.stringify(ids));
+        data.append("percents",JSON.stringify(percents));
+        data.append("location",JSON.stringify(location));
+        
+        $.ajax({type: "POST", 
+        url:"consultaPublica", 
+        data: data, 
+        dataType:"json",
+        processData: false,
+        contentType: false,     
+        success: 
+          function(obj){
+              location.href = "ResultadosBusquedas.jsp";
+          },
+        error: function(status){
+              window.alert("No se han encontrado resultados de busqueda!");
+          }                    
+      });    
           
       }
-      function buildReview(r,id){
-           r.push($(id).data("value"));          
+      function buildReview(r,cods,id){
+           r.push($(id).data("value")); 
+           cods.push($(id).data("codes"));
            console.log(review[count].toString());
+           console.log(ids[count].toString());
            $("#resumen").append(                         
            "<li>"+ review[count].toString() + "</li>"
             );            
             count++;
         
       }
-      function clean(r){
-          window.alert("desea borrar el historial de categorias de la busqueda?")
-          if(alert){
-          r = new Array();
+      function buildPercents(p,id){
+           p.push($(id).val());
+           if(percents[c] === null){
+               percents[c] = 0;
+           }
+           console.log(percents[c].toString());
+           
+           c++;
+           
+      }
+      function getLocateS(){
+          if(localeHX === null){
+              localeHX = 0,0;
+          }
+          else if(localeHY === null){
+              localeHY = 0,0;
+          }
+          console.log(localeHX + " " + localeHY);
+      }
+      function clean(r,p){
+          window.confirm("desea borrar el historial de categorias de la busqueda?")
+          if(confirm){
+          r = [];
+          p =[];
           $("#resumen").children("li").remove();
           }
       }
