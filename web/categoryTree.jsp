@@ -28,6 +28,7 @@
         <script type="text/javascript" src="js/lightbox.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+        
         <script> 
             $(document).ready(function(){
             $('select').formSelect();
@@ -110,6 +111,7 @@
         .select-wrapper{
             width: 50%!important;
         }
+        
     </style>
     </head>
     <body>
@@ -121,16 +123,16 @@
         <%Category aux = new Category();%>
         <%Category aux2 = new Category();%>
         <h4>Seleccione una categoria de empleo</h4>
-        <div class="row">
+        <script>
+            var review = [];
+            var count = 0;
+        </script>       
+        <div class="row">            
         <div class="col s6">
            <div class="cuerpoConsulta container" id="categoryList">
          <ul class="collapsible" data-collapsible = "accordion" id="categories">
-                <%int countFirst=0;%>
-                <%int countSecond=0;%> 
-                 <%for (int i=0; i < cat.size(); i++){%>            
-                 <%countFirst = cat.get(i).getIdCategory();%>
-                 <%String idF= "porcentaje_"+countFirst;%>
-                 <%if(cat.get(i).getIsRoot()==1){%>
+                 <%for (int i=0; i < cat.size(); i++){%>                                 
+                 <%if(cat.get(i).getIsRoot()==1){%>                
                  <%auxR=cat.get(i);%>
                 <li>
                  <div class="collapsible-header">        
@@ -146,14 +148,15 @@
 			<ul class="collapsible" data-collapsible="popup">
                             <li>
                                 <div class="collapsible-header">
-                                    <a><i class="material-icons">add</i><h1 data-value="<%=aux.getIdCategory()%>"><%=aux.getNameCategory()%></h1></a>
+                                    <a><i class="material-icons">add</i><%=aux.getNameCategory()%></a><h1 data-value="<%=aux.getIdCategory()%>" hidden></h1>
                              <%aux2 = cat.get(i);%>
                                 </div>
                              <%if(!CategoryModel.instance().giveChilds(aux2.getIdCategory()).isEmpty()){%>
-                                <div class="collapsible-body"> 
+                                <div class="collapsible-body">                                   
                                     <%for(Category c:CategoryModel.instance().giveChilds(aux2.getIdCategory())){%>
-                                    <a onclick="buildReview()" id="isSon"><i class="material-icons">fiber_manual_record</i><h2 id="info" data-value="<%=c.getIdCategory() %>"><%=c.getNameCategory() %></h2></a>
-                                       
+                                     <%String idF ="porcentajeF_"+c.getIdCategory();%>  
+                                    <%String idFPS= "catFS_"+c.getIdCategory();%>
+                                    <a onclick="buildReview(review,<%=idFPS%>)" id="<%=idFPS%>" data-value="<%=c.getNameCategory() %>"><i class="material-icons">fiber_manual_record</i><%=c.getNameCategory() %></a>                                                                  
                                                <select id="<%=idF%>" value="${item.value}">
                                                  <option value="" disabled selected>seleccione su nivel</option>
                                                  <option value="10">10%</option>
@@ -164,10 +167,10 @@
                                                  <option value="90">90%</option>
                                                  <option value="100">100%</option>
                                                </select>
-                                               <label>porcentaje</label> 
+                                               
                                                   <%}%>
 				</div>
-                                  <%}%>               
+                                  <%}%> 
                             </li>
                         </ul>                  
                         </div>
@@ -177,11 +180,10 @@
                               <%List<Category>help= CategoryModel.instance().giveChilds(auxR.getIdCategory());%>
                             <%for(Category c: help){%>                            
                             <%if(c.getIsDad() == 0){%>
-                            <%countSecond = c.getIdCategory();%>
-                            <%String idS= "porcentaje_"+countSecond;%> 
-                            <div class="collapsible-body">        
-                                <a onclick="buildReview()" id="isSon"><i class="material-icons">fiber_manual_record</i><h2 id="info" data-value="<%=aux.getIdCategory()%>"><%=c.getNameCategory() %></h2></a>
-                               
+                            <%String idS= "porcentaje_"+c.getIdCategory();%> 
+                            <%String idSP= "catS_"+c.getIdCategory();%>
+                            <div class="collapsible-body">
+                                <a onclick="buildReview(review,<%=idSP%>)" id="<%=idSP%>" data-value="<%=c.getNameCategory() %>"><i class="material-icons">fiber_manual_record</i><%=c.getNameCategory() %></a>                            
                                 <select id="<%=idS%>" value="${item.value}">
                                   <option value="" disabled selected>seleccione su nivel</option>
                                   <option value="10">10%</option>
@@ -192,7 +194,7 @@
                                   <option value="90">90%</option>
                                   <option value="100">100%</option>
                                 </select>
-                                <label>porcentaje</label>      
+                                     
                             </div>
                                <%}%>   
                                
@@ -390,20 +392,24 @@
             <div class="input-field col s6">    
              <input name="localeY" id="localeY" type="value" class="validate" readonly hidden>
             </div>
-             </div>     
+             </div>
+            <h5>Historial de categorias seleccionadas</h5>
+            <div class="resumen row" id="history">
+                
+                <ul id="resumen">
+                    
+                </ul>
+                
+            </div>       
            <div class="row">
-                <a class="col s2 btn mybtn" href="iniciar?limpiar=1"> Limpiar consulta </a>
+                <a class="col s2 btn mybtn" onclick="clean(review)"> Limpiar consulta </a>
                 <%if(!login.getUsername().isEmpty()){%>
                 <a class="col s2 btn mybtn" href="consultasEmpleateAllJobsByCategory">Consultar</a>
                 <%} else{%>
                  <a class="col s2 btn mybtn" href="consultasEmpleateJobsByCategory">Consultar</a>
                 <%}%>
             </div>
-            <div class="resumen row">
-             <%for(Category j : resumen){%>
-                <p><%=j.getNameCategory()%></p>
-             <%}%>
-            </div>
+           
            
             
             
@@ -412,4 +418,5 @@
 <%@ include file="footer.jspf" %>
 
 </body>
+
 </html>

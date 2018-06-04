@@ -6,8 +6,6 @@
 package Empleate.controller;
 
 import Empleate.domain.Category;
-import Empleate.domain.Dad;
-import Empleate.domain.Porcentaje;
 import Empleate.logica.CategoryModel;
 import Empleate.logica.JobModel;
 import com.google.gson.Gson;

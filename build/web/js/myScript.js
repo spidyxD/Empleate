@@ -391,13 +391,19 @@ function autoplay() {
           
           
       }
-      function buildReview(){
-           var r = [];
-           var i = 0;
-             $("#isSon").click(function(){
-            r.push($(this).children().children("h2").val());
-            i++;
-              console.log(r[i].toString());
-            });
-          
+      function buildReview(r,id){
+           r.push($(id).data("value"));          
+           console.log(review[count].toString());
+           $("#resumen").append(                         
+           "<li>"+ review[count].toString() + "</li>"
+            );            
+            count++;
+        
+      }
+      function clean(r){
+          window.alert("desea borrar el historial de categorias de la busqueda?")
+          if(alert){
+          r = new Array();
+          $("#resumen").children("li").remove();
+          }
       }
