@@ -23,11 +23,9 @@
         <script type="text/javascript" src="js/materialize.min.js"></script><!--js de materialize-->
         <script type="text/javascript" src="js/myScript.js"></script><!--codigo js para inicializar js-->
         <script type="text/javascript" src="js/vistaOfferer.js"></script><!--codigo js para inicializar js-->
-        
+
     </head>
-    <body>
-        
-       
+    <body>      
         <div class="row">
             <div class="perfil col s8">
                 <div class='barra'></div>
@@ -53,19 +51,25 @@
                         <%}%>
                     </div>    
                 </div>
-                   
+
             </div>
             <div class="mapa col s4">
                 <div id="map"></div>
-                <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqQdsFpuwxCwJcv_mFXDemq3DQRApLdJY&callback=initMap">  
+                <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqQdsFpuwxCwJcv_mFXDemq3DQRApLdJY&callback=initMap">
                 </script>
             </div>
-            </div>       
-         <div class="input-field" >
-            <a class="waves-effect waves-light btn modal-trigger" href="#updateOffererInf" style="margin: 20px!important">Editar perfil </a>
-         </div>  
+        </div>       
+        <div class="input-field" >
+            <% Offerer o = (Offerer) session.getAttribute("offerer");%>
+            <%if (o != null) {%>
+            <a class="waves-effect waves-light btn modal-trigger" 
+               href="#updateOffererInf" style="margin: 20px!important">Editar perfil </a>
+            <%}%>
+            <a class="waves-effect waves-light btn modal-trigger" 
+               href="agregarHabilidades" style="margin: 20px!important">Agregar Habilidades </a>
+        </div>  
         <%@include file="footer.jspf"%>
-        
+
     </body>
 
 

@@ -149,6 +149,14 @@
         <servlet-name>AgregarCategorias</servlet-name>
         <url-pattern>/redireccionar</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AgregarCategorias</servlet-name>
+        <url-pattern>/agregarHabilidades</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AgregarCategorias</servlet-name>
+        <url-pattern>/redireccionarHabilidades</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

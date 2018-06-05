@@ -9,9 +9,11 @@ import Empleate.domain.Category;
 import Empleate.domain.Company;
 import Empleate.domain.Login;
 import Empleate.domain.Manager;
+import Empleate.domain.Offerer;
 import Empleate.logica.CategoryModel;
 import Empleate.logica.CompanyModel;
 import Empleate.logica.LoginModel;
+import Empleate.logica.offerCategoryModel;
 import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,11 +32,12 @@ import javax.servlet.http.HttpSession;
  *
  * @author Andrés Gutiérrez
  */
-@WebServlet(name = "AgregarCategorias", urlPatterns = {"/agregarAdmin","/redireccionar"})
+@WebServlet(name = "AgregarCategorias", urlPatterns = {"/agregarAdmin", "/redireccionar", "/agregarHabilidades"})
 public class AgregarCategorias extends HttpServlet {
-    
-     ArrayList<Category> categories = CategoryModel.instance().findAllCategories();
-     String error = "";
+
+    ArrayList<Category> categories = CategoryModel.instance().findAllCategories();
+    String error = "";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         switch (request.getServletPath()) {
@@ -44,56 +47,97 @@ public class AgregarCategorias extends HttpServlet {
             case "/redireccionar":
                 this.doRedireccionar(request, response);
                 break;
+            case "/agregarHabilidades":
+                this.doAgregarHabilidades(request, response);
+                break;
+            case "/redireccionarHabilidades":
+                this.doRedireccionarHabilidades(request, response);
+                break;
         }
 
     }
-    
-    
-    
+
     private void doAgregarCatAdmin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             HttpSession s = request.getSession(true);
-            request.setAttribute("categories", categories);           
-            
-            request.setAttribute("error", error); 
+            request.setAttribute("categories", categories);
+
+            request.setAttribute("error", error);
             request.getRequestDispatcher("AgregarCategorias.jsp").forward(request, response);
         } catch (Exception e) {
             String error = e.getMessage();
             response.setStatus(401); //add successfull
         }
     }
-    
-       private void doRedireccionar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    private void doAgregarHabilidades(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            HttpSession s = request.getSession(true);
+            request.setAttribute("categories", categories);
+
+            request.setAttribute("error", error);
+            request.getRequestDispatcher("AgregarHabilidades.jsp").forward(request, response);
+        } catch (Exception e) {
+            String error = e.getMessage();
+            response.setStatus(401); //add successfull
+        }
+    }
+
+    private void doRedireccionar(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         try {
             HttpSession s = request.getSession(true);
             Category ct = new Category();
             String nomb = request.getParameter("nombre");
             String scod = request.getParameter("codCat");
-            int cod=0;
-            if(scod !=""){
+            int cod = 0;
+            if (scod != "") {
                 cod = Integer.parseInt(scod);
-            }     
+            }
             //verificar que esa categoria no sea repetida x el nombre
-            for (Category c:categories) {
+            for (Category c : categories) {
                 if (c.getNameCategory().toLowerCase().equals(nomb.toLowerCase())) {
                     throw new Exception("Nombre repetido");
                 }
             }
-            
+
             //insertar            
             CategoryModel.instance().insertarCategory(nomb, cod);
-            
-            request.setAttribute("categories", categories);    
-            Manager m = (Manager) s.getAttribute("manager"); 
-            request.getRequestDispatcher("visMan?idMan="+m.getLogin()).forward(request, response);
+
+            request.setAttribute("categories", categories);
+            Manager m = (Manager) s.getAttribute("manager");
+            request.getRequestDispatcher("visMan?idMan=" + m.getLogin()).forward(request, response);
         } catch (Exception e) {
             String error1 = e.getMessage();
-            request.setAttribute("error", error1);            
-            request.setAttribute("categories", categories); 
+            request.setAttribute("error", error1);
+            request.setAttribute("categories", categories);
             request.getRequestDispatcher("AgregarCategorias.jsp").forward(request, response);
         }
     }
-    
+
+    private void doRedireccionarHabilidades(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            HttpSession s = request.getSession(true);
+            Category ct = new Category();
+            Offerer o = (Offerer) s.getAttribute("offerer");
+            
+            String scod = request.getParameter("codCat");
+            String per = request.getParameter("porcHab");
+            int cod = Integer.parseInt(scod);
+            int pern = Integer.parseInt(per);
+            //insertar            
+            offerCategoryModel.instance().insertarOfferCategory(o.getIdOfferer(), cod, pern);// todos paramentros enteros
+
+            request.setAttribute("categories", categories);
+            request.getRequestDispatcher("visPubOff?idOf=" + o.getIdOfferer()).forward(request, response);
+        } catch (Exception e) {
+            String error1 = e.getMessage();
+            request.setAttribute("error", error1);
+            request.setAttribute("categories", categories);
+            request.getRequestDispatcher("AgregarCategorias.jsp").forward(request, response);
+        }
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -133,6 +177,5 @@ public class AgregarCategorias extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 
 }
