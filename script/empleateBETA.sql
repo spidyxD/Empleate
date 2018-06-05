@@ -39,12 +39,12 @@ CREATE TABLE Manager (
 CREATE TABLE Company (
   idCompany INT NOT NULL  AUTO_INCREMENT,
   name_company VARCHAR(45) NULL,
-  email VARCHAR(45) NULL,
+  email VARCHAR(45) NOT NULL UNIQUE,
   phone VARCHAR(45) NULL,
-  description VARCHAR(45) NULL,
+  description VARCHAR(250) NULL,
   location_X double,
   location_Y double,
-  address VARCHAR(45) NULL,
+  address VARCHAR(250) NULL,
   login INT NOT NULL UNIQUE,
   active INT,
   PRIMARY KEY (idCompany),
@@ -62,12 +62,13 @@ CREATE TABLE Offerer(
   name_offerer VARCHAR(45) NULL,
   lastname VARCHAR(45) NULL,
   nationality VARCHAR(45) NULL,
-  email VARCHAR(45) NULL,
+  email VARCHAR(45) NOT NULL UNIQUE,
   phone VARCHAR(45) NULL,
   location_X double,
   location_Y double,
-  residence VARCHAR(45) NULL,
+  residence VARCHAR(250) NULL,
   login INT NOT NULL UNIQUE,
+  active int,
   PRIMARY KEY (idOfferer),
    CONSTRAINT fkOfferer FOREIGN KEY (login) REFERENCES Login(idLogin));
 
@@ -205,10 +206,8 @@ insert into Job (name_Job, description_Job,salary, type_Job, comp, status_Job) v
 insert into Job (name_Job, description_Job,salary, type_Job, comp, status_Job) values('Developer','Junior Java',3750000,'private',3,1);
 insert into Job (name_Job, description_Job,salary, type_Job, comp, status_Job) values('Manager','loquesea Java',3750000,'public',3,1);
 
-
-insert into Offerer (name_offerer, lastname, nationality, phone, email,location_X,location_Y, residence,login) values ('Andres','Gutierrez','CR','61688613','a@gmail.com',100.96,93.58,'Heredia',8);
-insert into Offerer (name_offerer, lastname, nationality, phone, email,location_X,location_Y, residence,login) values ('Roger','Amador','CR','83656107','r@gmail.com',100.96,93.58,'Desamparados',9);
-
+insert into Offerer (name_offerer, lastname, nationality, phone, email,location_X,location_Y, residence,login,active) values ('Andres','Gutierrez','CR','61688613','a@gmail.com',100.96,93.58,'Heredia',8,1);
+insert into Offerer (name_offerer, lastname, nationality, phone, email,location_X,location_Y, residence,login,active) values ('Roger','Amador','CR','83656107','r@gmail.com',100.96,93.58,'Desamparados',9,0);
 
 
 
