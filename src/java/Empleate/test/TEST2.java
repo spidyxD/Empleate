@@ -18,11 +18,8 @@ import java.util.ArrayList;
  */
 public class TEST2 {
     public static void main(String[] arg) throws Exception{
-       Offerer  off = new Offerer();
-       off.setIdOfferer(2);
-       off.setLogin(9);
-       off.setPhone("85732292");
-        OffererModel.instance().updateOfferer(off);
+          String n = "ANDRES";
+          System.out.println(n.toLowerCase().equals(n.toLowerCase()));
     }
     
 }

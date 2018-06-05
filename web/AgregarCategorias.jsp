@@ -30,8 +30,8 @@
         </script>
     </head>
     <body>
-
         <jsp:useBean id="categories" scope="request" type="ArrayList<Category>" />
+        <jsp:useBean id="error" scope="request" type="String" />
         <%@include file="header.jspf"%>
 
         <div class="container">
@@ -51,14 +51,17 @@
                         <a class="btn" href="javascript:mostrar();">Seleccionar un categoria</a>
                     </div> 
                     <div id="resumen">
-                        <input id="codCat" type="text" name="nombre" class="validate" value="">
-                        <input id="myCat" type="text" name="nombre" class="validate" value="">
+                        <input id="codCat" type="text" name="codCat" class="validate" value="">
+                        <input id="myCat" type="text" name="myCat" class="validate" value="">
                     </div>
                     <div>
                          <input class="btn"  type="submit" value="Agregar" style="margin-top: 10px;">
                     </div>
                 </form>
             </div>
+                <%if(!error.equals("")){%>
+            <p style="color:red;"><%=error%></p>
+            <%}%>
         </div>
         <%@include file="footer.jspf"%>
         <!--JavaScript at end of body for optimized loading-->

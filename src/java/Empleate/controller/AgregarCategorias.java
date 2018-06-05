@@ -34,7 +34,7 @@ import javax.servlet.http.HttpSession;
 public class AgregarCategorias extends HttpServlet {
     
      ArrayList<Category> categories = CategoryModel.instance().findAllCategories();
-
+     String error = "";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         switch (request.getServletPath()) {
@@ -55,6 +55,7 @@ public class AgregarCategorias extends HttpServlet {
             HttpSession s = request.getSession(true);
             request.setAttribute("categories", categories);           
             
+            request.setAttribute("error", error); 
             request.getRequestDispatcher("AgregarCategorias.jsp").forward(request, response);
         } catch (Exception e) {
             String error = e.getMessage();
@@ -65,26 +66,31 @@ public class AgregarCategorias extends HttpServlet {
        private void doRedireccionar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             HttpSession s = request.getSession(true);
-            
             Category ct = new Category();
             String nomb = request.getParameter("nombre");
             String scod = request.getParameter("codCat");
             int cod=0;
-            
             if(scod !=""){
                 cod = Integer.parseInt(scod);
+            }     
+            //verificar que esa categoria no sea repetida x el nombre
+            for (Category c:categories) {
+                if (c.getNameCategory().toLowerCase().equals(nomb.toLowerCase())) {
+                    throw new Exception("Nombre repetido");
+                }
             }
             
-            //insertar
-            
+            //insertar            
             CategoryModel.instance().insertarCategory(nomb, cod);
             
-            request.setAttribute("categories", categories);           
+            request.setAttribute("categories", categories);    
             Manager m = (Manager) s.getAttribute("manager"); 
             request.getRequestDispatcher("visMan?idMan="+m.getLogin()).forward(request, response);
         } catch (Exception e) {
-            String error = e.getMessage();
-            request.getRequestDispatcher("error.jsp").forward(request, response);
+            String error1 = e.getMessage();
+            request.setAttribute("error", error1);            
+            request.setAttribute("categories", categories); 
+            request.getRequestDispatcher("AgregarCategorias.jsp").forward(request, response);
         }
     }
     

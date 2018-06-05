@@ -171,8 +171,8 @@ public class categoryDAO extends HibernateUtil implements IBaseDAO<Category, Int
         try {
             String sql;
             if(padre==0){
-              sql = "insert into Category (name_Category,isRoot,isDad) values('"+nom+"',0,0);";            
-            }else{
+              sql = "insert into category (name_Category,isRoot,isDad) values('"+nom+"',1,0);";            
+            }else{//si tiene un papa
               sql = "insert into category(parentCategory,name_Category,isRoot,isDad) values("+padre+",'"+nom+"',0,0);";
             }
             operationStart();           
