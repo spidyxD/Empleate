@@ -123,8 +123,8 @@ public class jobDAO extends HibernateUtil implements IBaseDAO<Job, Integer> {
         try {
             operationStart();                    
              String sql = "select job.idJob,job.name_job,job.description_job,salary,type_job,job.comp,job.status_job from "
-                        + "company,job,jobCategory,category where company.idCompany=job.comp and job.idJob=jobCategory.j and jobCategory.cat = category.idCategory and " +
-                         "company.location_X <=" + x + " and company.location_Y <= "+ y;
+                        + "company,job,jobCategory,category where company.idCompany=job.comp and job.idJob=jobCategory.j and jobCategory.cat = category.idCategory";
+                         //"company.location_X <=" + x + " and company.location_Y <= "+ y;
                         for(int i=0;i<cat.size();i++){
              sql = sql + " and jobCategory.cat="        
                         + cat.get(i).intValue() +" and jobCategory.percentage=" + Integer.valueOf(p.get(i));
@@ -172,8 +172,8 @@ public class jobDAO extends HibernateUtil implements IBaseDAO<Job, Integer> {
             
          
              String sql = "select job.idJob,job.name_job,job.description_job,salary,type_job,job.comp,job.status_job from "
-                        + "company,job,jobCategory,category where company.idCompany=job.comp and job.idJob=jobCategory.j and jobCategory.cat = category.idCategory and " +
-                         "company.location_X <=" + x + " and company.location_Y <= "+ y;
+                        + "company,job,jobCategory,category where company.idCompany=job.comp and job.idJob=jobCategory.j and jobCategory.cat = category.idCategory "; 
+                        // "company.location_X <=" + x + " and company.location_Y <= "+ y;
                         for(int i=0;i<cat.size();i++){
              sql = sql + " and jobCategory.cat="        
                         + cat.get(i).intValue() +" and jobCategory.percentage=" + Integer.valueOf(p.get(i));
