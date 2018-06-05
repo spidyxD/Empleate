@@ -17,7 +17,7 @@
     <body>
         <%@include file="header.jspf"%>
         <h1>Resultados</h1>
-        <jsp:useBean id="jobsByCategory" scope="request" type="List<Job>" class="java.util.ArrayList"/>
+       
         <!-- -->
         <div class="container">
         <table>
@@ -29,19 +29,12 @@
                     <th>Empresa</th>
                 </tr>
             </thead>
-            <%for (Job j : jobsByCategory) {%>   
-            <tbody>
-                <tr>
-                    <td><%=j.getNameJob()%></td>
-                    <td><%=j.getDescriptionJob()%></td>
-                    <td><%=j.getSalary()%>&nbsp colones</td>
-                    <td><%=j.getCompany().getNameCompany()%></td>
-                </tr>
-             <%}%>
+            <tbody id="results">
+                
             </tbody>
         </table>
         <!-- -->
-        <h>Resultados de busqueda: <%=jobsByCategory.size()%></h><br><br>
+        <h>Resultados de busqueda: </h><br><br>
         <a class="col s2 btn mybtn" href="iniciar">Regresar </a><br><br>
         </div>
         <%@include file="footer.jspf"%>

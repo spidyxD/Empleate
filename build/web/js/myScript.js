@@ -32,8 +32,9 @@ function autoplay() {
     }
     
     function giveLat(){
-        var x = marker.getPosition().lat();
-        showX(x);       
+        localeHX = marker.getPosition().lat();         
+        //showX(localeHX);
+        
     }        
 
     function showY(y){
@@ -41,8 +42,9 @@ function autoplay() {
     }
     
     function giveLng(){
-        var y = marker.getPosition().lng();  
-        showY(y);     
+       localeHY = marker.getPosition().lng(); 
+        //showY(localeHY);
+        
     }
     //envia el porcentaje escogido en la categoria seleccionada
     function givePercent(i){
@@ -387,26 +389,27 @@ function autoplay() {
       });    
     }
       // FUNCIONES NECESARIAS PARA LA BUSQUEDAS POR CATEGORIAS, UBICACION Y PORCENTAJE!
-      function addElementToSearch(){
-        location = {localeHX:localeHX,localeHY:localeHY}; 
+      function addElementToSearch(localeHX,localeHY){
+        $("#results").hide();
+        ubicacion = {localeHX:localeHX,localeHY:localeHY}; 
         data=new FormData();
         data.append("categories",JSON.stringify(ids));
         data.append("percents",JSON.stringify(percents));
-        data.append("location",JSON.stringify(location));
-        
+        data.append("location",JSON.stringify(ubicacion));        
         $.ajax({type: "POST", 
-        url:"consultaPublica", 
+        url:"consultas", 
         data: data, 
         dataType:"json",
         processData: false,
         contentType: false,     
         success: 
           function(obj){
-              location.href = "ResultadosBusquedas.jsp";
+              buildTableJobs(obj);
+             
           },
-        error: function(status){
-              window.alert("No se han encontrado resultados de busqueda!");
-          }                    
+       error: function(jqXHR, textStatus, errorThrown){
+                    window.alert(errorThrown);
+                }                 
       });    
           
       }
@@ -432,13 +435,8 @@ function autoplay() {
            
       }
       function getLocateS(){
-          if(localeHX === null){
-              localeHX = 0,0;
-          }
-          else if(localeHY === null){
-              localeHY = 0,0;
-          }
-          console.log(localeHX + " " + localeHY);
+          localeHX = marker.getPosition().lat();
+          localeHY = marker.getPosition().lng();
       }
       function clean(r,p){
           window.confirm("desea borrar el historial de categorias de la busqueda?")
@@ -448,3 +446,25 @@ function autoplay() {
           $("#resumen").children("li").remove();
           }
       }
+      
+      // PARA EL RESULTADO DE LA BUSQUEDA DE PUESTOS
+      function buildTableJobs(obj) {          
+          $("#results").show();
+        var op;
+        for (var i = 0; i < obj.length; i++) {
+            if(obj[i].statusJob === 1){
+            op = "<td>" + "disponible" + "</td>";
+            }else{
+            op = "<td>" + "no disponible" + "</td>";    
+            }
+            tr = $("<tr />");           
+            
+            tr.html( 
+                    "<td>" + obj[i].nameJob + "</td>" +
+                    "<td>" + obj[i].descriptionJob + "</td>" +
+                    "<td>" + obj[i].salary + "</td>" +
+                    "<td>"+"company"+"</td>" +
+                    op);
+            $("#results").append(tr);
+        }
+    }

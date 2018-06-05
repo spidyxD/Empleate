@@ -74,8 +74,8 @@ public class JobModel {
     }
 
     //Busca las categorias con nombre c (tiene pinta de ser el que busca privadamente)
-    public List findGeneralJobByCategory(String c, String id,double x,double y) throws Exception {
-        List<Job> jobs = jDAO.findGeneralByCategory(c, id,x,y);
+    public List findGeneralJobByCategory(List<Double> c, List<String> p,double x,double y) throws Exception {
+        List<Job> jobs = jDAO.findGeneralByCategory(c, p, x, y);
         List<Job> njobs = new ArrayList();//
         try {
             for (int i = 0; i < jobs.size(); i++) {
@@ -99,15 +99,6 @@ public class JobModel {
         return null;
     }
 
-    public List getAllJobsByCategory(HashMap<Category, String> resumen,double x,double y) throws Exception {
-        List<Category> ls = new ArrayList<>();// para ir colocando los resultados
-        Iterator<Map.Entry<Category, String>> entries = resumen.entrySet().iterator();
-        while (entries.hasNext()) {
-            Map.Entry<Category, String> entry = entries.next();
-            ls.addAll(findGeneralJobByCategory(((Category)entry.getKey()).getNameCategory(),entry.getValue(),x,y));
-        }
-        return ls;
-    }
     
 
     public List<Job> findAllJobs() throws Exception {

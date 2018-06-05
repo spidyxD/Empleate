@@ -139,7 +139,6 @@ public class updateInf extends HttpServlet {
         catch (Exception e) {
             String error = e.getMessage();
             request.setAttribute("error", error);
-            ;
             response.setStatus(400); //si hay un error en el envio de la ubicacion
             request.getRequestDispatcher("registCompany.jsp").forward(request, response);
         }

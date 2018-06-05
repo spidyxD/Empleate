@@ -2,6 +2,7 @@ package Empleate.domain;
 // Generated 12/03/2018 12:06:18 AM by Hibernate Tools 4.3.1
 
 
+import com.google.gson.annotations.Expose;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,13 +12,13 @@ import java.util.Set;
 public class Job  implements java.io.Serializable {
 
 
-     private int idJob;
-     private Company company;
-     private String nameJob;
-     private String descriptionJob;
-     private Integer salary;
-     private String typeJob;
-     private Integer statusJob;
+     @Expose private int idJob;
+     @Expose private Company company;
+     @Expose private String nameJob;
+     @Expose private String descriptionJob;
+     @Expose private Integer salary;
+     @Expose private String typeJob;
+     @Expose private Integer statusJob;
      private Set<Jobcategory> jobcategories = new HashSet<Jobcategory>(0);
 
     public Job() {

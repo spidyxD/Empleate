@@ -131,6 +131,7 @@
             var percents = [];
             var localeHX = 0;
             var localeHY =0;
+            var rs =0;
         </script>       
         <div class="row">            
         <div class="col s6">
@@ -212,7 +213,12 @@
                   <%}%>
                                            
             </ul>
-            </div>  
+            </div>
+                <a class="col s2 btn mybtn" onclick="clean(review,percents)"> Borrar </a>
+                <h1 id="isLogin" data-value="<%=login.getUsername()%>"></h1>
+                <script>var isLogin= $("#isLogin").data("value") </script>
+                <a class="col s2 btn mybtn" onclick="addElementToSearch(localeHX,localeHY)">Buscar</a>
+
          </div>              
   
          <script>
@@ -220,7 +226,7 @@
             $('.collapsible').collapsible();            
             });  
              
-        </script>          
+        </script>
         <div class="col s6">
         <div class="container map">
          <input id="pac-input" class="controls" type="text" placeholder="Search Box">
@@ -383,14 +389,14 @@
           map: map});
           console.log(marker.getPosition().lat()+" "+marker.getPosition().lng());
        }
-        localeHX = marker.getPosition().lat();
-        localeHY = marker.getPosition().lng();
     }
+    
      </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXHkW8XZy3R2tQa_326VbuFp29wDJ93Qw&libraries=places&callback=load_peta"></script>
      </div>  
                
-        </div>    
+        </div> 
+      
         </div>
              <div class = "row">       
              <div class="input-field col s6">
@@ -400,23 +406,39 @@
              <input name="localeY" id="localeY" type="value" class="validate" readonly hidden>
             </div>
              </div>
-            <h5>Categorias seleccionadas</h5>
+            <div class="row">
+         <div class="col s2">
+             <h1>Catgorias seleccionadas</h1>  
             <div class="resumen row" id="history">
                 
                 <ul id="resumen">
                     
                 </ul>
                 
-            </div>       
-           <div class="row">
-                <a class="col s2 btn mybtn" onclick="clean(review,percents)"> Limpiar consulta </a>
-                <h1 id="isLogin" data-value="<%=login.getUsername()%>"></h1>
-                <script>var isLogin= $("#isLogin").data("value") </script>
-                <a class="col s2 btn mybtn" onclick="addElementToSearch()">Consultar</a>
+            </div>    
+        </div>
+        <div class="col s10">     
+            <div class="container">
+            <h1>Resultados</h1>    
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripcion</th>
+                        <th>Salario</th>
+                        <th>Empresa</th>
+                        <th>Condicion</th>
+                    </tr>
+                </thead>
+                <tbody id="results">
+
+                </tbody><br>
+            </table>
+            <!-- -->
+            <h3 id="rss">  </h3><br><br>
             </div>
-           
-           
-            
+        </div>   
+        </div>   
             
            <h id="log"> <%=login.getUsername()%></h>
    

@@ -9,10 +9,10 @@ package Empleate.domain;
  *
  * @author Addiel
  */
-public class Location {
+public class Ubicacion {
     double localeHX;
     double localeHY;
-    public Location() {
+    public Ubicacion() {
     }
 
     public double getLocaleHX() {

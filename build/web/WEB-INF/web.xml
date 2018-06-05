@@ -83,7 +83,10 @@
         <servlet-name>consultasEmpleate</servlet-name>
         <url-pattern>/consultaPrivada</url-pattern>
     </servlet-mapping>
-     
+     <servlet-mapping>
+        <servlet-name>consultasEmpleate</servlet-name>
+        <url-pattern>/consultas</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>consultasEmpleate</servlet-name>
         <url-pattern>/consultarOffrers</url-pattern>

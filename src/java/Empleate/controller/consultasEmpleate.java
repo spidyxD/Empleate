@@ -6,10 +6,14 @@
 package Empleate.controller;
 
 import Empleate.domain.Category;
-import Empleate.domain.Location;
+import Empleate.domain.Job;
+import Empleate.domain.Login;
+import Empleate.domain.Ubicacion;
 import Empleate.logica.CategoryModel;
 import Empleate.logica.JobModel;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -30,7 +34,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Addiel
  */
-@WebServlet(name = "consultasEmpleate", urlPatterns = {"/consultaPublica", "/iniciar", "/consultaPrivada", "/consultarOffrers", "/desplegar"})
+@WebServlet(name = "consultasEmpleate", urlPatterns = {"/consultas","/consultaPublica", "/iniciar", "/consultaPrivada", "/consultarOffrers", "/desplegar"})
 @MultipartConfig
 public class consultasEmpleate extends HttpServlet {
 
@@ -50,12 +54,17 @@ public class consultasEmpleate extends HttpServlet {
     String pr = "";
     HashMap<Category, String> resumenCompleto = new HashMap();//nuevo resumen
     double x, y = 0;
-    List jobs = new ArrayList();
+    List<Job> jobs = new ArrayList();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         switch (request.getServletPath()) {
             //Para Jobs
+            case "/consultas":
+                System.out.print("AQUI ENTRE");
+                this.doSearchJobsByCategory(request, response);
+                break;
             case "/consultaPublica"://Publico
                 this.doSearchPublicJobsByCategory(request, response);
                 break;
@@ -162,7 +171,7 @@ public class consultasEmpleate extends HttpServlet {
             Gson gson = new Gson();
             List<Double> cats = gson.fromJson(readerCats, List.class);
             List<String> perc = gson.fromJson(readerPerc, List.class);
-            Location lc = gson.fromJson(readerLoc, Location.class);
+            Ubicacion lc = gson.fromJson(readerLoc, Ubicacion.class);
             System.out.println(cats.size());
             System.out.println(perc.size());
             double lx = lc.getLocaleHX();
@@ -198,7 +207,7 @@ public class consultasEmpleate extends HttpServlet {
             Gson gson = new Gson();
             List<String> cats = gson.fromJson(readerCats, List.class);
             List<String> perc = gson.fromJson(readerPerc, List.class);
-            Location lc = gson.fromJson(readerLoc, Location.class);
+            Ubicacion lc = gson.fromJson(readerLoc, Ubicacion.class);
             System.out.println(cats.size());
             System.out.println(perc.size());
             double lx = lc.getLocaleHX();
@@ -262,6 +271,49 @@ public class consultasEmpleate extends HttpServlet {
 
     private void doSearchOfferers(HttpServletRequest request, HttpServletResponse response) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void doSearchJobsByCategory(HttpServletRequest request, HttpServletResponse response) {
+         try {
+            HttpSession s = request.getSession(true);
+            BufferedReader readerCats = new BufferedReader(new InputStreamReader(request.getPart("categories").getInputStream()));
+            BufferedReader readerLoc = new BufferedReader(new InputStreamReader(request.getPart("location").getInputStream()));
+            BufferedReader readerPerc = new BufferedReader(new InputStreamReader(request.getPart("percents").getInputStream()));
+            PrintWriter out = response.getWriter();
+            Gson gson = new Gson();
+            Gson gson2 = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+            java.lang.reflect.Type listType = new TypeToken<ArrayList<Job>>() {
+            }.getType();
+            List<Double> cats = gson.fromJson(readerCats, List.class);
+            List<String> perc = gson.fromJson(readerPerc, List.class);
+            Ubicacion lc = gson.fromJson(readerLoc, Ubicacion.class);
+            System.out.println(cats.size());
+            System.out.println(perc.size());
+            double lx = lc.getLocaleHX();
+            System.out.println(lx);
+            Login l = (Login)s.getAttribute("login");
+            if(l.getUsername().isEmpty()){
+            jobs = JobModel.instance().findPublicJobByCategory(cats, perc, lc.getLocaleHX(), lc.getLocaleHY());
+            }else {
+            jobs = JobModel.instance().findGeneralJobByCategory(cats, perc, lc.getLocaleHX(), lc.getLocaleHY());
+            }
+            System.out.println(jobs.size());
+            if(!jobs.isEmpty()){
+             response.setContentType("application/json; charset=UTF-8");             
+             out.write(gson2.toJson(jobs,listType));
+             response.setStatus(200); //search successfull
+            }
+            else{
+              String error = l.getUsername()+" No se han encontrado puestos ";  
+              response.setStatus(400,error); //search failed 
+            }
+            jobs.clear();
+           
+            
+        } catch (Exception e) {
+            String error = e.getMessage();
+             response.setStatus(400,error); //search failed 
+        }
     }
 
 }
