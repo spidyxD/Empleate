@@ -54,4 +54,8 @@ public class jobCategoryModel {
         return null;
     }
     
+     public void insertarJobCategory(int job, int cat, int por) {
+        jcD.insertarJobCategory(job, cat, por);
+     }
+    
 }

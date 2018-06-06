@@ -25,7 +25,7 @@
             <h4>Formulario para registro de Oferentes</h4>
             
             <div class="row">
-                <form enctype="multipart/form-data" id="formularioOff" action="javascript:uploadOfferer_CV();" method="post" class="col s12">
+                <form enctype="multipart/form-data" id="formularioOff" action="javascript:uploadOfferer_CV(localeHX,localeHY);" method="post" class="col s12">
                     <div class="row">
                         <div class="input-field col s4">
                             <input id="nombre" type="text" name="nombre" class="validate" value="">
@@ -72,11 +72,11 @@
                     <div class="row">
 
                         <div class="input-field col s6">
-                            <input  name="username" id="userNa" type="text" class="validate" value="">
+                            <input  name="username" id="userO" type="text" class="validate" value="">
                             <label for="username">Username</label>
                         </div>
                         <div class="input-field col s6">
-                            <input name="password" id="keyp" type="password" name="password" class="validate"  value="">
+                            <input name="password" id="keyO" type="password" name="password" class="validate"  value="">
                             <label for="password">Password</label>
                             <p>
                             <label>
@@ -86,7 +86,7 @@
                             </p>
                             <script>
                             function showPass() {
-                                var x = document.getElementById("keyp");
+                                var x = document.getElementById("keyO");
                                 if (x.type === "password") {
                                     x.type = "text";
                                 } else {
@@ -102,7 +102,7 @@
                     </div>
                      <div class="input-field col s6">
                          
-                        <fieldset id="camposSet">
+                        <fieldset>
                           <legend>Agregar Curriculum</legend>
                           <input class="btn" type="file" name="pdf" id="pdf">
                         </fieldset>        
@@ -112,7 +112,7 @@
                 </form>
             </div>
         </div>
-        <div class="error" id="error">
+        <div class="error">
             <%if (error != null) {%>
             <p><%=error%></p>
             <%}%>

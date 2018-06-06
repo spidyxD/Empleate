@@ -18,92 +18,95 @@ import org.hibernate.HibernateException;
  *
  * @author Addiel
  */
-public class offerCategoryDAO extends HibernateUtil implements IBaseDAO <Offercategory,Integer> {
+public class offerCategoryDAO extends HibernateUtil implements IBaseDAO<Offercategory, Integer> {
 
     @Override
     public void add(Offercategory o) {
-        try{
+        try {
             operationStart();
             getSesion().save(o);
             getTransac().commit();
-        }
-        catch(HibernateException he){
+        } catch (HibernateException he) {
             handleException(he);
             throw he;
-        }
-        finally{
-        getSesion().close();
+        } finally {
+            getSesion().close();
         }
     }
 
     @Override
     public Offercategory merge(Offercategory o) {
-         try{
+        try {
             operationStart();
-            o = (Offercategory)getSesion().merge(o);
+            o = (Offercategory) getSesion().merge(o);
             getTransac().commit();
-        }
-        catch(HibernateException he){
+        } catch (HibernateException he) {
             handleException(he);
             throw he;
+        } finally {
+            getSesion().close();
         }
-        finally{
-        getSesion().close();
-        }
-         return o;
+        return o;
     }
 
     @Override
     public void delete(Offercategory o) {
-         try{
+        try {
             operationStart();
             getSesion().delete(o);
             getTransac().commit();
-        }
-        catch(HibernateException he){
+        } catch (HibernateException he) {
             handleException(he);
             throw he;
-        }
-        finally{
-        getSesion().close();
+        } finally {
+            getSesion().close();
         }
     }
 
     @Override
     public Offercategory findById(Integer id) {
         Offercategory oc = null;
-         try{
+        try {
             operationStart();
-            oc = (Offercategory)getSesion().get(Offercategory.class,id);
+            oc = (Offercategory) getSesion().get(Offercategory.class, id);
             getTransac().commit();
-        }
-        catch(HibernateException he){
+        } catch (HibernateException he) {
             handleException(he);
             throw he;
+        } finally {
+            getSesion().close();
         }
-        finally{
-        getSesion().close();
-        }
-         return oc;
+        return oc;
     }
 
     @Override
     public List<Offercategory> findAll() {
-          List<Offercategory> listOC = new ArrayList();
-         try{
+        List<Offercategory> listOC = new ArrayList();
+        try {
             operationStart();
             listOC = getSesion().createQuery("from offerCategory").list();
             getTransac().commit();
-        }
-        catch(HibernateException he){
+        } catch (HibernateException he) {
             handleException(he);
             throw he;
+        } finally {
+            getSesion().close();
         }
-        finally{
-        getSesion().close();
-        }
-    return listOC;
+        return listOC;
     }
-   
-    
+
+    public void insertarOfferCategory(int id, int cat, int por) {
+        try {
+            String sql;
+            sql = "insert into offerCategory (offer, cat, percentage)values("+id+","+cat+","+por+");";
+            operationStart();
+            getSesion().createSQLQuery(sql).executeUpdate();
+            getTransac().commit();
+        } catch (HibernateException he) {
+            handleException(he);
+            throw he;
+        } finally {
+            getSesion().close();
+        }
+    }
 }
