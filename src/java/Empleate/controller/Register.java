@@ -36,7 +36,7 @@ import javax.servlet.http.Part;
  *
  * @author Addiel
  */
-@WebServlet(name = "Register", urlPatterns = {"/Register", "/RegistroCompany", "/RegistroOffer", "/uploadPDF"})
+@WebServlet(name = "Register", urlPatterns = {"/Register", "/RegistroCompany", "/RegistroOffer"})
 @MultipartConfig
 public class Register extends HttpServlet {
 
@@ -61,17 +61,13 @@ public class Register extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         switch (request.getServletPath()) {
-            case "Register":
-                this.goToRegister(request, response);
-                break;
             case "/RegistroCompany":
                 this.doRegisterCompany(request, response);
                 break;
             case "/RegistroOffer":
                 this.doRegisterOfferer(request, response);
                 break;
-            case "/uploadPDF":
-                this.doUploadPdf(request, response);
+           
         }
     }
 
@@ -114,10 +110,6 @@ public class Register extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void goToRegister(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     private void doRegisterCompany(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             HttpSession s = request.getSession(true);
@@ -135,7 +127,7 @@ public class Register extends HttpServlet {
             l.setIdLogin(0);
             l.setType_log("company");
             l.setEnable(0);
-            if (LoginModel.instance().findLoginByUserName(l.getUsername()) != null|| !c.getPhone().matches(regex)) {
+            if (LoginModel.instance().findLoginByUserName(l.getUsername()) != null || !c.getPhone().matches(regex)) {
                 throw new Exception("USUARIO YA EXISTE o EL TELEFONO DEBE SER SOLO NUMEROS");
             } else {
 
@@ -157,7 +149,7 @@ public class Register extends HttpServlet {
         } catch (Exception e) {
             String error = e.getMessage();
             request.setAttribute("error", error);
-            response.setStatus(400,error); //add successfull
+            response.setStatus(401,error); //add successfull
         }
     }
 
@@ -165,22 +157,22 @@ public class Register extends HttpServlet {
 
         try {
             HttpSession s = request.getSession(true);
-            boolean trouble = false;
             Reader offererReader = new BufferedReader(new InputStreamReader(request.getPart("offerer").getInputStream()));
             Gson gson = new Gson();
             PrintWriter out = response.getWriter();
             Reader loginReader = new BufferedReader(new InputStreamReader(request.getPart("login").getInputStream()));
-
-            Login login = gson.fromJson(loginReader, Login.class);
-            System.out.println(login.getUsername());
-
+            
             Offerer offerer = gson.fromJson(offererReader, Offerer.class);
             System.out.println(offerer.getNameOfferer());
+            
+            Login login = gson.fromJson(loginReader, Login.class);
+            System.out.println(login.getUsername());
 
             login.setIdLogin(0);
             login.setEnable(1);
             login.setType_log("offerer");
-            if (LoginModel.instance().findLoginByUserName(login.getUsername()) != null || !offerer.getPhone().matches(regex)) {
+            if (LoginModel.instance().findLoginByUserName(login.getUsername()) != null
+                    || !offerer.getPhone().matches(regex)) {
                 throw new Exception("USUARIO YA EXISTE o EL TELEFONO DEBE SER SOLO NUMEROS");
             } else {
                 LoginModel.instance().addLogin(login);
@@ -215,11 +207,8 @@ public class Register extends HttpServlet {
         } catch (Exception e) {
             String error = e.getMessage();
             request.setAttribute("error", error);
-            response.setStatus(400,error); // error with content
+            response.setStatus(401,error); // error with content
         }
     }
 
-    private void doUploadPdf(HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException, IOException, ServletException {
-
-    }
 }

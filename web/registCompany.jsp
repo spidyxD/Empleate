@@ -26,7 +26,7 @@
         <div class="cuerpo container"><!-- nom,apel,nation,phone,email,recidence**login** -->
             <h4>Formulario para registro de Empresas</h4>
             <div class="row">
-                <form action="javascript:addComp();" id="formularioComp" method="post" class="col s12">
+                <form action="javascript:addComp(localeHX,localeHY);" id="formularioComp" method="post" class="col s12">
                     <div class="row">
                         <div class="input-field col s4">
                             <input name="nombreEmpresa" id="nombreEmpresa" type="text" class="validate"> 
@@ -71,11 +71,11 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s6">
-                            <input name="username" id="userNc" type="text" class="validate" >
+                            <input name="username" id="userNC" type="text" class="validate" >
                             <label for="username">Username</label>
                         </div>
                         <div class="input-field col s6">
-                            <input name="password" id="keyc" type="password" class="validate">
+                            <input name="password" id="keyC" type="password" class="validate">
                             <label for="password">Password</label>
                               <p>
                             <label>
@@ -85,7 +85,7 @@
                             </p>
                             <script>
                             function showPass() {
-                                var x = document.getElementById("keyc");
+                                var x = document.getElementById("keyC");
                                 if (x.type === "password") {
                                     x.type = "text";
                                 } else {

@@ -16,7 +16,8 @@
     </div>
 
    <script type="text/javascript">
-         
+         var localeHX;
+         var localeHY;
          function load_peta() 
          {
           var my_place;   
@@ -242,13 +243,14 @@
           map: map});
           console.log(marker.getPosition().lat()+" "+marker.getPosition().lng());
        }
-   
+       localeHX = marker.getPosition().lat();
+       localeHY = marker.getPosition().lng();
     }
      </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXHkW8XZy3R2tQa_326VbuFp29wDJ93Qw&libraries=places&callback=load_peta"
      type="text/javascript"></script>
      </div>
-     </div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+     </div><br><br><br><br><br><br><br><br><br><br>
         <div class="row">
             <div class="col s12">
                 <a class="btn-floating btn-large waves-effect waves-light red" onclick="alertaR()"><i class="material-icons">add</i></a>

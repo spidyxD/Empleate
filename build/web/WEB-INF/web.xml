@@ -16,12 +16,11 @@
         <servlet-name>Register</servlet-name>
         <servlet-class>Empleate.controller.Register</servlet-class>
     </servlet>
-    
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
-    </servlet>    
+    </servlet>
     <servlet>
         <servlet-name>Vistas</servlet-name>
         <servlet-class>Empleate.controller.Vistas</servlet-class>
@@ -30,6 +29,10 @@
         <servlet-name>updateInf</servlet-name>
         <servlet-class>Empleate.controller.updateInf</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AgregarCategorias</servlet-name>
+        <servlet-class>Empleate.controller.AgregarCategorias</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Register</servlet-name>
         <url-pattern>/RegistroCompany</url-pattern>
@@ -37,10 +40,6 @@
     <servlet-mapping>
         <servlet-name>Register</servlet-name>
         <url-pattern>/RegistroOffer</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Register</servlet-name>
-        <url-pattern>/uploadPDF</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>login</servlet-name>
@@ -64,9 +63,12 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>consultasEmpleate</servlet-name>
+        <url-pattern>/consultas</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>consultasEmpleate</servlet-name>
         <url-pattern>/desplegar</url-pattern>
     </servlet-mapping>
-    
     <servlet-mapping>
         <servlet-name>Register</servlet-name>
         <url-pattern>/Register</url-pattern>
@@ -77,15 +79,11 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>consultasEmpleate</servlet-name>
-        <url-pattern>/consultaPublica</url-pattern>
+        <url-pattern>/consultasEmpleateJobsByCategory</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>consultasEmpleate</servlet-name>
-        <url-pattern>/consultaPrivada</url-pattern>
-    </servlet-mapping>
-     <servlet-mapping>
-        <servlet-name>consultasEmpleate</servlet-name>
-        <url-pattern>/consultas</url-pattern>
+        <url-pattern>/consultasEmpleateAllJobsByCategory</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>consultasEmpleate</servlet-name>
@@ -114,7 +112,7 @@
     <servlet-mapping>
         <servlet-name>Vistas</servlet-name>
         <url-pattern>/localizar</url-pattern>
-    </servlet-mapping>  
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Vistas</servlet-name>
         <url-pattern>/visMan</url-pattern>
@@ -122,11 +120,11 @@
     <servlet-mapping>
         <servlet-name>Vistas</servlet-name>
         <url-pattern>/ListarEmpr</url-pattern>
-    </servlet-mapping> 
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Vistas</servlet-name>
         <url-pattern>/activarAC</url-pattern>
-    </servlet-mapping> 
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>updateInf</servlet-name>
         <url-pattern>/updateInf</url-pattern>
@@ -138,7 +136,35 @@
     <servlet-mapping>
         <servlet-name>updateInf</servlet-name>
         <url-pattern>/UpdateInfCompany</url-pattern>
-    </servlet-mapping>    
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AgregarCategorias</servlet-name>
+        <url-pattern>/AgregarCategorias</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AgregarCategorias</servlet-name>
+        <url-pattern>/agregarAdmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AgregarCategorias</servlet-name>
+        <url-pattern>/redireccionar</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AgregarCategorias</servlet-name>
+        <url-pattern>/agregarHabilidades</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AgregarCategorias</servlet-name>
+        <url-pattern>/redireccionarHabilidades</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AgregarCategorias</servlet-name>
+        <url-pattern>/agregarPuestos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AgregarCategorias</servlet-name>
+        <url-pattern>/redireccionarPuestos</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
