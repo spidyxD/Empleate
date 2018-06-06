@@ -66,32 +66,12 @@
         <url-pattern>/consultas</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>consultasEmpleate</servlet-name>
-        <url-pattern>/desplegar</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>Register</servlet-name>
         <url-pattern>/Register</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>consultasEmpleate</servlet-name>
-        <url-pattern>/consultasEmpleateJobsByCategory</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>consultasEmpleate</servlet-name>
-        <url-pattern>/consultasEmpleateAllJobsByCategory</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>consultasEmpleate</servlet-name>
-        <url-pattern>/consultarOffrers</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>consultasEmpleate</servlet-name>
-        <url-pattern>/colap</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Vistas</servlet-name>

@@ -34,7 +34,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Addiel
  */
-@WebServlet(name = "consultasEmpleate", urlPatterns = {"/consultas","/consultaPublica", "/iniciar", "/consultaPrivada", "/consultarOffrers", "/desplegar"})
+@WebServlet(name = "consultasEmpleate", urlPatterns = {"/consultas","/iniciar"})
 @MultipartConfig
 public class consultasEmpleate extends HttpServlet {
 
@@ -64,19 +64,6 @@ public class consultasEmpleate extends HttpServlet {
             case "/consultas":
                 System.out.print("AQUI ENTRE");
                 this.doSearchJobsByCategory(request, response);
-                break;
-            case "/consultaPublica"://Publico
-                this.doSearchPublicJobsByCategory(request, response);
-                break;
-            //Para Categorias
-            case "/consultaPrivada"://Privado,public (Sesion iniciada)
-                this.doSearchGeneralJobsByCategory(request, response);
-                break;
-            case "/consultarOffrers":
-                this.doSearchOfferers(request, response);
-                break;
-            case "/desplegar"://sirve para desplegar las categorias deseadas(como si fuera el publico)
-                this.doDesplegar(request, response);
                 break;
             case "/iniciar"://al inicio de la busqueda
                 this.iniciar(request, response);
@@ -126,109 +113,6 @@ public class consultasEmpleate extends HttpServlet {
         }
     }
 
-    private void doDesplegar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            HttpSession s = request.getSession(true);
-            cat = new ArrayList<>();
-            BufferedReader reader = request.getReader();
-            PrintWriter out = response.getWriter();
-            Gson gson = new Gson();
-            //Dad d = gson.fromJson(reader, Dad.class);
-            String ex1 = request.getParameter("papa");
-            // System.out.println(ex1);     
-
-            cat = CategoryModel.instance().giveChilds(Integer.parseInt(ex1));
-            Category cth = CategoryModel.instance().findCategoryById(Integer.parseInt(ex1));
-            if (CategoryModel.instance().giveChilds(Integer.parseInt(ex1)).isEmpty()) {
-                //Porcentaje p = gson.fromJson(reader, Porcentaje.class);
-                String ex2 = request.getParameter("percent");
-                //System.out.println(ex2);
-                resumen.add(cth);// solo add hojas
-                resumenCompleto.put(cth, ex2);
-                response.setContentType("application/json; charset=UTF-8");
-                out.write(gson.toJson(cat));
-                response.setStatus(200);
-            }
-            response.setContentType("application/json; charset=UTF-8");
-            out.write(gson.toJson(resumen));
-            response.setStatus(200);
-        } catch (Exception e) {
-            String error = e.getMessage();
-            resumen.clear();
-            resumenCompleto.clear();
-            response.setStatus(401);
-        }
-
-    }
-
-    private void doSearchPublicJobsByCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            HttpSession s = request.getSession(true);
-            BufferedReader readerCats = new BufferedReader(new InputStreamReader(request.getPart("categories").getInputStream()));
-            BufferedReader readerLoc = new BufferedReader(new InputStreamReader(request.getPart("location").getInputStream()));
-            BufferedReader readerPerc = new BufferedReader(new InputStreamReader(request.getPart("percents").getInputStream()));
-            PrintWriter out = response.getWriter();
-            Gson gson = new Gson();
-            List<Double> cats = gson.fromJson(readerCats, List.class);
-            List<String> perc = gson.fromJson(readerPerc, List.class);
-            Ubicacion lc = gson.fromJson(readerLoc, Ubicacion.class);
-            System.out.println(cats.size());
-            System.out.println(perc.size());
-            double lx = lc.getLocaleHX();
-            System.out.println(lx);
-            jobs = JobModel.instance().findPublicJobByCategory(cats, perc, lc.getLocaleHX(), lc.getLocaleHY());
-            if(!jobs.isEmpty()){
-             response.setContentType("application/json; charset=UTF-8");    
-            out.write(gson.toJson(jobs));
-            response.setStatus(200); //search successfull
-            }
-            else{
-              response.setStatus(400); //search failed 
-            }
-            jobs.clear();
-           
-            
-        } catch (Exception e) {
-            String error = e.getMessage();
-             response.setStatus(400,error); //search failed 
-        }
-    }
-
-    /**
-     * @return lista de jobs que concuerdan con las cateogrias
-     */
-    private void doSearchGeneralJobsByCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            HttpSession s = request.getSession(true);
-            BufferedReader readerCats = new BufferedReader(new InputStreamReader(request.getPart("categories").getInputStream()));
-            BufferedReader readerLoc = new BufferedReader(new InputStreamReader(request.getPart("location").getInputStream()));
-            BufferedReader readerPerc = new BufferedReader(new InputStreamReader(request.getPart("percents").getInputStream()));
-            PrintWriter out = response.getWriter();
-            Gson gson = new Gson();
-            List<String> cats = gson.fromJson(readerCats, List.class);
-            List<String> perc = gson.fromJson(readerPerc, List.class);
-            Ubicacion lc = gson.fromJson(readerLoc, Ubicacion.class);
-            System.out.println(cats.size());
-            System.out.println(perc.size());
-            double lx = lc.getLocaleHX();
-            System.out.println(lx);
-            
-           /* jobs = JobModel.instance().getAllJobsByCategory((HashMap<Category, String>) s.getAttribute("resumenCompleto"),x,y);
-              if(!jobs.isEmpty()){
-            request.setAttribute("jobsByCategory", jobs);}
-            request.getRequestDispatcher("ResultadosBusquedas.jsp").
-                    forward(request, response);
-            jobs.clear();*/
-            response.setContentType("application/json; charset=UTF-8");
-            out.write(gson.toJson("Busqueda Existosa"));
-            response.setStatus(200); //search successfull
-        } catch (Exception e) {
-            String error = e.getMessage();
-             response.setStatus(200,error); //search failed
-            
-
-        }
-    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -294,8 +178,17 @@ public class consultasEmpleate extends HttpServlet {
             Login l = (Login)s.getAttribute("login");
             if(l.getUsername().isEmpty()){
             jobs = JobModel.instance().findPublicJobByCategory(cats, perc, lc.getLocaleHX(), lc.getLocaleHY());
+            for(int i=0;i<jobs.size();i++){
+               Job aux= JobModel.instance().giveJobComplete(jobs.get(i).getIdJob());
+                jobs.get(i).setCompany(aux.getCompany());
+                System.out.println(aux.getCompany().getNameCompany()+"hola");
+            }
             }else {
             jobs = JobModel.instance().findGeneralJobByCategory(cats, perc, lc.getLocaleHX(), lc.getLocaleHY());
+            for(int i=0;i<jobs.size();i++){
+               Job aux= JobModel.instance().giveJobComplete(jobs.get(i).getIdJob());
+                jobs.get(i).setCompany(aux.getCompany());
+            }
             }
             System.out.println(jobs.size());
             if(!jobs.isEmpty()){
@@ -307,8 +200,7 @@ public class consultasEmpleate extends HttpServlet {
               String error = l.getUsername()+" No se han encontrado puestos ";  
               response.setStatus(400,error); //search failed 
             }
-            jobs.clear();
-           
+            jobs.clear();        
             
         } catch (Exception e) {
             String error = e.getMessage();

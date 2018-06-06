@@ -104,5 +104,20 @@ public class jobCategoryDAO extends HibernateUtil implements IBaseDAO <Jobcatego
         }
     return listJC;
     }
+    
+        public void insertarJobCategory(int job, int cat, int por) {
+        try {
+            String sql;
+            sql = "insert into jobCategory (j, cat, percentage)values("+job+","+cat+","+por+");";
+            operationStart();
+            getSesion().createSQLQuery(sql).executeUpdate();
+            getTransac().commit();
+        } catch (HibernateException he) {
+            handleException(he);
+            throw he;
+        } finally {
+            getSesion().close();
+        }
+    }
    
 }

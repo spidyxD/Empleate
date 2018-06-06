@@ -57,5 +57,9 @@ public class CategoryModel {
     public List<Category> findAllCategoriesOfferer(int idOfferer){
        return catDAO.findAllCategoriesOfferer(idOfferer);
    }
+    
+   public void insertarCategory(String nom, int padre){
+       catDAO.insertarCategory(nom, padre);
+   }
         
 }//fin clase
